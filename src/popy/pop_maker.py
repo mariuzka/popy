@@ -165,6 +165,9 @@ class PopMaker:
 
         # for each location class
         for location_cls in location_classes:
+            str_location_cls = str(location_cls).split(".")[1].split("'")[0]
+            for agent in agents:
+                setattr(agent, str_location_cls, "None_"+str(agent.id))
 
             # create location dummy in order to use the location's methods
             location_dummy = location_cls(model=self.model)
@@ -269,7 +272,7 @@ class PopMaker:
 
                 #####################################################################################################
                 
-                for i, group_list in enumerate(group_lists):
+                for group_id, group_list in enumerate(group_lists):
                     location_dummy = location_cls(model=self.model)
                     location_dummy.setup()
                     location_dummy.group_agents = group_list
@@ -282,7 +285,7 @@ class PopMaker:
     
                     location_subgroups = set(location_subgroups)
                     
-                    for j, subgroup_value in enumerate(location_subgroups):
+                    for subgroup_id, subgroup_value in enumerate(location_subgroups):
                         
                         # get all subgroup affiliated agents
                         subgroup_affiliated_agents = []
@@ -298,15 +301,15 @@ class PopMaker:
                         subgroup_location.setup()
                         subgroup_location.group_value = group_value
                         subgroup_location.subgroup_value = subgroup_value
-                        subgroup_location.group_id = i
-                        subgroup_location.subgroup_id = j
+                        subgroup_location.group_id = group_id
+                        subgroup_location.subgroup_id = subgroup_id
                         
                         # Assigning process:
                         for agent in subgroup_affiliated_agents:
                             subgroup_location.add_agent(agent)
                             agent._initial_locations.append(str(type(subgroup_location)).split(".")[1] + "-" + str(subgroup_location.id))
+                            setattr(agent, str_location_cls, group_id)
                             
-                        
                         locations.append(subgroup_location)
 
         # TODO:
