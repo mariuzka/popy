@@ -7,16 +7,16 @@
   <title>Agent &mdash; popy 0.1.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2389946f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -50,6 +50,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Agent</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#popy.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Agent.add_location"><code class="docutils literal notranslate"><span class="pre">Agent.add_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Agent.contact_weight"><code class="docutils literal notranslate"><span class="pre">Agent.contact_weight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Agent.locations"><code class="docutils literal notranslate"><span class="pre">Agent.locations</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Agent.neighbors"><code class="docutils literal notranslate"><span class="pre">Agent.neighbors()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Agent.setup"><code class="docutils literal notranslate"><span class="pre">Agent.setup()</span></code></a></li>
 </ul>
@@ -59,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="location.html">Location</a></li>
 <li class="toctree-l2"><a class="reference internal" href="popmaker.html">Population Maker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
@@ -89,31 +93,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="agent">
+  <section id="agent">
 <h1>Agent<a class="headerlink" href="#agent" title="Permalink to this heading"></a></h1>
 <p>This is an overview over the <cite>Agent</cite> Class</p>
 <dl class="py class">
@@ -121,31 +101,83 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popy.</span></span><span class="sig-name descname"><span class="pre">Agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/agent.html#Agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent" title="Permalink to this definition"></a></dt>
 <dd><p>This is a Base class to represent agents in the simulation.</p>
 <p>Agents’ behavior can be implemented in classes that inherit from this.</p>
+<p class="rubric">Examples</p>
+<p>For instance, agents could all be instatiated with the <cite>is_infected</cite> attribute set to
+false:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">InfectionAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_infected</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Agent.add_location">
+<span class="sig-name descname"><span class="pre">add_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/agent.html#Agent.add_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.add_location" title="Permalink to this definition"></a></dt>
+<dd><p>Add this Agent to a given location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ap</strong> (<em>_type_</em>) – _description_</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Agent.neighbors">
-<span class="sig-name descname"><span class="pre">neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duplicates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><span class="pre">AgentList</span></a></span></span><a class="reference internal" href="../_modules/popy/agent.html#Agent.neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.neighbors" title="Permalink to this definition"></a></dt>
-<dd><p>Convenience method that returns all neighbors over all locations this agent is currently
-located in.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>All agents co-located with this agent over all locations.</p>
+<dd class="field-odd"><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – Add agent to this location.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">agentpy.AgentList</span></code></a></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Agent.contact_weight">
+<span class="sig-name descname"><span class="pre">contact_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/agent.html#Agent.contact_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.contact_weight" title="Permalink to this definition"></a></dt>
+<dd><p>Return the contact weight between this agent and a given other agent.</p>
+<p>This is summed over all shared locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent_v</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The other agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A weight of the contact between the two agents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="popy.Agent.locations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">locations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">LocationList</span></em><a class="headerlink" href="#popy.Agent.locations" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of locations that this agent is associated with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of locations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Agent.neighbors">
+<span class="sig-name descname"><span class="pre">neighbors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/agent.html#Agent.neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.neighbors" title="Permalink to this definition"></a></dt>
+<dd><p>Return all neighbors of an agent.</p>
+<p>Convenience method that returns all neighbors over all locations this agent is currently
+located in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentList</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All agents co-located with this agent over all locations.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.Agent.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/popy/agent.html#Agent.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.setup" title="Permalink to this definition"></a></dt>
-<dd><p>Setup function for the Agent.
-This is executed on the instantiation of each agent.</p>
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/agent.html#Agent.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Agent.setup" title="Permalink to this definition"></a></dt>
+<dd><p>Instantiate an Agent.</p>
+<p>This is executed on the instantiation of each agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

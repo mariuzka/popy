@@ -6,16 +6,16 @@
   <title>popy.agent &mdash; popy 0.1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2389946f"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -73,58 +73,93 @@
            <div itemprop="articleBody">
              
   <h1>Source code for popy.agent</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">agentpy</span> <span class="k">as</span> <span class="nn">ap</span>
+<span></span><span class="sd">&quot;&quot;&quot;Base class to create Agent objects.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">PopyException</span>
-<span class="kn">from</span> <span class="nn">.sequences</span> <span class="kn">import</span> <span class="n">LocationList</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
+<span class="kn">import</span> <span class="nn">agentpy</span> <span class="k">as</span> <span class="nn">ap</span>
+
+<span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">location</span> <span class="k">as</span> <span class="n">_location</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequences</span> <span class="k">as</span> <span class="n">_sequences</span>
 
 <div class="viewcode-block" id="Agent"><a class="viewcode-back" href="../../api/agent.html#popy.Agent">[docs]</a><span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a Base class to represent agents in the simulation.</span>
 
 <span class="sd">    Agents&#39; behavior can be implemented in classes that inherit from this.</span>
 
-<span class="sd">    :param ap: _description_</span>
-<span class="sd">    :type ap: _type_</span>
+<span class="sd">    Examples:</span>
+<span class="sd">        For instance, agents could all be instatiated with the `is_infected` attribute set to</span>
+<span class="sd">        false::</span>
+
+<span class="sd">            class InfectionAgent(Agent):</span>
+<span class="sd">                def setup(self):</span>
+<span class="sd">                    self.is_infected = False</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Agent Constructor.</span>
+
+<span class="sd">        All parameters will be passed to the :class:`agentpy.Agent` parent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Agent.setup"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup function for the Agent.</span>
-<span class="sd">        This is executed on the instantiation of each agent.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Agent.neighbors"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ap</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convenience method that returns all neighbors over all locations this agent is currently</span>
+<div class="viewcode-block" id="Agent.setup"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate an Agent.</span>
+
+<span class="sd">        This is executed on the instantiation of each agent.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Agent.neighbors"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ap</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all neighbors of an agent.</span>
+
+<span class="sd">        Convenience method that returns all neighbors over all locations this agent is currently</span>
 <span class="sd">        located in.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            :class:`agentpy.AgentList`: All agents co-located with this agent over all locations.</span>
+<span class="sd">            All agents co-located with this agent over all locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">agent</span>
-                <span class="k">for</span> <span class="n">neighbors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-                <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">neighbors</span>
-            <span class="p">]</span>
-        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">neighbors</span> <span class="k">if</span> <span class="n">duplicates</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">neighbors</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">ap</span><span class="o">.</span><span class="n">AgentList</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-            <span class="n">neighbors</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">neighbors_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Agent.add_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.add_location">[docs]</a>    <span class="k">def</span> <span class="nf">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add this Agent to a given location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: Add agent to this location.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">add_agent_to_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">LocationList</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-            <span class="p">[</span><span class="n">location</span> <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">locations</span> <span class="k">if</span> <span class="n">location</span><span class="o">.</span><span class="n">is_affiliated</span><span class="p">(</span><span class="bp">self</span><span class="p">)],</span>
-        <span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">locations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_sequences</span><span class="o">.</span><span class="n">LocationList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of locations that this agent is associated with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">locations_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Agent.contact_weight"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.contact_weight">[docs]</a>    <span class="k">def</span> <span class="nf">contact_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_v</span><span class="p">:</span> <span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the contact weight between this agent and a given other agent.</span>
+
+<span class="sd">        This is summed over all shared locations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent_v: The other agent.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A weight of the contact between the two agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">contact_weight</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">agent_v</span> <span class="ow">in</span> <span class="n">location</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+                <span class="n">contact_weight</span> <span class="o">+=</span> <span class="n">location</span><span class="o">.</span><span class="n">project_weights</span><span class="p">(</span><span class="n">agent1</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent2</span><span class="o">=</span><span class="n">agent_v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">contact_weight</span></div></div>
 </pre></div>
 
            </div>

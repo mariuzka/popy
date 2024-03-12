@@ -19,9 +19,8 @@
    "source": [
     "import random\n",
     "\n",
-    "import seaborn as sns\n",
-    "\n",
     "import popy\n",
+    "import seaborn as sns\n",
     "\n",
     "# for reproducibilty\n",
     "random.seed(1337)\n"

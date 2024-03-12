@@ -1,5 +1,7 @@
+.. currentmodule:: popy.pop_maker
+
 Population Maker
 ================
 
-.. autoclass:: popy.pop_maker.PopMaker
+.. autoclass:: PopMaker
     :members:

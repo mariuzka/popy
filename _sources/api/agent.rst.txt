@@ -1,7 +1,10 @@
+.. currentmodule:: popy
+
+=====
 Agent
 =====
 
 This is an overview over the `Agent` Class
 
-.. autoclass:: popy.Agent
+.. autoclass:: Agent
     :members:

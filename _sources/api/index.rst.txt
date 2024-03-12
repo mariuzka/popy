@@ -1,12 +1,15 @@
+.. currentmodule:: popy
+
 API Reference
 =============
 
 .. :caption: Contents
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 0
 
    agent
    location
    popmaker
    model
+   utils
