@@ -16,6 +16,7 @@ Welcome to popy's documentation!
    :maxdepth: 1
    :caption: Contents:
 
+   introduction
    installation
    api/index
    examples/index
