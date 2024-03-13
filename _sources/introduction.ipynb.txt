@@ -71,7 +71,8 @@
     "        return None\n",
     "\n",
     "    def stick_together(self, agent: popy.Agent) -> str | float:\n",
-    "        \"\"\"Ensures that agents with a shared value on an attribute are assigned to the same location instance.\"\"\"\n",
+    "        \"\"\"Ensures that agents with a shared value on an attribute are assigned to the same \n",
+    "        location instance.\"\"\"\n",
     "        return agent.id\n",
     "\n",
     "    def weight(self, agent: popy.Agent) -> float:\n",
@@ -79,7 +80,8 @@
     "        return 1\n",
     "\n",
     "    def project_weights(self, agent1: popy.Agent, agent2: popy.Agent) -> float:\n",
-    "        \"\"\"Calculates the edge weight between two agents that are assigned to the same location instance.\"\"\"\n",
+    "        \"\"\"Calculates the edge weight between two agents that are assigned to the same location \n",
+    "        instance.\"\"\"\n",
     "        return min([self.get_weight(agent1), self.get_weight(agent2)])\n",
     "    \n",
     "    def find(self, agent: popy.Agent) -> bool:\n",
@@ -122,11 +124,10 @@
    },
    "outputs": [],
    "source": [
+    "import pandas as pd\n",
     "import popy\n",
     "from popy.pop_maker import PopMaker\n",
-    "import popy.utils as utils\n",
-    "\n",
-    "import pandas as pd"
+    "import popy.utils as utils"
    ]
   },
   {
@@ -780,7 +781,9 @@
     }
    ],
    "source": [
-    "utils.location_crosstab(locations=locations, select_locations=ClassRoom, agent_attributes=[\"status\"])"
+    "utils.location_crosstab(\n",
+    "    locations=locations, select_locations=ClassRoom, agent_attributes=[\"status\"],\n",
+    ")"
    ]
   },
   {
@@ -2054,7 +2057,9 @@
     }
    ],
    "source": [
-    "utils.location_crosstab(locations=locations, select_locations=[ClassRoom], agent_attributes=\"status\")"
+    "utils.location_crosstab(\n",
+    "    locations=locations, select_locations=[ClassRoom], agent_attributes=\"status\",\n",
+    ")"
    ]
   },
   {
@@ -2249,7 +2254,7 @@
     "        ClassRoom, # nested into School using `stick_together()`\n",
     "        School, \n",
     "        SoccerTeam, # nested into School using `nest()`\n",
-    "        ]\n",
+    "        ],\n",
     "    )\n",
     "utils.plot_network(agents=agents, node_attrs=df_school.columns, node_color=\"status\")"
    ]
@@ -4363,22 +4368,27 @@
    "metadata": {},
    "outputs": [],
    "source": [
+    "import random\n",
+    "\n",
     "import popy\n",
     "from popy.pop_maker import PopMaker\n",
-    "import random\n",
     "import popy.utils as utils\n",
     "\n",
     "class Agent(popy.Agent):\n",
     "    pass\n",
     "\n",
+    "\n",
     "class Home(popy.Location):\n",
     "    pass\n",
+    "\n",
     "\n",
     "class InfectionModel(popy.Model):\n",
     "    def setup(self):\n",
     "        self.pop_maker = PopMaker(model=self)\n",
     "        self.agents = self.pop_maker.create_agents(df=df_soep, agent_class=Agent)\n",
-    "        self.locations = self.pop_maker.create_locations(agents=self.agents, location_classes=[Home])"
+    "        self.locations = self.pop_maker.create_locations(\n",
+    "            agents=self.agents, location_classes=[Home],\n",
+    "        )"
    ]
   },
   {

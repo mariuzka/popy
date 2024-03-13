@@ -488,6 +488,7 @@ AgentList (13 objects)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+
 <span class="n">utils</span><span class="o">.</span><span class="n">eval_affiliations</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -6055,7 +6056,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">df</span><span class="o">=</span><span class="n">df_sample</span><span class="p">,</span>
     <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Restaurant</span><span class="p">,</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Friends</span><span class="p">],</span>
-    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span>
+    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">graph</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_agent_graph</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">df_sample</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -7505,7 +7506,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">FullyConnected</span><span class="p">],</span>
     <span class="n">n_agents</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span>
+    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">plot_network</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;favorite_food&quot;</span><span class="p">)</span>
@@ -7858,7 +7859,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Line</span><span class="p">],</span>
     <span class="n">n_agents</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span>
+    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">plot_network</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;favorite_food&quot;</span><span class="p">)</span>
@@ -8211,7 +8212,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Ring</span><span class="p">],</span>
     <span class="n">n_agents</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span>
+    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">plot_network</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;favorite_food&quot;</span><span class="p">)</span>
@@ -8550,6 +8551,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
 <span class="k">class</span> <span class="nc">Grid</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">GridLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">9</span>
@@ -8920,8 +8922,9 @@ var element = document.currentScript.previousSibling.previousSibling;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">math</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 
 <span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
@@ -12008,7 +12011,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 <span class="n">attrs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="n">attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;_initial_locations&quot;</span><span class="p">)</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_agent_graph</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">attrs</span><span class="p">)</span>
-<span class="n">graph_layout</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">drawing</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">graph</span><span class="p">,)</span>
+<span class="n">graph_layout</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">drawing</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
 <span class="n">plot</span> <span class="o">=</span> <span class="n">BokehGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">hover_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plot</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="n">graph_layout</span><span class="p">)</span>
 <span class="n">plot</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
@@ -13390,9 +13393,8 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">status_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">status_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;teacher&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
@@ -13817,7 +13819,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">status_list</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">status_list</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13854,9 +13856,8 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">status_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">status_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;teacher&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
@@ -13864,7 +13865,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 
 <span class="n">df_school</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status_list</span><span class="p">,</span>
-    <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">status_list</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))},</span>
+    <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">]</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">status_list</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)},</span>
     <span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
@@ -14299,9 +14300,8 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">status_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">status_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;teacher&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
@@ -14970,9 +14970,8 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">status_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">status_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;teacher&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
@@ -15417,9 +15416,8 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">status_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">status_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;teacher&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
@@ -16038,10 +16036,6 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
-
-<span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
-
-
 <span class="k">class</span> <span class="nc">Household</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">couple_id</span>
@@ -16071,7 +16065,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
     <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Household</span><span class="p">,</span> <span class="n">Town</span><span class="p">,</span> <span class="n">Work</span><span class="p">],</span>
-    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span>
+    <span class="n">sample_level</span><span class="o">=</span><span class="s2">&quot;couple_id&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>

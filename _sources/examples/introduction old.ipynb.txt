@@ -24,6 +24,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -75,6 +76,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -273,6 +275,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -297,6 +300,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -333,6 +337,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -353,6 +358,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -414,6 +420,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -436,6 +443,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -452,6 +460,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -472,6 +481,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -501,6 +511,7 @@
   {
    "cell_type": "code",
    "execution_count": 10,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -534,6 +545,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -562,6 +574,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -598,12 +611,14 @@
    ],
    "source": [
     "import popy.utils as utils\n",
+    "\n",
     "utils.eval_affiliations(agents, locations)"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 13,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -644,6 +659,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -697,6 +713,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -715,6 +732,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -722,6 +740,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -729,6 +748,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -736,6 +756,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -743,6 +764,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -750,6 +772,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -771,6 +794,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1100,6 +1124,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1180,6 +1205,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1211,6 +1237,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1222,6 +1249,7 @@
   {
    "cell_type": "code",
    "execution_count": 20,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1238,6 +1266,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1294,6 +1323,7 @@
   {
    "cell_type": "code",
    "execution_count": 22,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1308,6 +1338,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1365,6 +1396,7 @@
   {
    "cell_type": "code",
    "execution_count": 24,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1382,6 +1414,7 @@
   {
    "cell_type": "code",
    "execution_count": 25,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1442,6 +1475,7 @@
   {
    "cell_type": "code",
    "execution_count": 26,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1462,6 +1496,7 @@
   {
    "cell_type": "code",
    "execution_count": 27,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1532,6 +1567,7 @@
   {
    "cell_type": "code",
    "execution_count": 28,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1562,6 +1598,7 @@
   {
    "cell_type": "code",
    "execution_count": 29,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1622,6 +1659,7 @@
   {
    "cell_type": "code",
    "execution_count": 30,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1655,6 +1693,7 @@
   {
    "cell_type": "code",
    "execution_count": 31,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1717,6 +1756,7 @@
   {
    "cell_type": "code",
    "execution_count": 32,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1781,6 +1821,7 @@
   {
    "cell_type": "code",
    "execution_count": 33,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -1888,6 +1929,7 @@
   {
    "cell_type": "code",
    "execution_count": 34,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1909,6 +1951,7 @@
   {
    "cell_type": "code",
    "execution_count": 35,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -2424,6 +2467,7 @@
   {
    "cell_type": "code",
    "execution_count": 36,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -2478,6 +2522,7 @@
   {
    "cell_type": "code",
    "execution_count": 37,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -2504,6 +2549,7 @@
   {
    "cell_type": "code",
    "execution_count": 38,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3032,6 +3078,7 @@
   {
    "cell_type": "code",
    "execution_count": 39,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3088,6 +3135,7 @@
   {
    "cell_type": "code",
    "execution_count": 40,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3386,6 +3434,7 @@
   {
    "cell_type": "code",
    "execution_count": 41,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3466,7 +3515,7 @@
     "    df=df_sample, \n",
     "    agent_class=Agent, \n",
     "    location_classes=[Restaurant, Table, Friends],\n",
-    "    sample_level=\"couple_id\"\n",
+    "    sample_level=\"couple_id\",\n",
     "    )\n",
     "\n",
     "graph = utils.create_agent_graph(agents, node_attrs=df_sample.columns)\n",
@@ -3479,6 +3528,7 @@
   {
    "cell_type": "code",
    "execution_count": 42,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3522,6 +3572,7 @@
   {
    "cell_type": "code",
    "execution_count": 43,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3603,6 +3654,7 @@
   {
    "cell_type": "code",
    "execution_count": 44,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3660,6 +3712,7 @@
   {
    "cell_type": "code",
    "execution_count": 45,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3727,6 +3780,7 @@
   {
    "cell_type": "code",
    "execution_count": 47,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3776,7 +3830,7 @@
     "    agent_class=Agent,\n",
     "    location_classes=[FullyConnected],\n",
     "    n_agents=50,\n",
-    "    sample_level=\"couple_id\"\n",
+    "    sample_level=\"couple_id\",\n",
     "    )\n",
     "\n",
     "plot_network(agents=agents, node_attrs=df.columns, node_color=\"favorite_food\")"
@@ -3792,6 +3846,7 @@
   {
    "cell_type": "code",
    "execution_count": 48,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3841,7 +3896,7 @@
     "    agent_class=Agent,\n",
     "    location_classes=[Line],\n",
     "    n_agents=50,\n",
-    "    sample_level=\"couple_id\"\n",
+    "    sample_level=\"couple_id\",\n",
     "    )\n",
     "\n",
     "plot_network(agents=agents, node_attrs=df.columns, node_color=\"favorite_food\")"
@@ -3857,6 +3912,7 @@
   {
    "cell_type": "code",
    "execution_count": 49,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3906,7 +3962,7 @@
     "    agent_class=Agent,\n",
     "    location_classes=[Ring],\n",
     "    n_agents=50,\n",
-    "    sample_level=\"couple_id\"\n",
+    "    sample_level=\"couple_id\",\n",
     "    )\n",
     "\n",
     "plot_network(agents=agents, node_attrs=df.columns, node_color=\"favorite_food\")"
@@ -3922,6 +3978,7 @@
   {
    "cell_type": "code",
    "execution_count": 50,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -3957,6 +4014,7 @@
    ],
    "source": [
     "import math\n",
+    "\n",
     "class Grid(popy.GridLocation):\n",
     "    def setup(self):\n",
     "        self.size = 9\n",
@@ -3979,6 +4037,7 @@
   {
    "cell_type": "code",
    "execution_count": 51,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4008,6 +4067,7 @@
   {
    "cell_type": "code",
    "execution_count": 52,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4042,8 +4102,9 @@
     }
    ],
    "source": [
-    "import random\n",
     "import math\n",
+    "import random\n",
+    "\n",
     "import networkx as nx\n",
     "\n",
     "class Agent(popy.Agent):\n",
@@ -4095,6 +4156,7 @@
   {
    "cell_type": "code",
    "execution_count": 53,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4170,6 +4232,7 @@
   {
    "cell_type": "code",
    "execution_count": 54,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4221,6 +4284,7 @@
   {
    "cell_type": "code",
    "execution_count": 55,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4302,6 +4366,7 @@
   {
    "cell_type": "code",
    "execution_count": 56,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4363,6 +4428,7 @@
   {
    "cell_type": "code",
    "execution_count": 57,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -4446,6 +4512,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -4453,6 +4520,7 @@
   {
    "cell_type": "code",
    "execution_count": 88,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -5030,6 +5098,7 @@
   {
    "cell_type": "code",
    "execution_count": 59,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6111,7 +6180,7 @@
     "attrs = list(df.columns)\n",
     "attrs.append(\"_initial_locations\")\n",
     "graph = utils.create_agent_graph(agents, node_attrs=attrs)\n",
-    "graph_layout = nx.drawing.spring_layout(graph,)\n",
+    "graph_layout = nx.drawing.spring_layout(graph)\n",
     "plot = BokehGraph(graph, width=400, height=400, hover_edges=True)\n",
     "plot.layout(layout=graph_layout)\n",
     "plot.draw(\n",
@@ -6124,6 +6193,7 @@
   {
    "cell_type": "code",
    "execution_count": 60,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -6160,6 +6230,7 @@
   {
    "cell_type": "code",
    "execution_count": 61,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6195,9 +6266,8 @@
    ],
    "source": [
     "from typing import Any\n",
-    "import pandas as pd\n",
     "\n",
-    "from popy import agent as _agent\n",
+    "import pandas as pd\n",
     "\n",
     "status_list = []\n",
     "status_list.extend([\"teacher\"] * 5)\n",
@@ -6296,6 +6366,7 @@
   {
    "cell_type": "code",
    "execution_count": 62,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6329,12 +6400,13 @@
     }
    ],
    "source": [
-    "[\"m\", \"w\"]*int((len(status_list)/2))"
+    "[\"m\", \"w\"]*int(len(status_list)/2)"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": 63,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6370,9 +6442,8 @@
    ],
    "source": [
     "from typing import Any\n",
-    "import pandas as pd\n",
     "\n",
-    "from popy import agent as _agent\n",
+    "import pandas as pd\n",
     "\n",
     "status_list = []\n",
     "status_list.extend([\"teacher\"] * 4)\n",
@@ -6380,7 +6451,7 @@
     "\n",
     "df_school = pd.DataFrame(\n",
     "    {\"status\": status_list,\n",
-    "    \"gender\": [\"m\", \"w\"]*int((len(status_list)/2))},\n",
+    "    \"gender\": [\"m\", \"w\"]*int(len(status_list)/2)},\n",
     "    )\n",
     "\n",
     "class Agent(popy.Agent):\n",
@@ -6488,6 +6559,7 @@
   {
    "cell_type": "code",
    "execution_count": 64,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6739,9 +6811,8 @@
    ],
    "source": [
     "from typing import Any\n",
-    "import pandas as pd\n",
     "\n",
-    "from popy import agent as _agent\n",
+    "import pandas as pd\n",
     "\n",
     "status_list = []\n",
     "status_list.extend([\"teacher\"] * 4)\n",
@@ -6866,6 +6937,7 @@
   {
    "cell_type": "code",
    "execution_count": 65,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -6901,9 +6973,8 @@
    ],
    "source": [
     "from typing import Any\n",
-    "import pandas as pd\n",
     "\n",
-    "from popy import agent as _agent\n",
+    "import pandas as pd\n",
     "\n",
     "status_list = []\n",
     "status_list.extend([\"teacher\"] * 2)\n",
@@ -7021,6 +7092,7 @@
   {
    "cell_type": "code",
    "execution_count": 66,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7076,9 +7148,8 @@
    ],
    "source": [
     "from typing import Any\n",
-    "import pandas as pd\n",
     "\n",
-    "from popy import agent as _agent\n",
+    "import pandas as pd\n",
     "\n",
     "status_list = []\n",
     "status_list.extend([\"teacher\"] * 20)\n",
@@ -7193,6 +7264,7 @@
   {
    "cell_type": "code",
    "execution_count": 67,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7370,6 +7442,7 @@
   {
    "cell_type": "code",
    "execution_count": 68,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7406,10 +7479,6 @@
    "source": [
     "from typing import Any\n",
     "\n",
-    "\n",
-    "from popy import agent as _agent\n",
-    "\n",
-    "\n",
     "class Household(popy.Location):\n",
     "    def split(self, agent):\n",
     "        return agent.couple_id\n",
@@ -7439,7 +7508,7 @@
     "    df=df,\n",
     "    agent_class=Agent,\n",
     "    location_classes=[Household, Town, Work],\n",
-    "    sample_level=\"couple_id\"\n",
+    "    sample_level=\"couple_id\",\n",
     ")\n",
     "\n",
     "for agent in agents:\n",
@@ -7460,6 +7529,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": []
@@ -7500,6 +7570,7 @@
   {
    "cell_type": "code",
    "execution_count": 69,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7637,6 +7708,7 @@
   {
    "cell_type": "code",
    "execution_count": 70,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -7664,6 +7736,7 @@
   {
    "cell_type": "code",
    "execution_count": 71,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7695,6 +7768,7 @@
   {
    "cell_type": "code",
    "execution_count": 72,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7715,6 +7789,7 @@
   {
    "cell_type": "code",
    "execution_count": 73,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7749,6 +7824,7 @@
   {
    "cell_type": "code",
    "execution_count": 74,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -7795,6 +7871,7 @@
   {
    "cell_type": "code",
    "execution_count": 75,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -7853,6 +7930,7 @@
   {
    "cell_type": "code",
    "execution_count": 76,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -7893,6 +7971,7 @@
   {
    "cell_type": "code",
    "execution_count": 77,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7923,6 +8002,7 @@
   {
    "cell_type": "code",
    "execution_count": 78,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7955,6 +8035,7 @@
   {
    "cell_type": "code",
    "execution_count": 79,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -7999,6 +8080,7 @@
   {
    "cell_type": "code",
    "execution_count": 80,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -8387,6 +8469,7 @@
   {
    "cell_type": "code",
    "execution_count": 81,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -9040,6 +9123,7 @@
   {
    "cell_type": "code",
    "execution_count": 82,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -9101,6 +9185,7 @@
   {
    "cell_type": "code",
    "execution_count": 83,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -9137,6 +9222,7 @@
   {
    "cell_type": "code",
    "execution_count": 84,
+   "id": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -9174,6 +9260,7 @@
   {
    "cell_type": "code",
    "execution_count": 85,
+   "id": null,
    "metadata": {},
    "outputs": [
     {
@@ -9197,6 +9284,7 @@
   {
    "cell_type": "code",
    "execution_count": 86,
+   "id": null,
    "metadata": {},
    "outputs": [
     {

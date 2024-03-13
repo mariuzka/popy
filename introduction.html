@@ -141,7 +141,8 @@ executed for each agent.</p>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures that agents with a shared value on an attribute are assigned to the same location instance.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures that agents with a shared value on an attribute are assigned to the same</span>
+<span class="sd">        location instance.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span>
 
     <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -149,7 +150,8 @@ executed for each agent.</p>
         <span class="k">return</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span> <span class="n">agent2</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the edge weight between two agents that are assigned to the same location instance.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the edge weight between two agents that are assigned to the same location</span>
+<span class="sd">        instance.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span>
 
     <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -176,11 +178,10 @@ executed for each agent.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">popy</span>
 <span class="kn">from</span> <span class="nn">popy.pop_maker</span> <span class="kn">import</span> <span class="n">PopMaker</span>
 <span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -1774,7 +1775,9 @@ var element = document.currentScript.previousSibling.previousSibling;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">location_crosstab</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span> <span class="n">select_locations</span><span class="o">=</span><span class="n">ClassRoom</span><span class="p">,</span> <span class="n">agent_attributes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">location_crosstab</span><span class="p">(</span>
+    <span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span> <span class="n">select_locations</span><span class="o">=</span><span class="n">ClassRoom</span><span class="p">,</span> <span class="n">agent_attributes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -6633,7 +6636,9 @@ var element = document.currentScript.previousSibling.previousSibling;
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">location_crosstab</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span> <span class="n">select_locations</span><span class="o">=</span><span class="p">[</span><span class="n">ClassRoom</span><span class="p">],</span> <span class="n">agent_attributes</span><span class="o">=</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">location_crosstab</span><span class="p">(</span>
+    <span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span> <span class="n">select_locations</span><span class="o">=</span><span class="p">[</span><span class="n">ClassRoom</span><span class="p">],</span> <span class="n">agent_attributes</span><span class="o">=</span><span class="s2">&quot;status&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7163,7 +7168,7 @@ var element = document.currentScript.previousSibling.previousSibling;
         <span class="n">ClassRoom</span><span class="p">,</span> <span class="c1"># nested into School using `stick_together()`</span>
         <span class="n">School</span><span class="p">,</span>
         <span class="n">SoccerTeam</span><span class="p">,</span> <span class="c1"># nested into School using `nest()`</span>
-        <span class="p">]</span>
+        <span class="p">],</span>
     <span class="p">)</span>
 <span class="n">utils</span><span class="o">.</span><span class="n">plot_network</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">node_attrs</span><span class="o">=</span><span class="n">df_school</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
 </pre></div>
@@ -10247,22 +10252,27 @@ introduction.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">popy</span>
 <span class="kn">from</span> <span class="nn">popy.pop_maker</span> <span class="kn">import</span> <span class="n">PopMaker</span>
-<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 <span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
     <span class="k">pass</span>
 
+
 <span class="k">class</span> <span class="nc">Home</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">pass</span>
+
 
 <span class="k">class</span> <span class="nc">InfectionModel</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pop_maker</span> <span class="o">=</span> <span class="n">PopMaker</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_maker</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_soep</span><span class="p">,</span> <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_maker</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Home</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_maker</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
+            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Home</span><span class="p">],</span>
+        <span class="p">)</span>
 </pre></div>
 </div>
 </div>
