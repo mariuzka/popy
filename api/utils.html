@@ -223,11 +223,16 @@ attribute.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="popy.utils.location_information">
-<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">location_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_locations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#location_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.location_information" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">location_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_locations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'table'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#location_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.location_information" title="Permalink to this definition"></a></dt>
 <dd><p>Parameter
 - locations =&gt;  Liste aller location Instanzen des Netzwerkes (streng genommen reicht auch Liste von allen die man sich anschauen will)
 - select_locations =&gt; einzelner Konstruktor oder Liste von Klassen Konstruktoren
-- agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen</p>
+- agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span></p>
+</dd>
+</dl>
 <dl class="simple">
 <dt>Output: Pro Location Instance der ausgewählten Location Klassen werden</dt><dd><p>Pandas Dataframes (Columns gefiltert durch agent_attributes)
 mit Hilfe von tabulate als Konsolen print ausgegeben</p>

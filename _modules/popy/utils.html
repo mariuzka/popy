@@ -302,35 +302,25 @@
 
 
 <div class="viewcode-block" id="location_information"><a class="viewcode-back" href="../../api/utils.html#popy.utils.location_information">[docs]</a><span class="k">def</span> <span class="nf">location_information</span><span class="p">(</span>
-        <span class="n">locations</span><span class="p">,</span>
-        <span class="n">select_locations</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">agent_attributes</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="p">):</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parameter</span>
+        <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">select_locations</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Location</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">agent_attributes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_format</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parameter</span>
 <span class="sd">    - locations =&gt;  Liste aller location Instanzen des Netzwerkes (streng genommen reicht auch Liste von allen die man sich anschauen will)</span>
 <span class="sd">    - select_locations =&gt; einzelner Konstruktor oder Liste von Klassen Konstruktoren</span>
-<span class="sd">    - agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen</span>
+<span class="sd">    - agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen.</span>
 
-<span class="sd">    Output: Pro Location Instance der ausgewählten Location Klassen werden </span>
-<span class="sd">            Pandas Dataframes (Columns gefiltert durch agent_attributes) </span>
+<span class="sd">    Output: Pro Location Instance der ausgewählten Location Klassen werden</span>
+<span class="sd">            Pandas Dataframes (Columns gefiltert durch agent_attributes)</span>
 <span class="sd">            mit Hilfe von tabulate als Konsolen print ausgegeben</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO Case einfügen, dass man nur locations angibt und dann alle</span>
-    <span class="c1"># stats für alle locations sieht? </span>
-
-    <span class="c1">#locations = tuple(locations)</span>
-
-    <span class="c1"># Unifiy parameter types</span>
     <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">select_locations</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="c1"># TESTING HOW TO MAKE LIST FROM CONSTRUCTOR</span>
             <span class="n">select_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">select_locations</span><span class="p">]</span>
-    <span class="c1">#else:</span>
-        <span class="c1">#print(&quot;Error: Select at least one location for stats overview&quot;)</span>
-        <span class="c1">#return</span>
+
     <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">agent_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent_attributes</span><span class="p">]</span>
@@ -339,13 +329,13 @@
     <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
-            <span class="c1">#str_location_instance = str(location_instance).split(&quot; &quot;)[0]</span>
+
             <span class="k">for</span> <span class="n">locationtype</span> <span class="ow">in</span> <span class="n">select_locations</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location_instance</span><span class="p">,</span> <span class="n">locationtype</span><span class="p">):</span>
                     <span class="n">valid_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">location_instance</span> <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">]</span>
-        
+        <span class="n">valid_locations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
+
 
     <span class="c1"># create agent df per location instance</span>
     <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
@@ -355,32 +345,50 @@
 
             <span class="c1"># Create the title of printout</span>
             <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
-            
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="c1"># get all agents per location instance, subset df by agent-attributes</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span> <span class="o">=</span> <span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span>  <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">]]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
             <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
     <span class="k">else</span><span class="p">:</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
             <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span> <span class="o">=</span> <span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
             <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
             <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
 
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;table&quot;</span><span class="p">:</span>
     <span class="c1">#### Print Part &quot;Basic&quot;</span>
-    <span class="k">for</span>  <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s2">&quot;keys&quot;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">))</span> 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  </div>
+        <span class="k">for</span>  <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s2">&quot;keys&quot;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="n">location_id_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">location_id_counter</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+            <span class="n">location_id_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
 
 
 <span class="k">def</span> <span class="nf">location_crosstab</span><span class="p">(</span>
-        <span class="n">locations</span><span class="p">,</span>
-        <span class="n">select_locations</span><span class="p">,</span>
-        <span class="n">agent_attributes</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
-        <span class="p">):</span>
-    <span class="c1"># Make every Parameter a list </span>
+        <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">select_locations</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Location</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">agent_attributes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">output_format</span> <span class="o">=</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Make every Parameter a list</span>
     <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">select_locations</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">select_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">select_locations</span><span class="p">]</span>
@@ -393,39 +401,90 @@
     <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
-            
+
             <span class="k">for</span> <span class="n">locationtype</span> <span class="ow">in</span> <span class="n">select_locations</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location_instance</span><span class="p">,</span> <span class="n">locationtype</span><span class="p">):</span>
                     <span class="n">valid_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">location_instance</span> <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">]</span>
-        
+        <span class="n">valid_locations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
+
 
     <span class="c1"># create agent df per location instance</span>
-    <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;table&quot;</span><span class="p">:</span>
+        <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
 
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
+
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+                <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+        <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">agent_attribute</span> <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">:</span>
+
+                <span class="n">crosstab_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">],</span>
+                    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="n">tabulate</span><span class="p">(</span>
+                        <span class="n">crosstab_table</span><span class="p">,</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">],</span>
+                        <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
-
             <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span>  <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">]]</span>
+
+            <span class="c1"># only keep wanted columns (agent attributes)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+
+            <span class="c1"># add location type as str</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
+
             <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
-    
-    
-    
-    <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        
+
+
         <span class="k">for</span> <span class="n">agent_attribute</span> <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">:</span>
 
-            <span class="n">crosstab_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">],</span>
-                                   <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,)</span>
-            
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">crosstab_table</span><span class="p">,</span>
-                           <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">],</span>
-                           <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">location_id</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">df_list_of_attribute</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+                <span class="n">crosstab_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">],</span>
+                    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">crosstab_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">location_id</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">crosstab_table</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+                <span class="n">crosstab_table</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">df_list_of_attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">crosstab_table</span><span class="p">)</span>
+
+                <span class="n">location_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">df_attribute</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_list_of_attribute</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># fix columns after concat</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span>
+            <span class="n">location_array</span> <span class="o">=</span> <span class="n">df_attribute</span><span class="p">[</span><span class="s2">&quot;location_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="n">location_array</span><span class="p">)</span>
+
+            <span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_attribute</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result_list</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
 
 <span class="c1">##########################################################################</span>
 <span class="c1"># technical helper functions</span>
