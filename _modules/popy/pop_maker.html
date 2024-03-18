@@ -77,7 +77,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;Create a population for the simulation.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -88,26 +87,10 @@
 <span class="kn">import</span> <span class="nn">popy</span>
 <span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">PopyException</span>
 
-<span class="k">def</span> <span class="nf">make_it_a_list_if_it_is_no_list</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        x (_type_): _description_</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        _type_: _description_</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">x</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
-
-
 <div class="viewcode-block" id="PopMaker"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker">[docs]</a><span class="k">class</span> <span class="nc">PopMaker</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a population for the simulation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates and connects agents and locations.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -141,25 +124,25 @@
         <span class="n">sample_weight</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">replace_sample_level_column</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw a sample from a base population.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw a sample from a dataframe.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            df (:class:`pandas.DataFrame`): DF of the actual population</span>
-<span class="sd">            n (int): Target size of the final sample. If this is higher the the size of the input</span>
+<span class="sd">            df (:class:`pandas.DataFrame`): a pandas DataFrame</span>
+<span class="sd">            n (int): Target size of the final sample. If this is higher the size of the input</span>
 <span class="sd">                DataFrame, the sampling will occure with replacement. Without otherwise. If `n` is</span>
 <span class="sd">                set to `None`, df is returned as it is.</span>
-<span class="sd">            sample_level (str, optional): A variable the specifies groups in the data. For</span>
-<span class="sd">                instance a household ID to sample by households. Defaults to None.</span>
-<span class="sd">            sample_weight (str, optional): _description_. Defaults to None.</span>
+<span class="sd">            sample_level (str, optional): A variable the specifies sample units,</span>
+<span class="sd">                i.e. rows that should always</span>
+<span class="sd">            be sampled together. For instance, a household ID to sample by households.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            sample_weight (str, optional): The column of df which should be used as</span>
+<span class="sd">                probability weight. Defaults to None.</span>
 <span class="sd">            replace_sample_level_column (bool): Should the original values of the sample level be</span>
 <span class="sd">                overwritten by unique values after sampling to avoid duplicates?</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The drawn sample.</span>
+<span class="sd">            A pandas DataFrame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># TODO: Möglichkeit einbauen, zu erzwingen n_agents genau zu treffen,</span>
-        <span class="c1"># falls sample_level an ist</span>
-
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -211,19 +194,23 @@
             <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates one agent-instance of the given agent-class for each row of the given df.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates agents from a pandas DataFrame.</span>
 
+<span class="sd">        Creates one agent-instance of the given agent-class for each row of the given df,</span>
+<span class="sd">        if df is not None.</span>
 <span class="sd">        All columns of the df are added as instance attributes containing the row-specific values</span>
 <span class="sd">        of the specific column.</span>
+<span class="sd">        If df is None and n is not None, n default agents without any additional attributes are</span>
+<span class="sd">        created.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            df: The DataFrame from which the agents should be created from.</span>
 <span class="sd">            agent_class: A class to instantiate all agents with. Every column in the DataFrame will</span>
 <span class="sd">                result in an attribute of the agents.</span>
+<span class="sd">            df: The DataFrame from which the agents should be created from.</span>
 <span class="sd">            n: The number of agents that should be created. Defaults to None.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of agents, created based on the input.</span>
+<span class="sd">            A list of agents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -295,7 +282,7 @@
 
         <span class="n">all_values</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
-            <span class="n">agent_values</span> <span class="o">=</span> <span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span><span class="n">dummy_location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">agent</span><span class="p">))</span>
+            <span class="n">agent_values</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span><span class="n">dummy_location</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">agent</span><span class="p">))</span>
 
             <span class="k">if</span> <span class="n">allow_nesting</span><span class="p">:</span>
                 <span class="c1"># Add mother location&#39;s value to the value of the lower level location</span>
@@ -311,25 +298,15 @@
 
         <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_values</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PopMaker.get_stick_value"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.get_stick_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_stick_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent (_type_): _description_</span>
-<span class="sd">            dummy_location (_type_): _description_</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_get_stick_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">):</span>
         <span class="n">stick_value</span> <span class="o">=</span> <span class="n">dummy_location</span><span class="o">.</span><span class="n">stick_together</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">stick_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;None&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">stick_value</span></div>
+            <span class="k">return</span> <span class="n">stick_value</span>
 
 
     <span class="k">def</span> <span class="nf">_get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="n">location_cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]:</span>
-
         <span class="n">dummy_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dummy_location</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
 
         <span class="c1"># determine the number of groups needed</span>
@@ -343,7 +320,7 @@
             <span class="n">n_location_groups</span> <span class="o">=</span> <span class="n">dummy_location</span><span class="o">.</span><span class="n">n_locations</span>
 
 
-        <span class="n">stick_values</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_stick_value</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">}</span>
+        <span class="n">stick_values</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_stick_value</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">}</span>
         <span class="n">groups</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[]]</span>
         <span class="n">dummy_location</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dummy_location</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
 
@@ -351,7 +328,7 @@
         <span class="k">for</span> <span class="n">stick_value</span> <span class="ow">in</span> <span class="n">stick_values</span><span class="p">:</span>
             <span class="n">sticky_agents</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">agent</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stick_value</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">)</span> <span class="o">==</span> <span class="n">stick_value</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_stick_value</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">dummy_location</span><span class="p">)</span> <span class="o">==</span> <span class="n">stick_value</span>
             <span class="p">]</span>
 
             <span class="n">assigned</span> <span class="o">=</span> <span class="kc">False</span>
@@ -501,17 +478,17 @@
 
 <div class="viewcode-block" id="PopMaker.create_locations"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.create_locations">[docs]</a>    <span class="k">def</span> <span class="nf">create_locations</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">agents</span><span class="p">,</span>
-        <span class="n">location_classes</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">,</span>
+        <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">popy</span><span class="o">.</span><span class="n">LocationList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates location instances and connects them with the given agent population.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agents (_type_): _description_</span>
-<span class="sd">            location_classes (_type_): _description_</span>
+<span class="sd">            agents (list | popy.AgentList): A list of agents.</span>
+<span class="sd">            location_classes (list): A list of location classes.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            popy.LocationList: A list of locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_model</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
@@ -571,12 +548,12 @@
 
                 <span class="c1"># if this location does not glue together other locations</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">dummy_location</span><span class="o">.</span><span class="n">melt</span><span class="p">():</span>
-                    <span class="n">group_lists</span><span class="p">:</span> <span class="p">[[</span><span class="n">_agent</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_groups</span><span class="p">(</span>
+                    <span class="n">group_lists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_groups</span><span class="p">(</span>
                         <span class="n">agents</span><span class="o">=</span><span class="n">group_value_affiliated_agents</span><span class="p">,</span>
                         <span class="n">location_cls</span><span class="o">=</span><span class="n">location_cls</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">group_lists</span><span class="p">:</span> <span class="p">[[</span><span class="n">_agent</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_melted_groups</span><span class="p">(</span>
+                    <span class="n">group_lists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_melted_groups</span><span class="p">(</span>
                         <span class="n">agents</span><span class="o">=</span><span class="n">group_value_affiliated_agents</span><span class="p">,</span>
                         <span class="n">location_cls</span><span class="o">=</span><span class="n">location_cls</span><span class="p">,</span>
                     <span class="p">)</span>
@@ -592,7 +569,7 @@
                         <span class="n">agent_subgroup_value</span>
                         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">group_list</span>
                         <span class="k">for</span> <span class="n">agent_subgroup_value</span>
-                        <span class="ow">in</span> <span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span><span class="n">dummy_location</span><span class="o">.</span><span class="n">subsplit</span><span class="p">(</span><span class="n">agent</span><span class="p">))</span>
+                        <span class="ow">in</span> <span class="n">utils</span><span class="o">.</span><span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span><span class="n">dummy_location</span><span class="o">.</span><span class="n">subsplit</span><span class="p">(</span><span class="n">agent</span><span class="p">))</span>
                     <span class="p">}</span>
 
                     <span class="c1"># for each group of agents assigned to a specific sublocation</span>
@@ -603,7 +580,7 @@
 
                         <span class="c1">#for agent in group_affiliated_agents:</span>
                         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">group_list</span><span class="p">:</span>
-                            <span class="n">agent_subgroup_value</span> <span class="o">=</span> <span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span>
+                            <span class="n">agent_subgroup_value</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">make_it_a_list_if_it_is_no_list</span><span class="p">(</span>
                                 <span class="n">dummy_location</span><span class="o">.</span><span class="n">subsplit</span><span class="p">(</span><span class="n">agent</span><span class="p">),</span>
                             <span class="p">)</span>
                             <span class="k">if</span> <span class="n">subgroup_value</span> <span class="ow">in</span> <span class="n">agent_subgroup_value</span><span class="p">:</span>
@@ -662,7 +639,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-        <span class="n">agent_class</span><span class="o">=</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span>
+        <span class="n">agent_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">]</span><span class="o">=</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span>
         <span class="n">n_agents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">sample_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">sample_weight</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -676,8 +653,9 @@
 <span class="sd">            df (pd.DataFrame): A data set with individual data that forms the basis for</span>
 <span class="sd">                the creation of agents. Each row is (potentially) translated into one agent.</span>
 <span class="sd">                Each column is translated into one agent attribute.</span>
-<span class="sd">            agent_class (_type_): The class from which the agent instances are created.</span>
-<span class="sd">            location_classes (_type_): The class from which the location instances are created.</span>
+<span class="sd">            agent_class (type[popy.Agent]): The class from which the agent instances are created.</span>
+<span class="sd">            location_classes (list): A list of classes from which the location instances are</span>
+<span class="sd">                created.</span>
 <span class="sd">            n_agents (Optional[int], optional): The number of agents that will be created.</span>
 <span class="sd">                If `n_agents` is set to None, each row of `df` is translated into exactly one agent.</span>
 <span class="sd">                Otherwise, rows are randomly drawn (with replacement,</span>
@@ -687,11 +665,13 @@
 <span class="sd">                the rows are sampled individually.</span>
 <span class="sd">                Otherwise the rows are sampled as groups. `sample_level` defines</span>
 <span class="sd">                which column of `df` contains the group id.</span>
-<span class="sd">            sample_weight (Optional[str]): &lt;description&gt;</span>
-<span class="sd">            replace_sample_level_column (bool): &lt;description&gt;</span>
+<span class="sd">            sample_weight (Optional[str]): The column of df in which should be used as probability</span>
+<span class="sd">                weight during sampling.</span>
+<span class="sd">            replace_sample_level_column (bool): Should the original values of the sample level be</span>
+<span class="sd">                overwritten by unique values after sampling to avoid duplicates?</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            tuple: _description_</span>
+<span class="sd">            tuple: A list of agents and a list of locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># draw a sample from dataset</span>
         <span class="n">df_sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_sample</span><span class="p">(</span>
@@ -711,8 +691,17 @@
         <span class="k">return</span> <span class="n">agents</span><span class="p">,</span> <span class="n">locations</span></div>
 
 
-<div class="viewcode-block" id="PopMaker.get_df_agents"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.get_df_agents">[docs]</a>    <span class="k">def</span> <span class="nf">get_df_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<div class="viewcode-block" id="PopMaker.get_df_agents"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.get_df_agents">[docs]</a>    <span class="k">def</span> <span class="nf">get_df_agents</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">columns</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">drop_agentpy_columns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the latest created population of agents as a dataframe.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            columns (list | None): A list of column names that sould be kept.</span>
+<span class="sd">                All other columns are deleted.</span>
+<span class="sd">            drop_agentpy_columns (bool): Deletes some columns created by AgentPy.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            PopyException: _description_</span>
@@ -725,19 +714,36 @@
             <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;There are no agents.&quot;</span>
             <span class="k">raise</span> <span class="n">PopyException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="nb">vars</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">])</span></div>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="nb">vars</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">drop_agentpy_columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;_var_ignore&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
 
 
     <span class="k">def</span> <span class="nf">_plot_network</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> 
+            <span class="bp">self</span><span class="p">,</span>
             <span class="n">network_type</span><span class="p">,</span>
-            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">edge_alpha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="n">edge_color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-            <span class="p">):</span>
-        
+    <span class="p">):</span>
+
         <span class="k">if</span> <span class="n">network_type</span> <span class="o">==</span> <span class="s2">&quot;bipartite&quot;</span><span class="p">:</span>
             <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
@@ -746,13 +752,13 @@
                         <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">node_attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">][</span><span class="n">node_attr</span><span class="p">]</span>
                 <span class="k">del</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span>
             <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;bipartite&quot;</span> <span class="k">if</span> <span class="n">node_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">node_color</span>
-        
+
         <span class="k">elif</span> <span class="n">network_type</span> <span class="o">==</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span>
             <span class="n">graph</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_agent_graph</span><span class="p">(</span>
-                <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> 
-                <span class="n">node_attrs</span><span class="o">=</span><span class="n">node_attrs</span><span class="p">,</span> 
+                <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span>
+                <span class="n">node_attrs</span><span class="o">=</span><span class="n">node_attrs</span><span class="p">,</span>
                 <span class="n">include_0_weights</span><span class="o">=</span><span class="n">include_0_weights</span><span class="p">,</span>
-                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;firebrick&quot;</span> <span class="k">if</span> <span class="n">node_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">node_color</span>
 
         <span class="n">graph_layout</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">drawing</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
@@ -764,14 +770,29 @@
             <span class="n">edge_color</span><span class="o">=</span><span class="n">edge_color</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">plot_bipartite_network</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> 
-            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="PopMaker.plot_bipartite_network"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.plot_bipartite_network">[docs]</a>    <span class="k">def</span> <span class="nf">plot_bipartite_network</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">edge_alpha</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
             <span class="n">edge_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
             <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots the two-mode network of agents and locations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_color (str, optional): The node attribute that determines the</span>
+<span class="sd">                color of the nodes. If None, the node color represents whether</span>
+<span class="sd">                it is a location or an agent instance.</span>
+<span class="sd">            node_attrs (list | None, optional): A list of agent and location attributes that</span>
+<span class="sd">                should be shown as node attributes in the network graph. Defaults to None.</span>
+<span class="sd">            edge_alpha (str, optional): The node attribute that determines the edges&#39; transparency.</span>
+<span class="sd">                Defaults to &quot;weight&quot;.</span>
+<span class="sd">            edge_color (str, optional): The node attribute that determines the edges&#39; color.</span>
+<span class="sd">                Defaults to &quot;black&quot;.</span>
+<span class="sd">            include_0_weights (bool, optional): Should edges with a weight of zero be included in</span>
+<span class="sd">                the plot? Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plot_network</span><span class="p">(</span>
             <span class="n">network_type</span><span class="o">=</span><span class="s2">&quot;bipartite&quot;</span><span class="p">,</span>
             <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span>
@@ -779,17 +800,31 @@
             <span class="n">edge_alpha</span><span class="o">=</span><span class="n">edge_alpha</span><span class="p">,</span>
             <span class="n">edge_color</span><span class="o">=</span><span class="n">edge_color</span><span class="p">,</span>
             <span class="n">include_0_weights</span><span class="o">=</span><span class="n">include_0_weights</span><span class="p">,</span>
-        <span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">plot_agent_network</span><span class="p">(</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="PopMaker.plot_agent_network"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.plot_agent_network">[docs]</a>    <span class="k">def</span> <span class="nf">plot_agent_network</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;firebrick&quot;</span><span class="p">,</span>
+            <span class="n">node_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;firebrick&quot;</span><span class="p">,</span>
             <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">edge_alpha</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
             <span class="n">edge_color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
             <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plots the agent network.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node_color (str, optional): The node attribute that determines the</span>
+<span class="sd">                color of the nodes. If None, the node color represents whether</span>
+<span class="sd">                it is a location or an agent instance.</span>
+<span class="sd">            node_attrs (list | None, optional): A list of agent and location attributes that</span>
+<span class="sd">                should be shown as node attributes in the network graph. Defaults to None.</span>
+<span class="sd">            edge_alpha (str, optional): The node attribute that determines the edges&#39; transparency.</span>
+<span class="sd">                Defaults to &quot;weight&quot;.</span>
+<span class="sd">            edge_color (str, optional): The node attribute that determines the edges&#39; color.</span>
+<span class="sd">                Defaults to &quot;black&quot;.</span>
+<span class="sd">            include_0_weights (bool, optional): Should edges with a weight of zero be included in</span>
+<span class="sd">                the plot? Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_plot_network</span><span class="p">(</span>
             <span class="n">network_type</span><span class="o">=</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span>
             <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span>
@@ -797,7 +832,7 @@
             <span class="n">edge_alpha</span><span class="o">=</span><span class="n">edge_alpha</span><span class="p">,</span>
             <span class="n">edge_color</span><span class="o">=</span><span class="n">edge_color</span><span class="p">,</span>
             <span class="n">include_0_weights</span><span class="o">=</span><span class="n">include_0_weights</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

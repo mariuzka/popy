@@ -57,8 +57,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.create_locations"><code class="docutils literal notranslate"><span class="pre">PopMaker.create_locations()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.draw_sample"><code class="docutils literal notranslate"><span class="pre">PopMaker.draw_sample()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.get_df_agents"><code class="docutils literal notranslate"><span class="pre">PopMaker.get_df_agents()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.get_stick_value"><code class="docutils literal notranslate"><span class="pre">PopMaker.get_stick_value()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.make"><code class="docutils literal notranslate"><span class="pre">PopMaker.make()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.plot_agent_network"><code class="docutils literal notranslate"><span class="pre">PopMaker.plot_agent_network()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.pop_maker.PopMaker.plot_bipartite_network"><code class="docutils literal notranslate"><span class="pre">PopMaker.plot_bipartite_network()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -100,19 +101,23 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="popy.pop_maker.PopMaker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popy.pop_maker.</span></span><span class="sig-name descname"><span class="pre">PopMaker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">999</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker" title="Permalink to this definition"></a></dt>
-<dd><p>Create a population for the simulation.</p>
+<dd><p>Creates and connects agents and locations.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.pop_maker.PopMaker.create_agents">
 <span class="sig-name descname"><span class="pre">create_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_class=&lt;class</span> <span class="pre">'popy.agent.Agent'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.create_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.create_agents" title="Permalink to this definition"></a></dt>
-<dd><p>Creates one agent-instance of the given agent-class for each row of the given df.</p>
-<p>All columns of the df are added as instance attributes containing the row-specific values
-of the specific column.</p>
+<dd><p>Creates agents from a pandas DataFrame.</p>
+<p>Creates one agent-instance of the given agent-class for each row of the given df,
+if df is not None.
+All columns of the df are added as instance attributes containing the row-specific values
+of the specific column.
+If df is None and n is not None, n default agents without any additional attributes are
+created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span>) – The DataFrame from which the agents should be created from.</p></li>
 <li><p><strong>agent_class</strong> – A class to instantiate all agents with. Every column in the DataFrame will
 result in an attribute of the agents.</p></li>
+<li><p><strong>df</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span>) – The DataFrame from which the agents should be created from.</p></li>
 <li><p><strong>n</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]</span>) – The number of agents that should be created. Defaults to None.</p></li>
 </ul>
 </dd>
@@ -120,7 +125,7 @@ result in an attribute of the agents.</p></li>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentList</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of agents, created based on the input.</p>
+<dd class="field-odd"><p>A list of agents.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -128,19 +133,19 @@ result in an attribute of the agents.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.pop_maker.PopMaker.create_locations">
 <span class="sig-name descname"><span class="pre">create_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_classes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.create_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.create_locations" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_.</p>
+<dd><p>Creates location instances and connects them with the given agent population.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>agents</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>location_classes</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>agents</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> | </em><em>popy.AgentList</em>) – A list of agents.</p></li>
+<li><p><strong>location_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of location classes.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>A list of locations.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>popy.LocationList</p>
 </dd>
 </dl>
 </dd></dl>
@@ -148,17 +153,20 @@ result in an attribute of the agents.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.pop_maker.PopMaker.draw_sample">
 <span class="sig-name descname"><span class="pre">draw_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_sample_level_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.draw_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.draw_sample" title="Permalink to this definition"></a></dt>
-<dd><p>Draw a sample from a base population.</p>
+<dd><p>Draw a sample from a dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – DF of the actual population</p></li>
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Target size of the final sample. If this is higher the the size of the input
+<li><p><strong>df</strong> (<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>) – a pandas DataFrame</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Target size of the final sample. If this is higher the size of the input
 DataFrame, the sampling will occure with replacement. Without otherwise. If <cite>n</cite> is
 set to <cite>None</cite>, df is returned as it is.</p></li>
-<li><p><strong>sample_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – A variable the specifies groups in the data. For
-instance a household ID to sample by households. Defaults to None.</p></li>
-<li><p><strong>sample_weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – _description_. Defaults to None.</p></li>
+<li><p><strong>sample_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – A variable the specifies sample units,
+i.e. rows that should always</p></li>
+<li><p><strong>instance</strong> (<em>be sampled together. For</em>) – Defaults to None.</p></li>
+<li><p><strong>households.</strong> (<em>a household ID to sample by</em>) – Defaults to None.</p></li>
+<li><p><strong>sample_weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The column of df which should be used as
+probability weight. Defaults to None.</p></li>
 <li><p><strong>replace_sample_level_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Should the original values of the sample level be
 overwritten by unique values after sampling to avoid duplicates?</p></li>
 </ul>
@@ -167,45 +175,32 @@ overwritten by unique values after sampling to avoid duplicates?</p></li>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The drawn sample.</p>
+<dd class="field-odd"><p>A pandas DataFrame.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.pop_maker.PopMaker.get_df_agents">
-<span class="sig-name descname"><span class="pre">get_df_agents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.get_df_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.get_df_agents" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_df_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_agentpy_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.get_df_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.get_df_agents" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the latest created population of agents as a dataframe.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>PopyException</strong> – _description_</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dataframe which contains one row for each
-agent and one column for each agent attribute.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.pop_maker.PopMaker.get_stick_value">
-<span class="sig-name descname"><span class="pre">get_stick_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.get_stick_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.get_stick_value" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>agent</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>dummy_location</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> | </em><em>None</em>) – A list of column names that sould be kept.
+All other columns are deleted.</p></li>
+<li><p><strong>drop_agentpy_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Deletes some columns created by AgentPy.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>PopyException</strong> – _description_</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dataframe which contains one row for each
+agent and one column for each agent attribute.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -221,8 +216,9 @@ agent and one column for each agent attribute.</p>
 <li><p><strong>df</strong> (<em>pd.DataFrame</em>) – A data set with individual data that forms the basis for
 the creation of agents. Each row is (potentially) translated into one agent.
 Each column is translated into one agent attribute.</p></li>
-<li><p><strong>agent_class</strong> (<em>_type_</em>) – The class from which the agent instances are created.</p></li>
-<li><p><strong>location_classes</strong> (<em>_type_</em>) – The class from which the location instances are created.</p></li>
+<li><p><strong>agent_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><em>type</em></a><em>[</em><a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>popy.Agent</em></a><em>]</em>) – The class from which the agent instances are created.</p></li>
+<li><p><strong>location_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of classes from which the location instances are
+created.</p></li>
 <li><p><strong>n_agents</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>]</em><em>, </em><em>optional</em>) – The number of agents that will be created.
 If <cite>n_agents</cite> is set to None, each row of <cite>df</cite> is translated into exactly one agent.
 Otherwise, rows are randomly drawn (with replacement,
@@ -232,15 +228,69 @@ equals <cite>n_agents</cite>.</p></li>
 the rows are sampled individually.
 Otherwise the rows are sampled as groups. <cite>sample_level</cite> defines
 which column of <cite>df</cite> contains the group id.</p></li>
-<li><p><strong>sample_weight</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – &lt;description&gt;</p></li>
-<li><p><strong>replace_sample_level_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – &lt;description&gt;</p></li>
+<li><p><strong>sample_weight</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – The column of df in which should be used as probability
+weight during sampling.</p></li>
+<li><p><strong>replace_sample_level_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Should the original values of the sample level be
+overwritten by unique values after sampling to avoid duplicates?</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>A list of agents and a list of locations.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.pop_maker.PopMaker.plot_agent_network">
+<span class="sig-name descname"><span class="pre">plot_agent_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'firebrick'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_0_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.plot_agent_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.plot_agent_network" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the agent network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the
+color of the nodes. If None, the node color represents whether
+it is a location or an agent instance.</p></li>
+<li><p><strong>node_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – A list of agent and location attributes that
+should be shown as node attributes in the network graph. Defaults to None.</p></li>
+<li><p><strong>edge_alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the edges’ transparency.
+Defaults to “weight”.</p></li>
+<li><p><strong>edge_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the edges’ color.
+Defaults to “black”.</p></li>
+<li><p><strong>include_0_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Should edges with a weight of zero be included in
+the plot? Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.pop_maker.PopMaker.plot_bipartite_network">
+<span class="sig-name descname"><span class="pre">plot_bipartite_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weight'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_0_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/pop_maker.html#PopMaker.plot_bipartite_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.pop_maker.PopMaker.plot_bipartite_network" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the two-mode network of agents and locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the
+color of the nodes. If None, the node color represents whether
+it is a location or an agent instance.</p></li>
+<li><p><strong>node_attrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em> | </em><em>None</em><em>, </em><em>optional</em>) – A list of agent and location attributes that
+should be shown as node attributes in the network graph. Defaults to None.</p></li>
+<li><p><strong>edge_alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the edges’ transparency.
+Defaults to “weight”.</p></li>
+<li><p><strong>edge_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – The node attribute that determines the edges’ color.
+Defaults to “black”.</p></li>
+<li><p><strong>include_0_weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Should edges with a weight of zero be included in
+the plot? Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>

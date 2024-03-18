@@ -58,7 +58,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.create_contact_matrix"><code class="docutils literal notranslate"><span class="pre">create_contact_matrix()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.eval_affiliations"><code class="docutils literal notranslate"><span class="pre">eval_affiliations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.export_network"><code class="docutils literal notranslate"><span class="pre">export_network()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#popy.utils.get_df_agents"><code class="docutils literal notranslate"><span class="pre">get_df_agents()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.group_it"><code class="docutils literal notranslate"><span class="pre">group_it()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.location_information"><code class="docutils literal notranslate"><span class="pre">location_information()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.network_measures"><code class="docutils literal notranslate"><span class="pre">network_measures()</span></code></a></li>
@@ -134,6 +133,7 @@ attribute.</p>
 <li><p><strong>weighted</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Should the contacts be weighted? Defaults to False.</p></li>
 <li><p><strong>plot</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Should the matrix be plotted? Defaults to False.</p></li>
 <li><p><strong>annot</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Should the plottet matrix be annotated? Defaults to False.</p></li>
+<li><p><strong>return_df</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Should the data be returned as pandas.DataFrame?</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -178,23 +178,6 @@ attribute.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="popy.utils.get_df_agents">
-<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">get_df_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agentpy_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#get_df_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.get_df_agents" title="Permalink to this definition"></a></dt>
-<dd><p>_summary_.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agents</strong> (<em>AgentList</em>) – _description_</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="popy.utils.group_it">
 <span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">group_it</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'index'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summarize_highest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#group_it"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.group_it" title="Permalink to this definition"></a></dt>
 <dd><p>_summary_.</p>
@@ -221,18 +204,23 @@ attribute.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="popy.utils.location_information">
 <span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">location_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_locations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'table'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#location_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.location_information" title="Permalink to this definition"></a></dt>
-<dd><p>Parameter
-- locations =&gt;  Liste aller location Instanzen des Netzwerkes (streng genommen reicht auch Liste von allen die man sich anschauen will)
-- select_locations =&gt; einzelner Konstruktor oder Liste von Klassen Konstruktoren
-- agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen.</p>
+<dd><p>Provides information on the agents assigned to location instances.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span></p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em>]</em>) – A list of location instances.</p></li>
+<li><p><strong>select_locations</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – A list of
+location classes. Defaults to None.</p></li>
+<li><p><strong>agent_attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – A list of agent attributes.
+Defaults to None.</p></li>
+<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – A str determining what is returned. Defaults to “table”.</p></li>
+</ul>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Output: Pro Location Instance der ausgewählten Location Klassen werden</dt><dd><p>Pandas Dataframes (Columns gefiltert durch agent_attributes)
-mit Hilfe von tabulate als Konsolen print ausgegeben</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas.DataFrame or nothing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None | pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>

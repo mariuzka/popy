@@ -591,7 +591,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "id": "501a7d94",
+   "id": "9ad45267",
    "metadata": {},
    "outputs": [
     {
@@ -631,7 +631,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "789dec77",
+   "id": "d7f4cf52",
    "metadata": {},
    "source": [
     "The node in the center of the graph is the location.\n",
@@ -693,7 +693,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "1f872993",
+   "id": "40bb1b06",
    "metadata": {},
    "source": [
     "Before diving into all the details of the definition of location classes, let's simplify the process of generating agents and locations.\n",
@@ -722,7 +722,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "e6c60b37",
+   "id": "d6d54f42",
    "metadata": {},
    "outputs": [
     {
@@ -763,7 +763,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "71be292d",
+   "id": "7a65c28f",
    "metadata": {},
    "outputs": [
     {
@@ -830,7 +830,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
-   "id": "e20d1d94",
+   "id": "8a53c8e8",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -841,7 +841,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "id": "e5ef1544",
+   "id": "f99d13a8",
    "metadata": {},
    "outputs": [
     {
@@ -960,7 +960,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "id": "268dbed5",
+   "id": "37174a23",
    "metadata": {},
    "outputs": [
     {
@@ -1037,7 +1037,7 @@
   {
    "cell_type": "code",
    "execution_count": 25,
-   "id": "bb9e9d59",
+   "id": "13022d30",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1716,7 +1716,7 @@
   {
    "cell_type": "code",
    "execution_count": 36,
-   "id": "8c28bd64",
+   "id": "b962e797",
    "metadata": {},
    "outputs": [
     {
@@ -1757,7 +1757,7 @@
   {
    "cell_type": "code",
    "execution_count": 37,
-   "id": "7425c4df",
+   "id": "aba568da",
    "metadata": {},
    "outputs": [
     {
@@ -1835,7 +1835,7 @@
   {
    "cell_type": "code",
    "execution_count": 39,
-   "id": "9a2cd0ac",
+   "id": "c14d9014",
    "metadata": {},
    "outputs": [
     {
@@ -1876,7 +1876,7 @@
   {
    "cell_type": "code",
    "execution_count": 40,
-   "id": "8451609f",
+   "id": "304baf19",
    "metadata": {},
    "outputs": [
     {
@@ -2245,7 +2245,7 @@
   {
    "cell_type": "code",
    "execution_count": 47,
-   "id": "948b6474",
+   "id": "79700ac2",
    "metadata": {},
    "outputs": [
     {
@@ -2286,7 +2286,7 @@
   {
    "cell_type": "code",
    "execution_count": 48,
-   "id": "bed04123",
+   "id": "829a4aa0",
    "metadata": {},
    "outputs": [
     {
@@ -2379,7 +2379,7 @@
   {
    "cell_type": "code",
    "execution_count": 50,
-   "id": "9232a87f",
+   "id": "24a422da",
    "metadata": {},
    "outputs": [
     {
@@ -2420,7 +2420,7 @@
   {
    "cell_type": "code",
    "execution_count": 51,
-   "id": "4937fb0d",
+   "id": "4084d9ed",
    "metadata": {},
    "outputs": [
     {
@@ -3404,7 +3404,7 @@
   {
    "cell_type": "code",
    "execution_count": 66,
-   "id": "18c449cc",
+   "id": "d7f407e3",
    "metadata": {},
    "outputs": [
     {
@@ -3445,7 +3445,7 @@
   {
    "cell_type": "code",
    "execution_count": 67,
-   "id": "59348c61",
+   "id": "94036fa1",
    "metadata": {},
    "outputs": [
     {
@@ -3966,7 +3966,7 @@
     }
    ],
    "source": [
-    "utils.get_df_agents(agents=agents)"
+    "pop_maker.get_df_agents()"
    ]
   },
   {
@@ -4474,7 +4474,7 @@
     }
    ],
    "source": [
-    "utils.get_df_agents(agents).sort_values(\"hh\").reset_index(drop=True)"
+    "pop_maker.get_df_agents().sort_values(\"hh\").reset_index(drop=True)"
    ]
   },
   {
@@ -5399,7 +5399,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "cd30ca04",
+   "id": "646de47f",
    "metadata": {},
    "source": [
     "Just because we can, let's have look at the network:"
@@ -5408,7 +5408,7 @@
   {
    "cell_type": "code",
    "execution_count": 84,
-   "id": "3206059d",
+   "id": "b2942458",
    "metadata": {},
    "outputs": [
     {
@@ -5449,7 +5449,7 @@
   {
    "cell_type": "code",
    "execution_count": 85,
-   "id": "eb122447",
+   "id": "d9d58875",
    "metadata": {},
    "outputs": [
     {
