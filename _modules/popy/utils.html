@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>popy.utils &mdash; popy 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2389946f"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            popy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">popy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">popy.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for popy.utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Various utility functions for popy.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">typing</span>
+
+<span class="kn">from</span> <span class="nn">bokehgraph</span> <span class="kn">import</span> <span class="n">BokehGraph</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">networkx</span> <span class="kn">import</span> <span class="n">bipartite</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="kn">import</span> <span class="nn">popy</span>
+
+<span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">AgentList</span>
+
+
+
+<span class="c1">##########################################################################</span>
+<span class="c1"># scientific stuff</span>
+<span class="c1">##########################################################################</span>
+
+<div class="viewcode-block" id="create_agent_graph"><a class="viewcode-back" href="../../api/utils.html#popy.utils.create_agent_graph">[docs]</a><span class="k">def</span> <span class="nf">create_agent_graph</span><span class="p">(</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="n">AgentList</span><span class="p">,</span>
+        <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Graph from a model&#39;s agent list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agents: A model&#39;s agent list</span>
+<span class="sd">        node_attrs: A list of agent attributes</span>
+<span class="sd">        include_0_weights: Should edges with weight 0 be displayed?</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A weighted graph created from a model&#39;s agent list. Agents are connected if they are</span>
+<span class="sd">        neighbors in the model. Their connecting edge include the contact_weight as &quot;weight&quot;</span>
+<span class="sd">        attribute.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+    <span class="c1"># create nodes</span>
+    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">projection</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+
+            <span class="n">node_attr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">if</span> <span class="n">node_attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">node_attr</span> <span class="ow">in</span> <span class="n">node_attrs</span><span class="p">:</span>
+                    <span class="n">node_attr_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">node_attr</span><span class="p">:</span> <span class="nb">vars</span><span class="p">(</span><span class="n">agent</span><span class="p">)[</span><span class="n">node_attr</span><span class="p">]})</span>
+            <span class="n">projection</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="o">**</span><span class="n">node_attr_dict</span><span class="p">)</span>
+
+    <span class="c1"># create edges</span>
+    <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">agent_v</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">neighbors</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">projection</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">contact_weight</span><span class="p">(</span><span class="n">agent_v</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">include_0_weights</span> <span class="ow">or</span> <span class="n">weight</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">projection</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">projection</span></div>
+
+
+<div class="viewcode-block" id="export_network"><a class="viewcode-back" href="../../api/utils.html#popy.utils.export_network">[docs]</a><span class="k">def</span> <span class="nf">export_network</span><span class="p">(</span><span class="n">env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export the current agent network (unweighted version).</span>
+
+<span class="sd">    This is a projection of the underlying bipartite network between agents and locations.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The current agent network as unipartite, unweighted graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">agent_nodes</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
+
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">bipartite</span><span class="o">.</span><span class="n">projection</span><span class="o">.</span><span class="n">projected_graph</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">agent_nodes</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">agent_id</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">projection</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">agent_id</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">projection</span></div>
+
+
+<span class="c1"># TODO: calculate relative freqs</span>
+<div class="viewcode-block" id="create_contact_matrix"><a class="viewcode-back" href="../../api/utils.html#popy.utils.create_contact_matrix">[docs]</a><span class="k">def</span> <span class="nf">create_contact_matrix</span><span class="p">(</span>
+    <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">AgentList</span><span class="p">,</span>
+    <span class="n">attr</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+    <span class="n">weighted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">annot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">return_df</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a contact matrix as a DataFrame from a given model&#39;s agent list.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agents: A list of agents.</span>
+<span class="sd">        attr: The agent attribute which is shown in the matrix.</span>
+<span class="sd">        weighted: Should the contacts be weighted? Defaults to False.</span>
+<span class="sd">        plot: Should the matrix be plotted? Defaults to False.</span>
+<span class="sd">        annot: Should the plottet matrix be annotated? Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A DataFrame containing a contact matrix based on `attr`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">contact_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">attr_values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">attr_u_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">_u&quot;</span>
+    <span class="n">attr_v_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2">_v&quot;</span>
+
+    <span class="k">for</span> <span class="n">agent_u</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+        <span class="n">attr_u</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">agent_u</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr_u</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attr_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr_u</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">agent_v</span> <span class="ow">in</span> <span class="n">agent_u</span><span class="o">.</span><span class="n">neighbors</span><span class="p">():</span>
+                <span class="n">attr_v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">agent_v</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">attr_v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">attr_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr_v</span><span class="p">)</span>
+
+                    <span class="n">pair</span> <span class="o">=</span> <span class="p">{</span><span class="n">agent_u</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+
+                    <span class="k">if</span> <span class="n">pair</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+                        <span class="n">contact_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;id_u&quot;</span><span class="p">:</span> <span class="n">agent_u</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                <span class="n">attr_u_name</span><span class="p">:</span> <span class="n">attr_u</span><span class="p">,</span>
+                                <span class="s2">&quot;id_v&quot;</span><span class="p">:</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                <span class="n">attr_v_name</span><span class="p">:</span> <span class="n">attr_v</span><span class="p">,</span>
+                                <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">agent_u</span><span class="o">.</span><span class="n">contact_weight</span><span class="p">(</span><span class="n">agent_v</span><span class="p">),</span>
+                            <span class="p">},</span>
+                        <span class="p">)</span>
+                        <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
+
+    <span class="n">attr_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">attr_values</span><span class="p">))</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">attr_values</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">attr_values</span><span class="p">))</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">weight_total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">contact</span> <span class="ow">in</span> <span class="n">contact_data</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">contact</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">weighted</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">weight_total</span> <span class="o">+=</span> <span class="n">weight</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contact</span><span class="p">[</span><span class="n">attr_u_name</span><span class="p">],</span> <span class="n">contact</span><span class="p">[</span><span class="n">attr_v_name</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contact</span><span class="p">[</span><span class="n">attr_u_name</span><span class="p">],</span> <span class="n">contact</span><span class="p">[</span><span class="n">attr_v_name</span><span class="p">]]</span> <span class="o">+</span> <span class="n">weight</span>
+        <span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contact</span><span class="p">[</span><span class="n">attr_v_name</span><span class="p">],</span> <span class="n">contact</span><span class="p">[</span><span class="n">attr_u_name</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contact</span><span class="p">[</span><span class="n">attr_v_name</span><span class="p">],</span> <span class="n">contact</span><span class="p">[</span><span class="n">attr_u_name</span><span class="p">]]</span> <span class="o">+</span> <span class="n">weight</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="n">annot</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="n">attr</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_df</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="eval_affiliations"><a class="viewcode-back" href="../../api/utils.html#popy.utils.eval_affiliations">[docs]</a><span class="k">def</span> <span class="nf">eval_affiliations</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints information on the distribution of agents per location and locations per agent.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PopyException: _description_</span>
+<span class="sd">        PopyException: _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#if self.agents is None:</span>
+    <span class="c1">#    msg = &quot;You have to create agents first!&quot;</span>
+    <span class="c1">#    raise PopyException(msg)</span>
+
+    <span class="c1">#if self.locations is None:</span>
+    <span class="c1">#    msg = &quot;You have to create locations first!&quot;</span>
+    <span class="c1">#    raise PopyException(msg)</span>
+
+    <span class="n">df_locations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;location_class&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">location</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="s2">&quot;n_agents&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">agents</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">locations</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">print_header</span><span class="p">(</span><span class="s2">&quot;Number of agents per location&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_locations</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;location_class&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+    <span class="n">df_agents</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">&quot;n_affiliated_locations&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">locations</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span>
+        <span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">print_header</span><span class="p">(</span><span class="s2">&quot;Number of affiliated locations per agent&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_agents</span><span class="o">.</span><span class="n">n_affiliated_locations</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="location_information"><a class="viewcode-back" href="../../api/utils.html#popy.utils.location_information">[docs]</a><span class="k">def</span> <span class="nf">location_information</span><span class="p">(</span>
+        <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">select_locations</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Location</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">agent_attributes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_format</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parameter</span>
+<span class="sd">    - locations =&gt;  Liste aller location Instanzen des Netzwerkes (streng genommen reicht auch Liste von allen die man sich anschauen will)</span>
+<span class="sd">    - select_locations =&gt; einzelner Konstruktor oder Liste von Klassen Konstruktoren</span>
+<span class="sd">    - agent_attributes =&gt; Liste oder einzelnenes Attribute der Agenten, die in der Output-Tabelle erscheinen sollen.</span>
+
+<span class="sd">    Output: Pro Location Instance der ausgewählten Location Klassen werden</span>
+<span class="sd">            Pandas Dataframes (Columns gefiltert durch agent_attributes)</span>
+<span class="sd">            mit Hilfe von tabulate als Konsolen print ausgegeben</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">select_locations</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">select_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">select_locations</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">agent_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent_attributes</span><span class="p">]</span>
+
+    <span class="c1"># determine eligible locations classes</span>
+    <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">locationtype</span> <span class="ow">in</span> <span class="n">select_locations</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location_instance</span><span class="p">,</span> <span class="n">locationtype</span><span class="p">):</span>
+                    <span class="n">valid_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">valid_locations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
+
+
+    <span class="c1"># create agent df per location instance</span>
+    <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
+
+            <span class="c1"># Create the title of printout</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># get all agents per location instance, subset df by agent-attributes</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span> <span class="o">=</span> <span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
+            <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span> <span class="o">=</span> <span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
+            <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;table&quot;</span><span class="p">:</span>
+    <span class="c1">#### Print Part &quot;Basic&quot;</span>
+        <span class="k">for</span>  <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s2">&quot;keys&quot;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="n">location_id_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">location_id_counter</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+            <span class="n">location_id_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">location_crosstab</span><span class="p">(</span>
+        <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">select_locations</span><span class="p">:</span> <span class="n">popy</span><span class="o">.</span><span class="n">Location</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">],</span>
+        <span class="n">agent_attributes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">output_format</span> <span class="o">=</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Make every Parameter a list</span>
+    <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">select_locations</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">select_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">select_locations</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">agent_attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent_attributes</span><span class="p">]</span>
+
+    <span class="c1"># determine eligible locations classes</span>
+    <span class="n">valid_locations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">select_locations</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">locationtype</span> <span class="ow">in</span> <span class="n">select_locations</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">location_instance</span><span class="p">,</span> <span class="n">locationtype</span><span class="p">):</span>
+                    <span class="n">valid_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">valid_locations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
+
+
+    <span class="c1"># create agent df per location instance</span>
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;table&quot;</span><span class="p">:</span>
+        <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">agent_attributes</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
+
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+                <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+        <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">agent_attribute</span> <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">:</span>
+
+                <span class="n">crosstab_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">],</span>
+                    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="n">tabulate</span><span class="p">(</span>
+                        <span class="n">crosstab_table</span><span class="p">,</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">],</span>
+                        <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;fancy_grid&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">==</span> <span class="s2">&quot;df&quot;</span><span class="p">:</span>
+        <span class="n">agent_dfs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">location_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">valid_locations</span><span class="p">):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">.Location: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">location_type</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location_instance</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_agents</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">location_instance</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+
+            <span class="c1"># only keep wanted columns (agent attributes)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">agent_attributes</span><span class="p">)]</span>
+
+            <span class="c1"># add location type as str</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location_type</span>
+
+            <span class="n">agent_dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+
+        <span class="k">for</span> <span class="n">agent_attribute</span> <span class="ow">in</span> <span class="n">agent_attributes</span><span class="p">:</span>
+
+            <span class="n">location_id</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">df_list_of_attribute</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">agent_dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+                <span class="n">crosstab_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">agent_attribute</span><span class="p">],</span>
+                    <span class="n">columns</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">crosstab_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">location_id</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">crosstab_table</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+                <span class="n">crosstab_table</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;location_type&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">df_list_of_attribute</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">crosstab_table</span><span class="p">)</span>
+
+                <span class="n">location_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">df_attribute</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df_list_of_attribute</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># fix columns after concat</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span>
+            <span class="n">location_array</span> <span class="o">=</span> <span class="n">df_attribute</span><span class="p">[</span><span class="s2">&quot;location_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df_attribute</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;location_id&quot;</span><span class="p">,</span> <span class="n">location_array</span><span class="p">)</span>
+
+            <span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_attribute</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result_list</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="c1">##########################################################################</span>
+<span class="c1"># technical helper functions</span>
+<span class="c1">##########################################################################</span>
+
+
+<div class="viewcode-block" id="get_df_agents"><a class="viewcode-back" href="../../api/utils.html#popy.utils.get_df_agents">[docs]</a><span class="k">def</span> <span class="nf">get_df_agents</span><span class="p">(</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="n">AgentList</span><span class="p">,</span> 
+        <span class="n">columns</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">agentpy_columns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agents (AgentList): _description_</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="nb">vars</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">agentpy_columns</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;_var_ignore&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;model&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;p&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">columns</span><span class="p">]</span>
+    
+    
+    <span class="k">return</span> <span class="n">df</span></div>
+
+<div class="viewcode-block" id="group_it"><a class="viewcode-back" href="../../api/utils.html#popy.utils.group_it">[docs]</a><span class="k">def</span> <span class="nf">group_it</span><span class="p">(</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">return_value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;lower_bound&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+    <span class="n">summarize_highest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value: _description_</span>
+<span class="sd">        start: _description_</span>
+<span class="sd">        step: _description_</span>
+<span class="sd">        n_steps: _description_</span>
+<span class="sd">        return_value: _description_. Defaults to &quot;index&quot;.</span>
+<span class="sd">        summarize_highest: _description_. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        _type_: _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: something is fishy in this function...</span>
+    <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> has to be a number!&quot;</span>
+    <span class="k">assert</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;The value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is smaller than the smallest lower bound </span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s2">.&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+        <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="n">i</span>
+        <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">lower_bound</span> <span class="o">+</span> <span class="n">step</span>
+
+        <span class="k">if</span> <span class="n">lower_bound</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">return_value</span> <span class="o">==</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="n">i</span>
+
+            <span class="k">elif</span> <span class="n">return_value</span> <span class="o">==</span> <span class="s2">&quot;lower_bound&quot;</span><span class="p">:</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="n">lower_bound</span>  <span class="c1"># type: ignore</span>
+
+            <span class="k">elif</span> <span class="n">return_value</span> <span class="o">==</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;You have entered a non-existing option for `return_value`.&quot;</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">summarize_highest</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">:</span>
+                    <span class="n">new_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="c1"># BUG: new_value possibly unbound</span>
+    <span class="k">return</span> <span class="n">new_value</span></div>
+
+<div class="viewcode-block" id="print_header"><a class="viewcode-back" href="../../api/utils.html#popy.utils.print_header">[docs]</a><span class="k">def</span> <span class="nf">print_header</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a header around an object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text: Object to be printed within the header.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: This is weird.... and it should probably not be print-statements cuz no one can catch</span>
+    <span class="c1"># them.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;______________________________________&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;______________________________________&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="network_measures"><a class="viewcode-back" href="../../api/utils.html#popy.utils.network_measures">[docs]</a><span class="k">def</span> <span class="nf">network_measures</span><span class="p">(</span><span class="n">agent_list</span><span class="p">,</span> <span class="n">node_attrs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates nx networkgraph and calculates common network measures.</span>
+
+<span class="sd">    If the created network consist of independent groups of nodes</span>
+<span class="sd">    subgraphs are created and measures are calculated for each subgraph</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        agent_list: A model&#39;s agent list</span>
+<span class="sd">        node_attrs: A list of agent attributes</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        dictionary/or list of dictionaries of the common network</span>
+<span class="sd">        measure results</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">nx_graph</span> <span class="o">=</span> <span class="n">create_agent_graph</span><span class="p">(</span><span class="n">agent_list</span><span class="p">,</span> <span class="n">node_attrs</span><span class="p">)</span>
+
+    <span class="c1"># make distinction between multiple independent networks and one network</span>
+    <span class="k">if</span> <span class="n">nx</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">nx_graph</span><span class="p">):</span>
+
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;diameter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">diameter</span><span class="p">(</span><span class="n">nx_graph</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">nx_graph</span><span class="p">)</span>
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;transitivity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">transitivity</span><span class="p">(</span><span class="n">nx_graph</span><span class="p">)</span>
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;avg_clustering&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span>
+            <span class="n">nx_graph</span><span class="p">,</span>
+            <span class="n">weight</span><span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;avg_path_length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span>
+            <span class="n">nx_graph</span><span class="p">,</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1">#result_dict[&quot;periphery&quot;] = nx.periphery(nx_graph, weight = &quot;weight&quot;)</span>
+        <span class="c1">#result_dict[&quot;center&quot;] = nx.center(nx_graph, weight = &quot;weight&quot;)</span>
+        <span class="c1">#result_dict[&quot;centrality&quot;] = nx.degree_centrality(nx_graph)</span>
+        <span class="k">return</span> <span class="n">result_dict</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># sort subgraph component size(=num of nodes) in ascending order</span>
+        <span class="n">component_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">connected_components</span><span class="p">(</span><span class="n">nx_graph</span><span class="p">),</span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># create graph for each component and calculate network measures</span>
+        <span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">component_list</span><span class="p">:</span>
+            <span class="n">result_dict_subgraph</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">nx_subgraph</span> <span class="o">=</span> <span class="n">nx_graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">nx</span><span class="o">.</span><span class="n">NetworkXError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cant make graph out of component&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">result_dict_subgraph</span><span class="p">[</span><span class="s2">&quot;diameter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">diameter</span><span class="p">(</span>
+                <span class="n">nx_subgraph</span><span class="p">,</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result_dict_subgraph</span><span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">nx_subgraph</span><span class="p">)</span>
+            <span class="n">result_dict_subgraph</span><span class="p">[</span><span class="s2">&quot;transitivity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">transitivity</span><span class="p">(</span><span class="n">nx_subgraph</span><span class="p">)</span>
+            <span class="n">result_dict_subgraph</span><span class="p">[</span><span class="s2">&quot;avg_clustering&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_clustering</span><span class="p">(</span>
+                <span class="n">nx_subgraph</span><span class="p">,</span>
+                <span class="n">weight</span><span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">result_dict_subgraph</span><span class="p">[</span><span class="s2">&quot;avg_path_length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">average_shortest_path_length</span><span class="p">(</span>
+                <span class="n">nx_subgraph</span><span class="p">,</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1">#result_dict_subgraph[&quot;centrality&quot;] = nx.degree_centrality(nx_subgraph)</span>
+            <span class="c1">#result_dict_subgraph[&quot;periphery&quot;] = nx.periphery(nx_subgraph, weight = &quot;weight&quot;)</span>
+            <span class="c1">#result_dict_subgraph[&quot;center&quot;] = nx.center(nx_subgraph, weight = &quot;weight&quot;)</span>
+            <span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result_dict_subgraph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result_list</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marius Kaffai, Lukas Erhard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
