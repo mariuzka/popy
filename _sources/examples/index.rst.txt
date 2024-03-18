@@ -6,7 +6,7 @@ This is a example gallery that is supposed to show different implementations of 
 .. toctree::
 
     #introduction
-    minimal_example
+    #minimal_example
     #infection_simulation
     #opinion_dynamics
     #real_data

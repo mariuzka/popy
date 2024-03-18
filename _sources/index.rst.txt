@@ -19,7 +19,7 @@ Welcome to popy's documentation!
    introduction
    installation
    api/index
-   examples/index
+   #examples/index
 
 
 Indices and tables
