@@ -232,7 +232,7 @@
         <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="eval_affiliations"><a class="viewcode-back" href="../../api/utils.html#popy.utils.eval_affiliations">[docs]</a><span class="k">def</span> <span class="nf">eval_affiliations</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">locations</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="eval_affiliations"><a class="viewcode-back" href="../../api/utils.html#popy.utils.eval_affiliations">[docs]</a><span class="k">def</span> <span class="nf">eval_affiliations</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">locations</span><span class="p">,</span> <span class="n">return_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prints information on the distribution of agents per location and locations per agent.</span>
 
 <span class="sd">    Raises:</span>
@@ -247,7 +247,7 @@
     <span class="c1">#    msg = &quot;You have to create locations first!&quot;</span>
     <span class="c1">#    raise PopyException(msg)</span>
 
-    <span class="n">df_locations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;location_class&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">location</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
@@ -257,10 +257,15 @@
         <span class="p">],</span>
     <span class="p">)</span>
 
-    <span class="n">print_header</span><span class="p">(</span><span class="s2">&quot;Number of agents per location&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">df_locations</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;location_class&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;location_class&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+    <span class="n">df1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">()</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
 
-    <span class="n">df_agents</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">print_header</span><span class="p">(</span><span class="s2">&quot;Number of agents per location&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+
+    <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
@@ -269,9 +274,14 @@
             <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span>
         <span class="p">],</span>
     <span class="p">)</span>
+    <span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">n_affiliated_locations</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+    <span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">print_header</span><span class="p">(</span><span class="s2">&quot;Number of affiliated locations per agent&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">df_agents</span><span class="o">.</span><span class="n">n_affiliated_locations</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">return_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df1</span><span class="p">,</span> <span class="n">df2</span></div>
 
 
 <div class="viewcode-block" id="location_information"><a class="viewcode-back" href="../../api/utils.html#popy.utils.location_information">[docs]</a><span class="k">def</span> <span class="nf">location_information</span><span class="p">(</span>
