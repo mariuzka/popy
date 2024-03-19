@@ -470,11 +470,6 @@
 
         <span class="k">return</span> <span class="n">all_melted_groups</span>
 
-
-    <span class="k">def</span> <span class="nf">_get_cls_as_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
-
 <div class="viewcode-block" id="PopMaker.create_locations"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.create_locations">[docs]</a>    <span class="k">def</span> <span class="nf">create_locations</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">,</span>
@@ -496,7 +491,7 @@
 
         <span class="k">for</span> <span class="n">location_cls</span> <span class="ow">in</span> <span class="n">location_classes</span><span class="p">:</span>
 
-            <span class="n">str_location_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
+            <span class="n">str_location_cls</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
                 <span class="nb">setattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">str_location_cls</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
@@ -504,7 +499,7 @@
 
         <span class="c1"># for each location class</span>
         <span class="k">for</span> <span class="n">location_cls</span> <span class="ow">in</span> <span class="n">location_classes</span><span class="p">:</span>
-            <span class="n">str_location_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
+            <span class="n">str_location_cls</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="n">location_cls</span><span class="p">)</span>
 
             <span class="c1">#WaRUM GEHT DAS NICHT???????????????</span>
             <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
@@ -750,7 +745,7 @@
                     <span class="k">for</span> <span class="n">node_attr</span> <span class="ow">in</span> <span class="n">node_attrs</span><span class="p">:</span>
                         <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">node_attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">][</span><span class="n">node_attr</span><span class="p">]</span>
                 <span class="k">del</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span>
-            <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;bipartite&quot;</span> <span class="k">if</span> <span class="n">node_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">node_color</span>
+            <span class="n">node_color</span> <span class="o">=</span> <span class="s2">&quot;cls&quot;</span> <span class="k">if</span> <span class="n">node_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">node_color</span>
 
         <span class="k">elif</span> <span class="n">network_type</span> <span class="o">==</span> <span class="s2">&quot;agent&quot;</span><span class="p">:</span>
             <span class="n">graph</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_agent_graph</span><span class="p">(</span>
@@ -792,6 +787,14 @@
 <span class="sd">            include_0_weights (bool, optional): Should edges with a weight of zero be included in</span>
 <span class="sd">                the plot? Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node_attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cls&quot;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_attrs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;cls&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node_attrs</span><span class="p">:</span>
+                <span class="n">node_attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_attrs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_plot_network</span><span class="p">(</span>
             <span class="n">network_type</span><span class="o">=</span><span class="s2">&quot;bipartite&quot;</span><span class="p">,</span>
             <span class="n">node_color</span><span class="o">=</span><span class="n">node_color</span><span class="p">,</span>
