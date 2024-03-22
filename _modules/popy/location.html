@@ -79,6 +79,7 @@
 <span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 
 <span class="kn">from</span> <span class="nn">agentpy.objects</span> <span class="kn">import</span> <span class="n">Object</span>
 <span class="kn">from</span> <span class="nn">agentpy.sequences</span> <span class="kn">import</span> <span class="n">AgentList</span>
@@ -113,6 +114,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">round_function</span> <span class="o">=</span> <span class="nb">round</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multi_melt</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_branches</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -205,6 +207,7 @@
 <span class="sd">            Edge weight.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span></div>
+    
 
     <span class="c1"># INTERFACE METHODS:</span>
     <span class="c1"># (Methods that serve as user interface for defining the network via location classes.)</span>
@@ -247,7 +250,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Location.subsplit"><a class="viewcode-back" href="../../api/location.html#popy.Location.subsplit">[docs]</a>    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
+<div class="viewcode-block" id="Location.subsplit"><a class="viewcode-back" href="../../api/location.html#popy.Location.subsplit">[docs]</a>    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Splits a location instance into sub-instances to create a certain network structure.</span>
 
 <span class="sd">        Args:</span>
@@ -256,7 +259,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            str | float | None: A value or a list of values that represent specific sub-instances.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">_join_positions</span><span class="p">(</span><span class="n">pos1</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos2</span><span class="o">=</span><span class="n">neighbor</span><span class="p">)</span> 
+                <span class="k">for</span> <span class="n">neighbor</span> 
+                <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                <span class="p">]</span></div>
 
 <div class="viewcode-block" id="Location.weight"><a class="viewcode-back" href="../../api/location.html#popy.Location.weight">[docs]</a>    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines the edge weight between the agent and the location instance.</span>
@@ -328,6 +339,8 @@
 <div class="viewcode-block" id="Location.do_this_after_creation"><a class="viewcode-back" href="../../api/location.html#popy.Location.do_this_after_creation">[docs]</a>    <span class="k">def</span> <span class="nf">do_this_after_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;An action that is performed after all location instances have been created.&quot;&quot;&quot;</span>
         <span class="k">pass</span></div></div>
+
+
 
 
 <span class="k">class</span> <span class="nc">LineLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
@@ -413,6 +426,7 @@
 <span class="sd">            _type_: _description_</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">StarLocation</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_branches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_TEMP_infected</span> <span class="o">=</span> <span class="kc">True</span>
