@@ -119,16 +119,19 @@
 <span class="sd">        This is executed on the instantiation of each agent.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="Agent.neighbors"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ap</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
+<div class="viewcode-block" id="Agent.neighbors"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">-&gt;</span> <span class="n">ap</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all neighbors of an agent.</span>
 
 <span class="sd">        Convenience method that returns all neighbors over all locations this agent is currently</span>
-<span class="sd">        located in.</span>
+<span class="sd">        located in. The locations to be considered can be defined with location_classes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location_classes: A list of location_classes. </span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            All agents co-located with this agent over all locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">neighbors_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">neighbors_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="n">location_classes</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Agent.add_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.add_location">[docs]</a>    <span class="k">def</span> <span class="nf">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add this Agent to a given location.</span>
