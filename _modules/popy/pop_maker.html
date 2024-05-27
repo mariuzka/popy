@@ -250,7 +250,12 @@
 
 
         <span class="n">agents</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">objs</span><span class="o">=</span><span class="n">agents</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
+        
+        <span class="c1"># Save agents </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span></div>
 
@@ -487,20 +492,23 @@
 
 <div class="viewcode-block" id="PopMaker.create_locations"><a class="viewcode-back" href="../../api/popmaker.html#popy.pop_maker.PopMaker.create_locations">[docs]</a>    <span class="k">def</span> <span class="nf">create_locations</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">,</span>
         <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">clear_locations</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">popy</span><span class="o">.</span><span class="n">LocationList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates location instances and connects them with the given agent population.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agents (list | popy.AgentList): A list of agents.</span>
 <span class="sd">            location_classes (list): A list of location classes.</span>
+<span class="sd">            agents (list | popy.AgentList): A list of agents.</span>
 <span class="sd">            clear_locations: Should existing locations be removed before creating new ones?</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            popy.LocationList: A list of locations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">agents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span>
 
         <span class="c1"># remove locations from environment (network)</span>
         <span class="k">if</span> <span class="n">clear_locations</span><span class="p">:</span>
@@ -630,11 +638,16 @@
         <span class="c1"># TODO:</span>
         <span class="c1"># Warum gibt es keinen Fehler, wenn man ein Argument falsch schreibt? Habe gerade ewig</span>
         <span class="c1"># nach einem Bug gesucht und letzt hatte ich nur das &quot;j&quot; in &quot;objs&quot; vergessen</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">LocationList</span><span class="p">(</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">LocationList</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
             <span class="n">objs</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="c1"># save locations</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="n">locations</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_model</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="n">locations</span>
 
