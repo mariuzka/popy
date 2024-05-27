@@ -194,7 +194,7 @@
             <span class="n">agent_class_dict</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">clear_agents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">clear_agents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates agents from a pandas DataFrame.</span>
 
@@ -489,7 +489,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">,</span>
         <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-        <span class="n">clear_locations</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">clear_locations</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">popy</span><span class="o">.</span><span class="n">LocationList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates location instances and connects them with the given agent population.</span>
 
