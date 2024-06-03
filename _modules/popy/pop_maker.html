@@ -256,6 +256,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">agents</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">AgentList</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">objs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">agents</span></div>
 
