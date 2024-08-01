@@ -43,9 +43,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -74,11 +75,21 @@
              
   <h1>Source code for popy.model</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;The model class. It encapsulates the full simulation.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">agentpy</span> <span class="k">as</span> <span class="nn">ap</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">popy.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">import</span> <span class="nn">agentpy</span> <span class="k">as</span> <span class="nn">ap</span>
+<span class="kn">from</span> <span class="nn">agentpy</span> <span class="kn">import</span> <span class="n">AgentList</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">location</span> <span class="k">as</span> <span class="n">_location</span>
+
+<span class="kn">from</span> <span class="nn">popy.sequences</span> <span class="kn">import</span> <span class="n">LocationList</span>
+<span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../api/model.html#popy.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class the encapsulates a full simluation.</span>
@@ -98,20 +109,335 @@
 <span class="sd">            **kwargs: Optional parameters that are all passed to :class:`agentpy.Model`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">_run_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Model.sim_step"><a class="viewcode-back" href="../../api/model.html#popy.Model.sim_step">[docs]</a>    <span class="k">def</span> <span class="nf">sim_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do 1 step in the simulation.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="p">[</span><span class="n">location</span> <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">location</span><span class="o">.</span><span class="n">static_weight</span><span class="p">]:</span>
-            <span class="n">location</span><span class="o">.</span><span class="n">update_weights</span><span class="p">()</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">agents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show a iterable view of all agents in the environment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AgentList: A non-mutable AgentList of all agents in the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AgentList</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">objs</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show a iterable view of all locations in the environment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LocationList: a non-mutable LocationList of all locations in the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LocationList</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">objs</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Model.add_agent"><a class="viewcode-back" href="../../api/model.html#popy.Model.add_agent">[docs]</a>    <span class="k">def</span> <span class="nf">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an agent to the environment.</span>
+
+<span class="sd">        The added agent will have no connections to other agents or locatons by default.</span>
+<span class="sd">        If the agent is already in the current environment, this methods does nothing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: Agent to be added to the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">_obj</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_agents"><a class="viewcode-back" href="../../api/model.html#popy.Model.add_agents">[docs]</a>    <span class="k">def</span> <span class="nf">add_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add agents to the environment.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents (list): A list of the agents to be added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_location"><a class="viewcode-back" href="../../api/model.html#popy.Model.add_location">[docs]</a>    <span class="k">def</span> <span class="nf">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a location to the environment.</span>
+
+<span class="sd">        The added location will have no connections to other agents or locatons by default.</span>
+<span class="sd">        If the location is already in the current environment, this methods does nothing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: Location to be added to the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">_obj</span><span class="o">=</span><span class="n">location</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_locations"><a class="viewcode-back" href="../../api/model.html#popy.Model.add_locations">[docs]</a>    <span class="k">def</span> <span class="nf">add_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add multiple locations to the environment at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            locations (list): An iterable over multiple locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.add_agent_to_location"><a class="viewcode-back" href="../../api/model.html#popy.Model.add_agent_to_location">[docs]</a>    <span class="k">def</span> <span class="nf">add_agent_to_location</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">,</span>
+        <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span>
+        <span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add an agent to a specific location.</span>
+
+<span class="sd">        Both the agent and the location have to be defined beforehand. All additional keyword</span>
+<span class="sd">        arguments will be edge attributes for this connection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: Location the agent is to be added to.</span>
+<span class="sd">            agent: Agent to be added to the location.</span>
+<span class="sd">            weight: An optional weight for the connection.</span>
+<span class="sd">            **kwargs: Additional edge attributes.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: Raised if the location does not exist in the environment.</span>
+<span class="sd">            Exception: Raised if the agent does not exist in the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Create custom exceptions</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Location </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> does not exist in Environment!&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s2"> does not exist in Environment!&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_weight</span><span class="p">(</span><span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.remove_agent"><a class="viewcode-back" href="../../api/model.html#popy.Model.remove_agent">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove an agent from the environment.</span>
+
+<span class="sd">        If the agent does not exist in the environment, this method does nothing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: Agent to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.remove_agents"><a class="viewcode-back" href="../../api/model.html#popy.Model.remove_agents">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove multiple agents from the environment at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents (list): An iterable over multiple agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_agent</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.remove_location"><a class="viewcode-back" href="../../api/model.html#popy.Model.remove_location">[docs]</a>    <span class="k">def</span> <span class="nf">remove_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove a location from the environment.</span>
+
+<span class="sd">        If the location does not exist in the environment, this method does nothing.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: Location to be removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.remove_locations"><a class="viewcode-back" href="../../api/model.html#popy.Model.remove_locations">[docs]</a>    <span class="k">def</span> <span class="nf">remove_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove multiple locations at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            locations (list): An iterable over locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.remove_agent_from_location"><a class="viewcode-back" href="../../api/model.html#popy.Model.remove_agent_from_location">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agent_from_location</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">,</span>
+        <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove an agent from a location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: Location, the agent is to be removed from.</span>
+<span class="sd">            agent: Agent to be disassociated with the location.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: Raised if the location does not exist in the environment.</span>
+<span class="sd">            Exception: Raised if the agent does not exist in the environment.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: use custom exceptions</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Location </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2"> does not exist in Environment!&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s2"> does not exist in Environment!&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.agents_of_location"><a class="viewcode-back" href="../../api/model.html#popy.Model.agents_of_location">[docs]</a>    <span class="k">def</span> <span class="nf">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the list of agents associated with a specific location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location: The desired location.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AgentList</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.locations_of_agent"><a class="viewcode-back" href="../../api/model.html#popy.Model.locations_of_agent">[docs]</a>    <span class="k">def</span> <span class="nf">locations_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LocationList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the list of locations associated with a specific agent.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The desired agent.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LocationList</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.neighbors_of_agent"><a class="viewcode-back" href="../../api/model.html#popy.Model.neighbors_of_agent">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors_of_agent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of neighboring agents for a specific agent.</span>
+
+<span class="sd">        The locations to be considered can be defined with location_classes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: Agent of whom the neighbors are to be returned.</span>
+<span class="sd">            location_classes: A list of location_classes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The list of neighbors for the specified agent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">location_classes</span><span class="p">:</span>
+            <span class="n">location_classes</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="bp">cls</span><span class="p">)</span>
+                <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">location_classes</span>
+            <span class="p">]</span>
+
+            <span class="n">locations</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">node</span>
+                <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">location_classes</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">locations</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="p">)</span>
+
+        <span class="n">neighbor_agents</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">agent_id</span>
+            <span class="k">for</span> <span class="n">location_id</span> <span class="ow">in</span> <span class="n">locations</span>
+            <span class="k">for</span> <span class="n">agent_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">location_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">agent_id</span><span class="p">][</span><span class="s2">&quot;bipartite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">AgentList</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">agent_id</span><span class="p">][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">agent_id</span> <span class="ow">in</span> <span class="n">neighbor_agents</span>
+                <span class="k">if</span> <span class="n">agent_id</span> <span class="o">!=</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># TODO: evlt. filtern nach Klasse oder Key einbauen</span>
+    <span class="k">def</span> <span class="nf">_objects_between_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object1</span><span class="p">,</span> <span class="n">object2</span><span class="p">,</span> <span class="n">object_classes</span><span class="p">):</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">nx</span><span class="o">.</span><span class="n">all_simple_paths</span><span class="p">(</span>
+                <span class="n">G</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
+                <span class="n">source</span><span class="o">=</span><span class="n">object1</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">target</span><span class="o">=</span><span class="n">object2</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">cutoff</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">objects_between</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">object_classes</span><span class="p">:</span>
+            <span class="n">object_classes</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="bp">cls</span><span class="p">)</span>
+                <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">object_classes</span>
+            <span class="p">]</span>
+            <span class="n">objects_between</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">objects_between</span> <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">object_classes</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">objects_between</span>
+
+<div class="viewcode-block" id="Model.locations_between_agents"><a class="viewcode-back" href="../../api/model.html#popy.Model.locations_between_agents">[docs]</a>    <span class="k">def</span> <span class="nf">locations_between_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all locations the connect two agents.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent1 (Agent): Agent 1.</span>
+<span class="sd">            agent2 (Agent): Agent 2.</span>
+<span class="sd">            location_classes (tuple, optional): Constrain the locations to the following types.</span>
+<span class="sd">                Defaults to ().</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LocationList: A list of locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">LocationList</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">objs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_objects_between_objects</span><span class="p">(</span><span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.agents_between_locations"><a class="viewcode-back" href="../../api/model.html#popy.Model.agents_between_locations">[docs]</a>    <span class="k">def</span> <span class="nf">agents_between_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location1</span><span class="p">,</span> <span class="n">location2</span><span class="p">,</span> <span class="n">agent_classes</span><span class="o">=</span><span class="p">()):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all agents between two locations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location1 (Location): Location 1.</span>
+<span class="sd">            location2 (Location): Location 2.</span>
+<span class="sd">            agent_classes (tuple, optional): Constrain the agents to the following types.</span>
+<span class="sd">                Defaults to ().</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AgentList: A list of agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AgentList</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">objs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_objects_between_objects</span><span class="p">(</span><span class="n">location1</span><span class="p">,</span> <span class="n">location2</span><span class="p">,</span> <span class="n">agent_classes</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.set_weight"><a class="viewcode-back" href="../../api/model.html#popy.Model.set_weight">[docs]</a>    <span class="k">def</span> <span class="nf">set_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the weight of an agent at a location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent (Agent): The agent.</span>
+<span class="sd">            location (Location): The location.</span>
+<span class="sd">            weight (int): The weight</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">weight</span></div>
+
+<div class="viewcode-block" id="Model.get_weight"><a class="viewcode-back" href="../../api/model.html#popy.Model.get_weight">[docs]</a>    <span class="k">def</span> <span class="nf">get_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the weight of an agent at a location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent (Agent): The agent.</span>
+<span class="sd">            location (Location): The location.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The weight.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="n">location</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span></div></div>
 </pre></div>
 
            </div>

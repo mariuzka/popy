@@ -46,32 +46,21 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="agent.html">Agent</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Location</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#popy.Location"><code class="docutils literal notranslate"><span class="pre">Location</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.add_agent"><code class="docutils literal notranslate"><span class="pre">Location.add_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Location.add_agents"><code class="docutils literal notranslate"><span class="pre">Location.add_agents()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.agents"><code class="docutils literal notranslate"><span class="pre">Location.agents</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.do_this_after_creation"><code class="docutils literal notranslate"><span class="pre">Location.do_this_after_creation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.filter"><code class="docutils literal notranslate"><span class="pre">Location.filter()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.find"><code class="docutils literal notranslate"><span class="pre">Location.find()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.get_weight"><code class="docutils literal notranslate"><span class="pre">Location.get_weight()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.is_affiliated"><code class="docutils literal notranslate"><span class="pre">Location.is_affiliated()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.melt"><code class="docutils literal notranslate"><span class="pre">Location.melt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.n_affiliated_agents"><code class="docutils literal notranslate"><span class="pre">Location.n_affiliated_agents</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.neighbors"><code class="docutils literal notranslate"><span class="pre">Location.neighbors()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.nest"><code class="docutils literal notranslate"><span class="pre">Location.nest()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.project_weights"><code class="docutils literal notranslate"><span class="pre">Location.project_weights()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Location.remove_agent"><code class="docutils literal notranslate"><span class="pre">Location.remove_agent()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.setup"><code class="docutils literal notranslate"><span class="pre">Location.setup()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.split"><code class="docutils literal notranslate"><span class="pre">Location.split()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.stick_together"><code class="docutils literal notranslate"><span class="pre">Location.stick_together()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.subsplit"><code class="docutils literal notranslate"><span class="pre">Location.subsplit()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.update_weight"><code class="docutils literal notranslate"><span class="pre">Location.update_weight()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.update_weights"><code class="docutils literal notranslate"><span class="pre">Location.update_weights()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#popy.Location.weight"><code class="docutils literal notranslate"><span class="pre">Location.weight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Location.remove_agents"><code class="docutils literal notranslate"><span class="pre">Location.remove_agents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Location.set_weight"><code class="docutils literal notranslate"><span class="pre">Location.set_weight()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -81,6 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -115,7 +105,6 @@
 <dt class="sig sig-object py" id="popy.Location">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popy.</span></span><span class="sig-name descname"><span class="pre">Location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location" title="Permalink to this definition"></a></dt>
 <dd><p>Base class for location objects.</p>
-<p>Serves as an user interface for generating network models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.Location.add_agent">
 <span class="sig-name descname"><span class="pre">add_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.add_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.add_agent" title="Permalink to this definition"></a></dt>
@@ -130,6 +119,20 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Location.add_agents">
+<span class="sig-name descname"><span class="pre">add_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.add_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.add_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Add multiple agents at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agents</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An iterable over agents.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="popy.Location.agents">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><span class="pre">AgentList</span></a></em><a class="headerlink" href="#popy.Location.agents" title="Permalink to this definition"></a></dt>
@@ -137,49 +140,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List of agents at this location.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.do_this_after_creation">
-<span class="sig-name descname"><span class="pre">do_this_after_creation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.do_this_after_creation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.do_this_after_creation" title="Permalink to this definition"></a></dt>
-<dd><p>An action that is performed after all location instances have been created.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.filter">
-<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.filter" title="Permalink to this definition"></a></dt>
-<dd><p>Check whether the agent is meant to join this type of location.</p>
-<p>This is a boilerplate implementation of this method which always returns True; i.e. all
-agents will always be allowed at this location. Override this method in your own
-implementations as you seem fit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The agent that is currently processed by the PopMaker.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if the agent is allowed to join the location, False otherwise.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.find"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.find" title="Permalink to this definition"></a></dt>
-<dd><p>Assigns the agent to a specific location instance that meets the requirements.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>_agent.Agent</em>) – The agent that is currently processed by the PopMaker.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,50 +162,6 @@ implementations as you seem fit.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.is_affiliated">
-<span class="sig-name descname"><span class="pre">is_affiliated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.is_affiliated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.is_affiliated" title="Permalink to this definition"></a></dt>
-<dd><p>Check if the given agent is connected to this location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent to be checked.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if agent is affiliated with location, False otherwise</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.melt">
-<span class="sig-name descname"><span class="pre">melt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.melt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.melt" title="Permalink to this definition"></a></dt>
-<dd><p>Allows to assign agents with different attribute values to the same location.</p>
-<p>Merges the agents assigned to the instances of the returned location classes
-into one instance of this location class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list or tuple of location classes.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="popy.Location.n_affiliated_agents">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_affiliated_agents</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#popy.Location.n_affiliated_agents" title="Permalink to this definition"></a></dt>
-<dd><p>Return the number of agents currently at this location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Number of agents.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="popy.Location.neighbors">
 <span class="sig-name descname"><span class="pre">neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.neighbors" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a list of agents which are connected to the given agent via this location.</p>
@@ -258,22 +174,6 @@ into one instance of this location class.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>AgentList</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.nest">
-<span class="sig-name descname"><span class="pre">nest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.nest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.nest" title="Permalink to this definition"></a></dt>
-<dd><p>Nests this location class into another location class.</p>
-<p>Ensures that the agents assigned to the same instance of this location class
-are also assigned to the same instance of the returned location class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The location class in which this location class should be nested.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)">type</a>[<a class="reference internal" href="#popy.Location" title="popy.Location">Location</a>] | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -319,79 +219,12 @@ name or can be used as it is in the simulation code.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.setup" title="Permalink to this definition"></a></dt>
-<dd><p>Use this method to set attributes, for instance.</p>
-<p>This method is called automatically by the population maker after creating an instance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.split" title="Permalink to this definition"></a></dt>
-<dd><p>Creates seperate location instances for each unique returned value.</p>
+<dt class="sig sig-object py" id="popy.Location.remove_agents">
+<span class="sig-name descname"><span class="pre">remove_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.remove_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.remove_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Remove multiple agents at once.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The agent that is currently processed by the PopMaker.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The value(s) that determine(s) to which location instance</dt><dd><p>the agent is assigned.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.stick_together">
-<span class="sig-name descname"><span class="pre">stick_together</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.stick_together"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.stick_together" title="Permalink to this definition"></a></dt>
-<dd><p>Assigns agents with a shared value on an attribute to the same location instance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>_agent.Agent</em>) – The agent that is currently processed by the PopMaker.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A value that defines the groups of agents.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.subsplit">
-<span class="sig-name descname"><span class="pre">subsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.subsplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.subsplit" title="Permalink to this definition"></a></dt>
-<dd><p>Splits a location instance into sub-instances to create a certain network structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<em>_agent.Agent</em>) – The agent that is currently processed by the PopMaker.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A value or a list of values that represent specific sub-instances.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.update_weight">
-<span class="sig-name descname"><span class="pre">update_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.update_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.update_weight" title="Permalink to this definition"></a></dt>
-<dd><p>Create or update the agent-speific weight.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The agent to be updated.</p>
+<dd class="field-odd"><p><strong>agents</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An iterable over agents.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
@@ -400,32 +233,18 @@ name or can be used as it is in the simulation code.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.update_weights">
-<span class="sig-name descname"><span class="pre">update_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.update_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.update_weights" title="Permalink to this definition"></a></dt>
-<dd><p>Update the weight of every agent on this location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="popy.Location.weight">
-<span class="sig-name descname"><span class="pre">weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.weight" title="Permalink to this definition"></a></dt>
-<dd><p>Defines the edge weight between the agent and the location instance.</p>
-<p>Defines how the edge weight between an agent and the location is determined.
-This is a boilerplate implementation of this method which always returns 1; i.e. all
-edge weights will be 1. Override this method in your own implementations as you seem fit.</p>
+<dt class="sig sig-object py" id="popy.Location.set_weight">
+<span class="sig-name descname"><span class="pre">set_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/location.html#Location.set_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Location.set_weight" title="Permalink to this definition"></a></dt>
+<dd><p>Set the weight of an agent at the current location.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The agent that is currently processed by the PopMaker.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> (<a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>Agent</em></a>) – The agent.</p></li>
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The weight.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The edge weight.</p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>

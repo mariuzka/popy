@@ -21,6 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Example Gallery" href="../examples/index.html" />
     <link rel="prev" title="Model" href="model.html" /> 
 </head>
 
@@ -45,7 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="agent.html">Agent</a></li>
@@ -55,16 +56,14 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Utils</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.create_agent_graph"><code class="docutils literal notranslate"><span class="pre">create_agent_graph()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.create_contact_matrix"><code class="docutils literal notranslate"><span class="pre">create_contact_matrix()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#popy.utils.eval_affiliations"><code class="docutils literal notranslate"><span class="pre">eval_affiliations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.export_network"><code class="docutils literal notranslate"><span class="pre">export_network()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.group_it"><code class="docutils literal notranslate"><span class="pre">group_it()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#popy.utils.location_information"><code class="docutils literal notranslate"><span class="pre">location_information()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#popy.utils.network_measures"><code class="docutils literal notranslate"><span class="pre">network_measures()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#popy.utils.print_header"><code class="docutils literal notranslate"><span class="pre">print_header()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -144,23 +143,6 @@ attribute.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="popy.utils.eval_affiliations">
-<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">eval_affiliations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#eval_affiliations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.eval_affiliations" title="Permalink to this definition"></a></dt>
-<dd><p>Prints information on the distribution of agents per location and locations per agent.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>PopyException</strong> – _description_</p></li>
-<li><p><strong>PopyException</strong> – _description_</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="popy.utils.export_network">
 <span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">export_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#export_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.export_network" title="Permalink to this definition"></a></dt>
 <dd><p>Export the current agent network (unweighted version).</p>
@@ -200,53 +182,6 @@ attribute.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="popy.utils.location_information">
-<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">location_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select_locations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_attributes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'table'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#location_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.location_information" title="Permalink to this definition"></a></dt>
-<dd><p>Provides information on the agents assigned to location instances.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em>]</em>) – A list of location instances.</p></li>
-<li><p><strong>select_locations</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>popy.Location</em></a><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – A list of
-location classes. Defaults to None.</p></li>
-<li><p><strong>agent_attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – A list of agent attributes.
-Defaults to None.</p></li>
-<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – A str determining what is returned. Defaults to “table”.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A pandas.DataFrame or nothing.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None | pd.DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="popy.utils.network_measures">
-<span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">network_measures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#network_measures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.network_measures" title="Permalink to this definition"></a></dt>
-<dd><p>Creates nx networkgraph and calculates common network measures.</p>
-<p>If the created network consist of independent groups of nodes
-subgraphs are created and measures are calculated for each subgraph</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>agent_list</strong> – A model’s agent list</p></li>
-<li><p><strong>node_attrs</strong> – A list of agent attributes</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dictionary/or list of dictionaries of the common network
-measure results</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="popy.utils.print_header">
 <span class="sig-prename descclassname"><span class="pre">popy.utils.</span></span><span class="sig-name descname"><span class="pre">print_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/utils.html#print_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.utils.print_header" title="Permalink to this definition"></a></dt>
 <dd><p>Print a header around an object.</p>
@@ -264,6 +199,7 @@ measure results</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="model.html" class="btn btn-neutral float-left" title="Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples/index.html" class="btn btn-neutral float-right" title="Example Gallery" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

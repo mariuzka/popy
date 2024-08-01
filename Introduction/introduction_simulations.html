@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Running simulations using Popy &mdash; popy 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2389946f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation" href="../installation.html" />
+    <link rel="prev" title="Inspecting the network: The Inspector class" href="introduction_inspector.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            popy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../section_introduction.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction_basics.html">The Basics: Models, locations &amp; agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction_creator.html">Designing networks: The Creator class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction_inspector.html">Inspecting the network: The Inspector class</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Running simulations using Popy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#DataFaker">DataFaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#A-first-Model">A first Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Dynamic-networks">Dynamic networks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">popy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../section_introduction.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">Running simulations using Popy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Introduction/introduction_simulations.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Running-simulations-using-Popy">
+<h1>Running simulations using Popy<a class="headerlink" href="#Running-simulations-using-Popy" title="Permalink to this heading"></a></h1>
+<p>In the previous part of this introduction, we have learned how to use Popy to build, evaluate and export static networks. In the following part of this introduction, we will learn how to use Popy to directly run a simulation based on the defined network. To perform simulations, Popy relies on <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/#">AgentPy</a> - a general ABM framework. We recommend you to familiarize yourself with AgentPy first, as only some aspects of AgentPy are covered in this
+introduction.</p>
+<p>In the following, we programme a simple infection simulation as an example of how to use Popy to run simulations.</p>
+<section id="DataFaker">
+<h2>DataFaker<a class="headerlink" href="#DataFaker" title="Permalink to this heading"></a></h2>
+<p>In the previous example, we used example data to create the population of agents. In this example, we also use <em>fake</em> data, but this time we use a data generator provided by Popy to generate the data. The DataFaker creates a data set of any size, which is similar to a classic survey data set. <code class="docutils literal notranslate"><span class="pre">popy.data_fakers.soep_faker</span></code> creates data similiar to the <a class="reference external" href="https://www.diw.de/en/diw_01.c.678568.en/research_data_center_soep.html">German Socio-Economic Panel</a>.</p>
+<p>We start by creating a dataset of 1000 rows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">popy.data_fakers.soep</span> <span class="kn">import</span> <span class="n">soep_faker</span>
+
+<span class="n">df_soep</span> <span class="o">=</span> <span class="n">soep_faker</span><span class="o">.</span><span class="n">soep</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">df_soep</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[1], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">popy</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">data_fakers</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">soep</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> soep_faker
+<span class="ansi-green-intense-fg ansi-bold">      3</span> df_soep <span style="color: rgb(98,98,98)">=</span> soep_faker<span style="color: rgb(98,98,98)">.</span>soep(size<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> df_soep<span style="color: rgb(98,98,98)">.</span>head()
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;popy&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="A-first-Model">
+<h2>A first Model<a class="headerlink" href="#A-first-Model" title="Permalink to this heading"></a></h2>
+<p>The object class <code class="docutils literal notranslate"><span class="pre">Model</span></code> is a key component of implementing simulation models using Popy (or AgentPy). The class <code class="docutils literal notranslate"><span class="pre">Model</span></code> integrates all elements of the simulation and determines the simulation sequences. Every simulation model which relies on Popy must have exactly one instance of <code class="docutils literal notranslate"><span class="pre">Model</span></code>. (In fact, even the generation of static networks needs an instance of <code class="docutils literal notranslate"><span class="pre">Model</span></code>, which is created for you under the hood, to keep the code as simple as possible.)</p>
+<p><code class="docutils literal notranslate"><span class="pre">Model</span></code> has four core methods that structure the processes of the simulation model:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Model.setup()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Model.step()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Model.update()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Model.end()</span></code></p></li>
+</ol>
+<p>Please refer to the <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_model.html">AgentPy documentation</a> for more detailed information on those methods.</p>
+<p>In addition to an <em>empty</em> <code class="docutils literal notranslate"><span class="pre">Agent</span></code> class and an <em>empty</em> <code class="docutils literal notranslate"><span class="pre">Location</span></code> class, we define our first own <code class="docutils literal notranslate"><span class="pre">Model</span></code> class below. First we define the method <code class="docutils literal notranslate"><span class="pre">setup()</span></code>, which is executed according to the AgentPy logic at the beginning of the simulation. Within the <code class="docutils literal notranslate"><span class="pre">setup()</span></code> method, we do nothing more than create a <code class="docutils literal notranslate"><span class="pre">Creator</span></code> as usual and then create agents and locations. This time, however, we save everything as attributes of the <code class="docutils literal notranslate"><span class="pre">InfectionModel</span></code>. It is also important to pass the
+<code class="docutils literal notranslate"><span class="pre">InfectionModel</span></code> to the <code class="docutils literal notranslate"><span class="pre">Creator</span></code> in the form of <code class="docutils literal notranslate"><span class="pre">self</span></code> via the <code class="docutils literal notranslate"><span class="pre">model</span></code> parameter. This ensures that all agents and locations created via this <code class="docutils literal notranslate"><span class="pre">Creator</span></code> are assigned to the <code class="docutils literal notranslate"><span class="pre">InfectionModel</span></code> and vice versa. This allows agents to access their environment during the simulation, for example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">popy</span>
+
+<span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">Home</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">InfectionModel</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_soep</span><span class="p">,</span> <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
+            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Home</span><span class="p">],</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[2], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">random</span>
+<span class="ansi-green-fg">----&gt; 3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">popy</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">Agent</span>(popy<span style="color: rgb(98,98,98)">.</span>Agent):
+<span class="ansi-green-intense-fg ansi-bold">      6</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">pass</span>
+
+<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;popy&#39;
+</pre></div></div>
+</div>
+<p>Now, we execute the simulation model. Again, please refer to the <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/overview.html#running-a-simulation">AgentPy documentation</a> if needed.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">InfectionModel</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[3], line 4</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> parameters <span style="color: rgb(98,98,98)">=</span> {
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">steps</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">50</span>,
+<span class="ansi-green-intense-fg ansi-bold">      3</span> }
+<span class="ansi-green-fg">----&gt; 4</span> model <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">InfectionModel</span>(parameters<span style="color: rgb(98,98,98)">=</span>parameters)
+<span class="ansi-green-intense-fg ansi-bold">      5</span> results <span style="color: rgb(98,98,98)">=</span> model<span style="color: rgb(98,98,98)">.</span>run()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;InfectionModel&#39; is not defined
+</pre></div></div>
+</div>
+<p>The simulation has now run, but practically nothing has happened except that the agents and locations have been created. The <code class="docutils literal notranslate"><span class="pre">model</span></code> object now has the <code class="docutils literal notranslate"><span class="pre">agents</span></code> attribute, for example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">agents</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[4], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">model</span><span style="color: rgb(98,98,98)">.</span>agents
+
+<span class="ansi-red-fg">NameError</span>: name &#39;model&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">locations</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[5], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">model</span><span style="color: rgb(98,98,98)">.</span>locations
+
+<span class="ansi-red-fg">NameError</span>: name &#39;model&#39; is not defined
+</pre></div></div>
+</div>
+<p>Now we add some code to make the model a working infection simulation. We add the attributes <code class="docutils literal notranslate"><span class="pre">infection_status</span></code> and <code class="docutils literal notranslate"><span class="pre">days_since_infection</span></code> as well as the methods <code class="docutils literal notranslate"><span class="pre">infect</span></code> and <code class="docutils literal notranslate"><span class="pre">update_infection_status</span></code> to the agent.</p>
+<p>What is relevant here is how the agent accesses other agents with which it is in contact. This is done using the <code class="docutils literal notranslate"><span class="pre">Agent.neighbors()</span></code> method. On the other hand, it is relevant how the agent determines <em>how much</em> contact it has or has had with the other agents. This is done using the method <code class="docutils literal notranslate"><span class="pre">Agent.contact_weight()</span></code>. Both methods include all locations that an agent visits.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;susceptible&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">infect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">agent_v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neighbors</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">==</span> <span class="s2">&quot;susceptible&quot;</span><span class="p">:</span>
+                    <span class="n">infection_probability</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">contact_weight</span><span class="p">(</span><span class="n">agent_v</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">infection_probability</span><span class="p">:</span>
+                        <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
+
+
+    <span class="k">def</span> <span class="nf">update_infection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exposed&quot;</span><span class="p">,</span> <span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;infectious&quot;</span>
+
+            <span class="k">elif</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;symptomatic&quot;</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;recovered&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[6], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">Agent</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Agent):
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>, model, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs):
+<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span style="color: rgb(0,135,0)">super</span>()<span style="color: rgb(98,98,98)">.</span><span style="color: rgb(0,0,255)">__init__</span>(model, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<p>Next, we define 4 locations. A home <code class="docutils literal notranslate"><span class="pre">Home</span></code>, to which all agents of a household are assigned, a workplace <code class="docutils literal notranslate"><span class="pre">Work</span></code>, which groups the agents according to their occupational sectors, and a school <code class="docutils literal notranslate"><span class="pre">School</span></code>, which contains age-specific classes. To ensure that each agent has contact with at least two other agents, we also define the location <code class="docutils literal notranslate"><span class="pre">Ring</span></code>, which connects the entire population along a ring using the predefined Popy class <code class="docutils literal notranslate"><span class="pre">RingLocation</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">hid</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">12</span>
+
+<span class="k">class</span> <span class="nc">Work</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">work_hours_day</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">agent</span><span class="o">.</span><span class="n">nace2_division</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">nace2_division</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">work_hours_day</span>
+
+<span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">25</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="n">agent</span><span class="o">.</span><span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">18</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">age</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">6</span>
+
+<span class="k">class</span> <span class="nc">Ring</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">RingLocation</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[7], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">Home</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Location):
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">split</span>(<span style="color: rgb(0,135,0)">self</span>, agent):
+<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> agent<span style="color: rgb(98,98,98)">.</span>hid
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<p>We extend the <code class="docutils literal notranslate"><span class="pre">InfectionModel</span></code> so that 10 random agents are infected at the start of the simulation (<code class="docutils literal notranslate"><span class="pre">setup()</span></code>). In <code class="docutils literal notranslate"><span class="pre">step()</span></code> we define what should happen in each individual time step of the simulation. First, the method <code class="docutils literal notranslate"><span class="pre">update_infection_status()</span></code> is to be executed for each agent and then the method <code class="docutils literal notranslate"><span class="pre">infect()</span></code> for each agent. If you are wondering about the strange syntax, have a look <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/overview.html#agent-sequences">here</a>. The method
+<code class="docutils literal notranslate"><span class="pre">update()</span></code> is also executed in each time step, but always after the method <code class="docutils literal notranslate"><span class="pre">step()</span></code>. In <code class="docutils literal notranslate"><span class="pre">update()</span></code> we collect the number of agents ever infected per time step in order to visualize it after the simulation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">InfectionModel</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_soep</span><span class="p">,</span> <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
+            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span>
+            <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Home</span><span class="p">,</span>
+                <span class="n">Work</span><span class="p">,</span>
+                <span class="n">School</span><span class="p">,</span>
+                <span class="n">Ring</span><span class="p">,</span>
+                <span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">update_infection_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">infect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="p">(</span>
+            <span class="s2">&quot;cumulative_infections&quot;</span><span class="p">,</span>
+            <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">!=</span> <span class="s2">&quot;susceptible&quot;</span><span class="p">]),</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[8], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">InfectionModel</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Model):
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">setup</span>(<span style="color: rgb(0,135,0)">self</span>):
+<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>creator <span style="color: rgb(98,98,98)">=</span> popy<span style="color: rgb(98,98,98)">.</span>Creator(model<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">self</span>)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<p>Let’s execute the model:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">InfectionModel</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[9], line 4</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> parameters <span style="color: rgb(98,98,98)">=</span> {
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">steps</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">50</span>,
+<span class="ansi-green-intense-fg ansi-bold">      3</span> }
+<span class="ansi-green-fg">----&gt; 4</span> model <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">InfectionModel</span>(parameters<span style="color: rgb(98,98,98)">=</span>parameters)
+<span class="ansi-green-intense-fg ansi-bold">      5</span> results <span style="color: rgb(98,98,98)">=</span> model<span style="color: rgb(98,98,98)">.</span>run()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;InfectionModel&#39; is not defined
+</pre></div></div>
+</div>
+<p>Below, you can see the number of infections per time step.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">InfectionModel</span><span class="o">.</span><span class="n">cumulative_infections</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[10], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
+<span class="ansi-green-fg">----&gt; 3</span> plt<span style="color: rgb(98,98,98)">.</span>plot(<span class="ansi-yellow-bg">results</span><span style="color: rgb(98,98,98)">.</span>variables<span style="color: rgb(98,98,98)">.</span>InfectionModel<span style="color: rgb(98,98,98)">.</span>cumulative_infections)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> plt<span style="color: rgb(98,98,98)">.</span>grid()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;results&#39; is not defined
+</pre></div></div>
+</div>
+<p>Just because we can, let’s have look at the network:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">plot_bipartite_network</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[11], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">model</span><span style="color: rgb(98,98,98)">.</span>creator<span style="color: rgb(98,98,98)">.</span>plot_bipartite_network()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;model&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">plot_agent_network</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[12], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">model</span><span style="color: rgb(98,98,98)">.</span>creator<span style="color: rgb(98,98,98)">.</span>plot_agent_network()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;model&#39; is not defined
+</pre></div></div>
+</div>
+</section>
+<section id="Dynamic-networks">
+<h2>Dynamic networks<a class="headerlink" href="#Dynamic-networks" title="Permalink to this heading"></a></h2>
+<p>Up to now, we have had purely static networks that have not changed once they have been created. In Popy, there are two ways to change the networks during the simulation. Firstly, agents can leave and join locations using the methods <code class="docutils literal notranslate"><span class="pre">Location.remove_agent()</span></code> and <code class="docutils literal notranslate"><span class="pre">Location.add_agent()</span></code>. If a complete <em>move</em> of the agent from one location to another is not necessary, the connection weights between the agent and the location can also simply be varied. If possible, this method is always
+preferable. In the following, we will have a look at this method to create dynamic networks.</p>
+<p>We now want to add another property to the infection simulation: Agents only visit the school or workplace if they are not currently symptomatically ill.</p>
+<p>In order to exclude agents who are symptomatically ill from schools and workplaces, we adapt the <code class="docutils literal notranslate"><span class="pre">weight()</span></code> method in each case. By default, the <code class="docutils literal notranslate"><span class="pre">weight()</span></code> method is executed repeatedly in each time step for each location so that the weights are always up to date (as this can affect the performance of the simulation, you can set the attribute <code class="docutils literal notranslate"><span class="pre">Location.static_weight</span> <span class="pre">=</span> <span class="pre">True</span></code> in the <code class="docutils literal notranslate"><span class="pre">setup()</span></code> method to deactivate this function).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">hid</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">==</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">12</span>
+
+    <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">Work</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">work_hours_day</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">agent</span><span class="o">.</span><span class="n">nace2_division</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">nace2_division</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">==</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">work_hours_day</span>
+
+    <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">25</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="n">agent</span><span class="o">.</span><span class="n">age</span> <span class="o">&lt;=</span> <span class="mi">18</span> <span class="k">else</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">age</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">==</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">6</span>
+
+    <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">Ring</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">pos</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[13], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">Home</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Location):
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">split</span>(<span style="color: rgb(0,135,0)">self</span>, agent):
+<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> agent<span style="color: rgb(98,98,98)">.</span>hid
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="k">class</span> <span class="nc">InfectionModel</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_soep</span><span class="p">,</span> <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
+            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span>
+            <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Home</span><span class="p">,</span>
+                <span class="n">Work</span><span class="p">,</span>
+                <span class="n">School</span><span class="p">,</span>
+                <span class="n">Ring</span><span class="p">,</span>
+                <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">update_infection_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">infect</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="p">(</span>
+            <span class="s2">&quot;cumulative_infections&quot;</span><span class="p">,</span>
+            <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">!=</span> <span class="s2">&quot;susceptible&quot;</span><span class="p">]),</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[14], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">datetime</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">dt</span>
+<span class="ansi-green-fg">----&gt; 3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">InfectionModel</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Model):
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">setup</span>(<span style="color: rgb(0,135,0)">self</span>):
+<span class="ansi-green-intense-fg ansi-bold">      5</span>         <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>creator <span style="color: rgb(98,98,98)">=</span> popy<span style="color: rgb(98,98,98)">.</span>Creator(model<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">self</span>)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;susceptible&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">infect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">agent_v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neighbors</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">==</span> <span class="s2">&quot;susceptible&quot;</span><span class="p">:</span>
+                    <span class="n">contact_weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contact_weight</span><span class="p">(</span><span class="n">agent_v</span><span class="p">)</span>
+                    <span class="n">infection_probability</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">contact_weight</span>
+
+                    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">infection_probability</span><span class="p">:</span>
+                        <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
+
+
+    <span class="k">def</span> <span class="nf">update_infection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exposed&quot;</span><span class="p">,</span> <span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;infectious&quot;</span>
+
+            <span class="k">elif</span> <span class="mi">3</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;symptomatic&quot;</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;recovered&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[15], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">Agent</span>(<span class="ansi-yellow-bg">popy</span><span style="color: rgb(98,98,98)">.</span>Agent):
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>, model, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs):
+<span class="ansi-green-intense-fg ansi-bold">      3</span>         <span style="color: rgb(0,135,0)">super</span>()<span style="color: rgb(98,98,98)">.</span><span style="color: rgb(0,0,255)">__init__</span>(model, <span style="color: rgb(98,98,98)">*</span>args, <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>kwargs)
+
+<span class="ansi-red-fg">NameError</span>: name &#39;popy&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">InfectionModel</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[16], line 4</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> parameters <span style="color: rgb(98,98,98)">=</span> {
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">steps</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">50</span>,
+<span class="ansi-green-intense-fg ansi-bold">      3</span> }
+<span class="ansi-green-fg">----&gt; 4</span> model <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">InfectionModel</span>(parameters<span style="color: rgb(98,98,98)">=</span>parameters)
+<span class="ansi-green-intense-fg ansi-bold">      5</span> results <span style="color: rgb(98,98,98)">=</span> model<span style="color: rgb(98,98,98)">.</span>run()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;InfectionModel&#39; is not defined
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">InfectionModel</span><span class="o">.</span><span class="n">cumulative_infections</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[17], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
+<span class="ansi-green-fg">----&gt; 3</span> plt<span style="color: rgb(98,98,98)">.</span>plot(<span class="ansi-yellow-bg">results</span><span style="color: rgb(98,98,98)">.</span>variables<span style="color: rgb(98,98,98)">.</span>InfectionModel<span style="color: rgb(98,98,98)">.</span>cumulative_infections)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> plt<span style="color: rgb(98,98,98)">.</span>grid()
+
+<span class="ansi-red-fg">NameError</span>: name &#39;results&#39; is not defined
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction_inspector.html" class="btn btn-neutral float-left" title="Inspecting the network: The Inspector class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marius Kaffai, Lukas Erhard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

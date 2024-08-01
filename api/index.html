@@ -46,7 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agent.html">Agent</a></li>
@@ -56,6 +56,7 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -88,8 +89,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="agent.html">Agent</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agent.html#popy.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.contact_weight"><code class="docutils literal notranslate"><span class="pre">Agent.contact_weight()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.enter_location"><code class="docutils literal notranslate"><span class="pre">Agent.enter_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.get_agent_weight"><code class="docutils literal notranslate"><span class="pre">Agent.get_agent_weight()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.leave_location"><code class="docutils literal notranslate"><span class="pre">Agent.leave_location()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.locations"><code class="docutils literal notranslate"><span class="pre">Agent.locations</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agent.html#popy.Agent.neighbors"><code class="docutils literal notranslate"><span class="pre">Agent.neighbors()</span></code></a></li>
@@ -101,44 +102,40 @@
 <li class="toctree-l1"><a class="reference internal" href="location.html">Location</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="location.html#popy.Location"><code class="docutils literal notranslate"><span class="pre">Location</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.add_agent"><code class="docutils literal notranslate"><span class="pre">Location.add_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.add_agents"><code class="docutils literal notranslate"><span class="pre">Location.add_agents()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.agents"><code class="docutils literal notranslate"><span class="pre">Location.agents</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.do_this_after_creation"><code class="docutils literal notranslate"><span class="pre">Location.do_this_after_creation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.filter"><code class="docutils literal notranslate"><span class="pre">Location.filter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.find"><code class="docutils literal notranslate"><span class="pre">Location.find()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.get_weight"><code class="docutils literal notranslate"><span class="pre">Location.get_weight()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.is_affiliated"><code class="docutils literal notranslate"><span class="pre">Location.is_affiliated()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.melt"><code class="docutils literal notranslate"><span class="pre">Location.melt()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.n_affiliated_agents"><code class="docutils literal notranslate"><span class="pre">Location.n_affiliated_agents</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.neighbors"><code class="docutils literal notranslate"><span class="pre">Location.neighbors()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.nest"><code class="docutils literal notranslate"><span class="pre">Location.nest()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.project_weights"><code class="docutils literal notranslate"><span class="pre">Location.project_weights()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.remove_agent"><code class="docutils literal notranslate"><span class="pre">Location.remove_agent()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.setup"><code class="docutils literal notranslate"><span class="pre">Location.setup()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.split"><code class="docutils literal notranslate"><span class="pre">Location.split()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.stick_together"><code class="docutils literal notranslate"><span class="pre">Location.stick_together()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.subsplit"><code class="docutils literal notranslate"><span class="pre">Location.subsplit()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.update_weight"><code class="docutils literal notranslate"><span class="pre">Location.update_weight()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.update_weights"><code class="docutils literal notranslate"><span class="pre">Location.update_weights()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.weight"><code class="docutils literal notranslate"><span class="pre">Location.weight()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.remove_agents"><code class="docutils literal notranslate"><span class="pre">Location.remove_agents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="location.html#popy.Location.set_weight"><code class="docutils literal notranslate"><span class="pre">Location.set_weight()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="popmaker.html">Population Maker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker"><code class="docutils literal notranslate"><span class="pre">PopMaker</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.create_agents"><code class="docutils literal notranslate"><span class="pre">PopMaker.create_agents()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.create_locations"><code class="docutils literal notranslate"><span class="pre">PopMaker.create_locations()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.draw_sample"><code class="docutils literal notranslate"><span class="pre">PopMaker.draw_sample()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.get_df_agents"><code class="docutils literal notranslate"><span class="pre">PopMaker.get_df_agents()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.make"><code class="docutils literal notranslate"><span class="pre">PopMaker.make()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.plot_agent_network"><code class="docutils literal notranslate"><span class="pre">PopMaker.plot_agent_network()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="popmaker.html#popy.pop_maker.PopMaker.plot_bipartite_network"><code class="docutils literal notranslate"><span class="pre">PopMaker.plot_bipartite_network()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="popmaker.html">Population Maker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="model.html#popy.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.add_agent"><code class="docutils literal notranslate"><span class="pre">Model.add_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.add_agent_to_location"><code class="docutils literal notranslate"><span class="pre">Model.add_agent_to_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.add_agents"><code class="docutils literal notranslate"><span class="pre">Model.add_agents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.add_location"><code class="docutils literal notranslate"><span class="pre">Model.add_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.add_locations"><code class="docutils literal notranslate"><span class="pre">Model.add_locations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.agents"><code class="docutils literal notranslate"><span class="pre">Model.agents</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.agents_between_locations"><code class="docutils literal notranslate"><span class="pre">Model.agents_between_locations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.agents_of_location"><code class="docutils literal notranslate"><span class="pre">Model.agents_of_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.get_weight"><code class="docutils literal notranslate"><span class="pre">Model.get_weight()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.locations"><code class="docutils literal notranslate"><span class="pre">Model.locations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.locations_between_agents"><code class="docutils literal notranslate"><span class="pre">Model.locations_between_agents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.locations_of_agent"><code class="docutils literal notranslate"><span class="pre">Model.locations_of_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.neighbors_of_agent"><code class="docutils literal notranslate"><span class="pre">Model.neighbors_of_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.remove_agent"><code class="docutils literal notranslate"><span class="pre">Model.remove_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.remove_agent_from_location"><code class="docutils literal notranslate"><span class="pre">Model.remove_agent_from_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.remove_agents"><code class="docutils literal notranslate"><span class="pre">Model.remove_agents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.remove_location"><code class="docutils literal notranslate"><span class="pre">Model.remove_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.remove_locations"><code class="docutils literal notranslate"><span class="pre">Model.remove_locations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.set_weight"><code class="docutils literal notranslate"><span class="pre">Model.set_weight()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="model.html#popy.Model.sim_step"><code class="docutils literal notranslate"><span class="pre">Model.sim_step()</span></code></a></li>
 </ul>
 </li>
@@ -147,11 +144,8 @@
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.create_agent_graph"><code class="docutils literal notranslate"><span class="pre">create_agent_graph()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.create_contact_matrix"><code class="docutils literal notranslate"><span class="pre">create_contact_matrix()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.eval_affiliations"><code class="docutils literal notranslate"><span class="pre">eval_affiliations()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.export_network"><code class="docutils literal notranslate"><span class="pre">export_network()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.group_it"><code class="docutils literal notranslate"><span class="pre">group_it()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.location_information"><code class="docutils literal notranslate"><span class="pre">location_information()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.network_measures"><code class="docutils literal notranslate"><span class="pre">network_measures()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html#popy.utils.print_header"><code class="docutils literal notranslate"><span class="pre">print_header()</span></code></a></li>
 </ul>
 </li>

@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to popy's documentation!
+Welcome to Popy's documentation!
 ================================
 
-**Popy** is a python library that enables agent-based simulations based on a realistic sample.
+**Popy** is a python library that makes the creation and use of networks in agent-based models very easy.
 
 .. note::
       This project is under very active development and still in it's early stages.
@@ -15,11 +15,11 @@ Welcome to popy's documentation!
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
-
-   introduction
+   
+   section_introduction
    installation
    api/index
-   #examples/index
+   examples/index
 
 
 Indices and tables

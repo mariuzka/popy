@@ -46,7 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="agent.html">Agent</a></li>
@@ -54,6 +54,25 @@
 <li class="toctree-l2"><a class="reference internal" href="popmaker.html">Population Maker</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Model</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#popy.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.add_agent"><code class="docutils literal notranslate"><span class="pre">Model.add_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.add_agent_to_location"><code class="docutils literal notranslate"><span class="pre">Model.add_agent_to_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.add_agents"><code class="docutils literal notranslate"><span class="pre">Model.add_agents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.add_location"><code class="docutils literal notranslate"><span class="pre">Model.add_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.add_locations"><code class="docutils literal notranslate"><span class="pre">Model.add_locations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.agents"><code class="docutils literal notranslate"><span class="pre">Model.agents</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.agents_between_locations"><code class="docutils literal notranslate"><span class="pre">Model.agents_between_locations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.agents_of_location"><code class="docutils literal notranslate"><span class="pre">Model.agents_of_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.get_weight"><code class="docutils literal notranslate"><span class="pre">Model.get_weight()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.locations"><code class="docutils literal notranslate"><span class="pre">Model.locations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.locations_between_agents"><code class="docutils literal notranslate"><span class="pre">Model.locations_between_agents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.locations_of_agent"><code class="docutils literal notranslate"><span class="pre">Model.locations_of_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.neighbors_of_agent"><code class="docutils literal notranslate"><span class="pre">Model.neighbors_of_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.remove_agent"><code class="docutils literal notranslate"><span class="pre">Model.remove_agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.remove_agent_from_location"><code class="docutils literal notranslate"><span class="pre">Model.remove_agent_from_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.remove_agents"><code class="docutils literal notranslate"><span class="pre">Model.remove_agents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.remove_location"><code class="docutils literal notranslate"><span class="pre">Model.remove_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.remove_locations"><code class="docutils literal notranslate"><span class="pre">Model.remove_locations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popy.Model.set_weight"><code class="docutils literal notranslate"><span class="pre">Model.set_weight()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#popy.Model.sim_step"><code class="docutils literal notranslate"><span class="pre">Model.sim_step()</span></code></a></li>
 </ul>
 </li>
@@ -62,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -97,6 +117,339 @@
 <dd><p>Class the encapsulates a full simluation.</p>
 <p>This very closely follows the logic of the <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_model.html#agentpy.Model" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">agentpy.Model</span></code></a> package. See
 <a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_model.html#agentpy.Model" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">agentpy.Model</span></code></a> for more information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.add_agent">
+<span class="sig-name descname"><span class="pre">add_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.add_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.add_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Add an agent to the environment.</p>
+<p>The added agent will have no connections to other agents or locatons by default.
+If the agent is already in the current environment, this methods does nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent to be added to the environment.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.add_agent_to_location">
+<span class="sig-name descname"><span class="pre">add_agent_to_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.add_agent_to_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.add_agent_to_location" title="Permalink to this definition"></a></dt>
+<dd><p>Add an agent to a specific location.</p>
+<p>Both the agent and the location have to be defined beforehand. All additional keyword
+arguments will be edge attributes for this connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – Location the agent is to be added to.</p></li>
+<li><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent to be added to the location.</p></li>
+<li><p><strong>weight</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – An optional weight for the connection.</p></li>
+<li><p><strong>**kwargs</strong> – Additional edge attributes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><strong>Exception</strong></a> – Raised if the location does not exist in the environment.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><strong>Exception</strong></a> – Raised if the agent does not exist in the environment.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.add_agents">
+<span class="sig-name descname"><span class="pre">add_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.add_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.add_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Add agents to the environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agents</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of the agents to be added.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.add_location">
+<span class="sig-name descname"><span class="pre">add_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.add_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.add_location" title="Permalink to this definition"></a></dt>
+<dd><p>Add a location to the environment.</p>
+<p>The added location will have no connections to other agents or locatons by default.
+If the location is already in the current environment, this methods does nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – Location to be added to the environment.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.add_locations">
+<span class="sig-name descname"><span class="pre">add_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.add_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.add_locations" title="Permalink to this definition"></a></dt>
+<dd><p>Add multiple locations to the environment at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An iterable over multiple locations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="popy.Model.agents">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">agents</span></span><a class="headerlink" href="#popy.Model.agents" title="Permalink to this definition"></a></dt>
+<dd><p>Show a iterable view of all agents in the environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A non-mutable AgentList of all agents in the environment.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>AgentList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.agents_between_locations">
+<span class="sig-name descname"><span class="pre">agents_between_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.agents_between_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.agents_between_locations" title="Permalink to this definition"></a></dt>
+<dd><p>Return all agents between two locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location1</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>Location</em></a>) – Location 1.</p></li>
+<li><p><strong>location2</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>Location</em></a>) – Location 2.</p></li>
+<li><p><strong>agent_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a><em>, </em><em>optional</em>) – Constrain the agents to the following types.
+Defaults to ().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of agents.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AgentList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.agents_of_location">
+<span class="sig-name descname"><span class="pre">agents_of_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.agents_of_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.agents_of_location" title="Permalink to this definition"></a></dt>
+<dd><p>Return the list of agents associated with a specific location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – The desired location.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentList</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of agents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.get_weight">
+<span class="sig-name descname"><span class="pre">get_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.get_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.get_weight" title="Permalink to this definition"></a></dt>
+<dd><p>Get the weight of an agent at a location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> (<a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>Agent</em></a>) – The agent.</p></li>
+<li><p><strong>location</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>Location</em></a>) – The location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The weight.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="popy.Model.locations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">locations</span></span><a class="headerlink" href="#popy.Model.locations" title="Permalink to this definition"></a></dt>
+<dd><p>Show a iterable view of all locations in the environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a non-mutable LocationList of all locations in the environment.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>LocationList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.locations_between_agents">
+<span class="sig-name descname"><span class="pre">locations_between_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.locations_between_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.locations_between_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Return all locations the connect two agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent1</strong> (<a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>Agent</em></a>) – Agent 1.</p></li>
+<li><p><strong>agent2</strong> (<a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>Agent</em></a>) – Agent 2.</p></li>
+<li><p><strong>location_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a><em>, </em><em>optional</em>) – Constrain the locations to the following types.
+Defaults to ().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of locations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LocationList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.locations_of_agent">
+<span class="sig-name descname"><span class="pre">locations_of_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.locations_of_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.locations_of_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Return the list of locations associated with a specific agent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – The desired agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocationList</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of locations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.neighbors_of_agent">
+<span class="sig-name descname"><span class="pre">neighbors_of_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.neighbors_of_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.neighbors_of_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of neighboring agents for a specific agent.</p>
+<p>The locations to be considered can be defined with location_classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent of whom the neighbors are to be returned.</p></li>
+<li><p><strong>location_classes</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>]</span>) – A list of location_classes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://agentpy.readthedocs.io/en/latest/reference_sequences.html#agentpy.AgentList" title="(in agentpy)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgentList</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of neighbors for the specified agent.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.remove_agent">
+<span class="sig-name descname"><span class="pre">remove_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.remove_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.remove_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an agent from the environment.</p>
+<p>If the agent does not exist in the environment, this method does nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent to be removed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.remove_agent_from_location">
+<span class="sig-name descname"><span class="pre">remove_agent_from_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.remove_agent_from_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.remove_agent_from_location" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an agent from a location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – Location, the agent is to be removed from.</p></li>
+<li><p><strong>agent</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="agent.html#popy.Agent" title="popy.agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a></span>) – Agent to be disassociated with the location.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><strong>Exception</strong></a> – Raised if the location does not exist in the environment.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.12)"><strong>Exception</strong></a> – Raised if the agent does not exist in the environment.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.remove_agents">
+<span class="sig-name descname"><span class="pre">remove_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.remove_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.remove_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Remove multiple agents from the environment at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agents</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An iterable over multiple agents.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.remove_location">
+<span class="sig-name descname"><span class="pre">remove_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.remove_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.remove_location" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a location from the environment.</p>
+<p>If the location does not exist in the environment, this method does nothing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>location</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="location.html#popy.Location" title="popy.location.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a></span>) – Location to be removed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.remove_locations">
+<span class="sig-name descname"><span class="pre">remove_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.remove_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.remove_locations" title="Permalink to this definition"></a></dt>
+<dd><p>Remove multiple locations at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>locations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – An iterable over locations.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popy.Model.set_weight">
+<span class="sig-name descname"><span class="pre">set_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.set_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.set_weight" title="Permalink to this definition"></a></dt>
+<dd><p>Set the weight of an agent at a location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agent</strong> (<a class="reference internal" href="agent.html#popy.Agent" title="popy.Agent"><em>Agent</em></a>) – The agent.</p></li>
+<li><p><strong>location</strong> (<a class="reference internal" href="location.html#popy.Location" title="popy.Location"><em>Location</em></a>) – The location.</p></li>
+<li><p><strong>weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The weight</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.Model.sim_step">
 <span class="sig-name descname"><span class="pre">sim_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.sim_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.sim_step" title="Permalink to this definition"></a></dt>

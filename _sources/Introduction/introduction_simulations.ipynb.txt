@@ -1,0 +1,557 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Running simulations using Popy\n",
+    "\n",
+    "In the previous part of this introduction, we have learned how to use Popy to build, evaluate and export static networks.\n",
+    "In the following part of this introduction, we will learn how to use Popy to directly run a simulation based on the defined network.\n",
+    "To perform simulations, Popy relies on [AgentPy](https://agentpy.readthedocs.io/en/latest/#) - a general ABM framework.\n",
+    "We recommend you to familiarize yourself with AgentPy first, as only some aspects of AgentPy are covered in this introduction.\n",
+    "\n",
+    "In the following, we programme a simple infection simulation as an example of how to use Popy to run simulations."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### DataFaker\n",
+    "\n",
+    "In the previous example, we used example data to create the population of agents.\n",
+    "In this example, we also use *fake* data, but this time we use a data generator provided by Popy to generate the data.\n",
+    "The DataFaker creates a data set of any size, which is similar to a classic survey data set.\n",
+    "`popy.data_fakers.soep_faker` creates data similiar to the [German Socio-Economic Panel](https://www.diw.de/en/diw_01.c.678568.en/research_data_center_soep.html).\n",
+    "\n",
+    "We start by creating a dataset of 1000 rows:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from popy.data_fakers.soep import soep_faker\n",
+    "\n",
+    "df_soep = soep_faker.soep(size=1000)\n",
+    "df_soep.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### A first Model\n",
+    "\n",
+    "The object class `Model` is a key component of implementing simulation models using Popy (or AgentPy).\n",
+    "The class `Model` integrates all elements of the simulation and determines the simulation sequences.\n",
+    "Every simulation model which relies on Popy must have exactly one instance of `Model`.\n",
+    "(In fact, even the generation of static networks needs an instance of `Model`, which is created for you under the hood, to keep the code as simple as possible.)\n",
+    "\n",
+    "`Model` has four core methods that structure the processes of the simulation model:\n",
+    "\n",
+    "1. `Model.setup()`\n",
+    "2. `Model.step()`\n",
+    "3. `Model.update()`\n",
+    "4. `Model.end()`\n",
+    "\n",
+    "Please refer to the [AgentPy documentation](https://agentpy.readthedocs.io/en/latest/reference_model.html) for more detailed information on those methods."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "In addition to an *empty* `Agent` class and an *empty* `Location` class, we define our first own `Model` class below.\n",
+    "First we define the method `setup()`, which is executed according to the AgentPy logic at the beginning of the simulation.\n",
+    "Within the `setup()` method, we do nothing more than create a `Creator` as usual and then create agents and locations.\n",
+    "This time, however, we save everything as attributes of the `InfectionModel`.\n",
+    "It is also important to pass the `InfectionModel` to the `Creator` in the form of `self` via the `model` parameter.\n",
+    "This ensures that all agents and locations created via this `Creator` are assigned to the `InfectionModel` and vice versa.\n",
+    "This allows agents to access their environment during the simulation, for example."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import random\n",
+    "\n",
+    "import popy\n",
+    "\n",
+    "class Agent(popy.Agent):\n",
+    "    pass\n",
+    "\n",
+    "\n",
+    "class Home(popy.Location):\n",
+    "    pass\n",
+    "\n",
+    "\n",
+    "class InfectionModel(popy.Model):\n",
+    "    def setup(self):\n",
+    "        self.creator = popy.Creator(model=self)\n",
+    "        self.agents = self.creator.create_agents(df=df_soep, agent_class=Agent)\n",
+    "        self.locations = self.creator.create_locations(\n",
+    "            agents=self.agents, location_classes=[Home],\n",
+    "        )"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, we execute the simulation model.\n",
+    "Again, please refer to the [AgentPy documentation](https://agentpy.readthedocs.io/en/latest/overview.html#running-a-simulation) if needed."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "parameters = {\n",
+    "    \"steps\": 50,\n",
+    "}\n",
+    "model = InfectionModel(parameters=parameters)\n",
+    "results = model.run()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The simulation has now run, but practically nothing has happened except that the agents and locations have been created.\n",
+    "The `model` object now has the `agents` attribute, for example:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model.agents"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model.locations"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now we add some code to make the model a working infection simulation.\n",
+    "We add the attributes `infection_status` and `days_since_infection` as well as the methods `infect` and `update_infection_status` to the agent.\n",
+    "\n",
+    "What is relevant here is how the agent accesses other agents with which it is in contact.\n",
+    "This is done using the `Agent.neighbors()` method.\n",
+    "On the other hand, it is relevant how the agent determines *how much* contact it has or has had with the other agents.\n",
+    "This is done using the method `Agent.contact_weight()`.\n",
+    "Both methods include all locations that an agent visits."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Agent(popy.Agent):\n",
+    "    def __init__(self, model, *args, **kwargs):\n",
+    "        super().__init__(model, *args, **kwargs)\n",
+    "        self.infection_status = \"susceptible\"\n",
+    "        self.days_since_infection = 0\n",
+    "\n",
+    "    def infect(self):\n",
+    "        if self.infection_status in [\"infectious\", \"symptomatic\"]:\n",
+    "            for agent_v in self.neighbors():\n",
+    "                if agent_v.infection_status == \"susceptible\":\n",
+    "                    infection_probability = 0.01 * self.contact_weight(agent_v)\n",
+    "\n",
+    "                    if random.random() < infection_probability:\n",
+    "                        agent_v.infection_status = \"exposed\"\n",
+    "\n",
+    "\n",
+    "    def update_infection_status(self):\n",
+    "        if self.infection_status in [\"exposed\", \"infectious\", \"symptomatic\"]:\n",
+    "            self.days_since_infection += 1\n",
+    "\n",
+    "            if 2 <= self.days_since_infection <= 5:\n",
+    "                self.infection_status = \"infectious\"\n",
+    "\n",
+    "            elif 6 <= self.days_since_infection <= 10:\n",
+    "                self.infection_status = \"symptomatic\"\n",
+    "\n",
+    "            elif self.days_since_infection >= 11:\n",
+    "                self.infection_status = \"recovered\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Next, we define 4 locations.\n",
+    "A home `Home`, to which all agents of a household are assigned, a workplace `Work`, which groups the agents according to their occupational sectors, and a school `School`, which contains age-specific classes.\n",
+    "To ensure that each agent has contact with at least two other agents, we also define the location `Ring`, which connects the entire population along a ring using the predefined Popy class `RingLocation`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Home(popy.Location):\n",
+    "    def split(self, agent):\n",
+    "        return agent.hid\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        return 12\n",
+    "\n",
+    "class Work(popy.Location):\n",
+    "    def setup(self):\n",
+    "        self.n_agents = 10\n",
+    "\n",
+    "    def filter(self, agent):\n",
+    "        return True if agent.work_hours_day > 0 and agent.nace2_division > 0 else False\n",
+    "\n",
+    "    def split(self, agent):\n",
+    "        return agent.nace2_division\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        return agent.work_hours_day\n",
+    "\n",
+    "class School(popy.Location):\n",
+    "    def setup(self):\n",
+    "        self.n_agents = 25\n",
+    "\n",
+    "    def filter(self, agent):\n",
+    "        return True if 6 <= agent.age <= 18 else False\n",
+    "    \n",
+    "    def split(self, agent):\n",
+    "        return agent.age\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        return 6\n",
+    "\n",
+    "class Ring(popy.RingLocation):\n",
+    "    pass"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We extend the `InfectionModel` so that 10 random agents are infected at the start of the simulation (`setup()`).\n",
+    "In `step()` we define what should happen in each individual time step of the simulation.\n",
+    "First, the method `update_infection_status()` is to be executed for each agent and then the method `infect()` for each agent.\n",
+    "If you are wondering about the strange syntax, have a look [here](https://agentpy.readthedocs.io/en/latest/overview.html#agent-sequences).\n",
+    "The method `update()` is also executed in each time step, but always after the method `step()`.\n",
+    "In `update()` we collect the number of agents ever infected per time step in order to visualize it after the simulation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class InfectionModel(popy.Model):\n",
+    "    def setup(self):\n",
+    "        self.creator = popy.Creator(model=self)\n",
+    "        self.agents = self.creator.create_agents(df=df_soep, agent_class=Agent)\n",
+    "        self.locations = self.creator.create_locations(\n",
+    "            agents=self.agents, \n",
+    "            location_classes=[\n",
+    "                Home, \n",
+    "                Work, \n",
+    "                School, \n",
+    "                Ring,\n",
+    "                ])\n",
+    "\n",
+    "        for agent in random.choices(self.agents, k=10):\n",
+    "            agent.infection_status = \"exposed\"\n",
+    "    \n",
+    "    def step(self):\n",
+    "        self.agents.update_infection_status()\n",
+    "        self.agents.infect()\n",
+    "\n",
+    "    def update(self):\n",
+    "        self.record(\n",
+    "            \"cumulative_infections\",\n",
+    "            sum([1 for agent in self.agents if agent.infection_status != \"susceptible\"]),\n",
+    "        )"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let's execute the model:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "parameters = {\n",
+    "    \"steps\": 50,\n",
+    "}\n",
+    "model = InfectionModel(parameters=parameters)\n",
+    "results = model.run()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Below, you can see the number of infections per time step."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "plt.plot(results.variables.InfectionModel.cumulative_infections)\n",
+    "plt.grid()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Just because we can, let's have look at the network:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model.creator.plot_bipartite_network()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model.creator.plot_agent_network()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Dynamic networks\n",
+    "\n",
+    "Up to now, we have had purely static networks that have not changed once they have been created.\n",
+    "In Popy, there are two ways to change the networks during the simulation.\n",
+    "Firstly, agents can leave and join locations using the methods `Location.remove_agent()` and `Location.add_agent()`.\n",
+    "If a complete *move* of the agent from one location to another is not necessary, the connection weights between the agent and the location can also simply be varied.\n",
+    "If possible, this method is always preferable.\n",
+    "In the following, we will have a look at this method to create dynamic networks."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We now want to add another property to the infection simulation: Agents only visit the school or workplace if they are not currently symptomatically ill.\n",
+    "\n",
+    "In order to exclude agents who are symptomatically ill from schools and workplaces, we adapt the `weight()` method in each case.\n",
+    "By default, the `weight()` method is executed repeatedly in each time step for each location so that the weights are always up to date\n",
+    "(as this can affect the performance of the simulation, you can set the attribute `Location.static_weight = True` in the `setup()` method to deactivate this function)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Home(popy.Location):\n",
+    "    def split(self, agent):\n",
+    "        return agent.hid\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        if agent.infection_status == \"symptomatic\":\n",
+    "            return 3\n",
+    "        else:\n",
+    "            return 12\n",
+    "\n",
+    "    def project_weights(self, agent1, agent2):\n",
+    "        return min(self.get_weight(agent1), self.get_weight(agent2))\n",
+    "\n",
+    "class Work(popy.Location):\n",
+    "    def setup(self):\n",
+    "        self.n_agents = 10\n",
+    "\n",
+    "    def filter(self, agent):\n",
+    "        return True if agent.work_hours_day > 0 and agent.nace2_division > 0 else False\n",
+    "\n",
+    "    def split(self, agent):\n",
+    "        return agent.nace2_division\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        if agent.infection_status == \"symptomatic\":\n",
+    "            return 0\n",
+    "        else:\n",
+    "            return agent.work_hours_day\n",
+    "    \n",
+    "    def project_weights(self, agent1, agent2):\n",
+    "        return min(self.get_weight(agent1), self.get_weight(agent2))\n",
+    "\n",
+    "class School(popy.Location):\n",
+    "    def setup(self):\n",
+    "        self.n_agents = 25\n",
+    "\n",
+    "    def filter(self, agent):\n",
+    "        return True if 6 <= agent.age <= 18 else False\n",
+    "    \n",
+    "    def split(self, agent):\n",
+    "        return agent.age\n",
+    "\n",
+    "    def weight(self, agent):\n",
+    "        if agent.infection_status == \"symptomatic\":\n",
+    "            return 0\n",
+    "        else:\n",
+    "            return 6\n",
+    "        \n",
+    "    def project_weights(self, agent1, agent2):\n",
+    "        return min(self.get_weight(agent1), self.get_weight(agent2))\n",
+    "\n",
+    "class Ring(popy.Location):\n",
+    "    def subsplit(self, agent):\n",
+    "        pos = self.model.agents.index(agent)\n",
+    "        right = (pos + 1) % len(self.model.agents)\n",
+    "        return [pos, right]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import datetime as dt\n",
+    "\n",
+    "class InfectionModel(popy.Model):\n",
+    "    def setup(self):\n",
+    "        self.creator = popy.Creator(model=self)\n",
+    "        self.agents = self.creator.create_agents(df=df_soep, agent_class=Agent)\n",
+    "        self.locations = self.creator.create_locations(\n",
+    "            agents=self.agents, \n",
+    "            location_classes=[\n",
+    "                Home, \n",
+    "                Work, \n",
+    "                School, \n",
+    "                Ring,\n",
+    "                ])\n",
+    "        self.date = dt.date(2022, 1, 1)\n",
+    "\n",
+    "        for agent in random.choices(self.agents, k=10):\n",
+    "            agent.infection_status = \"exposed\"\n",
+    "    \n",
+    "    def step(self):\n",
+    "        self.agents.update_infection_status()\n",
+    "        self.agents.infect()\n",
+    "\n",
+    "    def update(self):\n",
+    "        self.record(\n",
+    "            \"cumulative_infections\",\n",
+    "            sum([1 for agent in self.agents if agent.infection_status != \"susceptible\"]),\n",
+    "        )"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Agent(popy.Agent):\n",
+    "    def __init__(self, model, *args, **kwargs):\n",
+    "        super().__init__(model, *args, **kwargs)\n",
+    "        self.infection_status = \"susceptible\"\n",
+    "        self.days_since_infection = 0\n",
+    "\n",
+    "    def infect(self):\n",
+    "        if self.infection_status in [\"infectious\", \"symptomatic\"]:\n",
+    "            for agent_v in self.neighbors():\n",
+    "                if agent_v.infection_status == \"susceptible\":\n",
+    "                    contact_weight = self.contact_weight(agent_v)\n",
+    "                    infection_probability = 0.01 * contact_weight\n",
+    "\n",
+    "                    if random.random() < infection_probability:\n",
+    "                        agent_v.infection_status = \"exposed\"\n",
+    "\n",
+    "\n",
+    "    def update_infection_status(self):\n",
+    "        if self.infection_status in [\"exposed\", \"infectious\", \"symptomatic\"]:\n",
+    "            self.days_since_infection += 1\n",
+    "\n",
+    "            if 1 <= self.days_since_infection <= 2:\n",
+    "                self.infection_status = \"infectious\"\n",
+    "\n",
+    "            elif 3 <= self.days_since_infection <= 10:\n",
+    "                self.infection_status = \"symptomatic\"\n",
+    "\n",
+    "            elif self.days_since_infection >= 11:\n",
+    "                self.infection_status = \"recovered\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "parameters = {\n",
+    "    \"steps\": 50,\n",
+    "}\n",
+    "model = InfectionModel(parameters=parameters)\n",
+    "results = model.run()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "plt.plot(results.variables.InfectionModel.cumulative_infections)\n",
+    "plt.grid()"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

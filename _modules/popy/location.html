@@ -43,9 +43,10 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
 </ul>
 
         </div>
@@ -76,22 +77,19 @@
 <span></span><span class="sd">&quot;&quot;&quot;Base class to create Location objects.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
-
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 
 <span class="kn">from</span> <span class="nn">agentpy.objects</span> <span class="kn">import</span> <span class="n">Object</span>
 <span class="kn">from</span> <span class="nn">agentpy.sequences</span> <span class="kn">import</span> <span class="n">AgentList</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">agent</span> <span class="k">as</span> <span class="n">_agent</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">model</span> <span class="k">as</span> <span class="n">_model</span>
 
 <div class="viewcode-block" id="Location"><a class="viewcode-back" href="../../api/location.html#popy.Location">[docs]</a><span class="k">class</span> <span class="nc">Location</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for location objects.</span>
-
-<span class="sd">    Serves as an user interface for generating network models.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for location objects.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">_model</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Location constructor.</span>
@@ -101,37 +99,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">subgroup_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">subgroup_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">allow_overcrowding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_locations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">static_weight</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">round_function</span> <span class="o">=</span> <span class="nb">round</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multi_melt</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_branches</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-<div class="viewcode-block" id="Location.setup"><a class="viewcode-back" href="../../api/location.html#popy.Location.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use this method to set attributes, for instance.</span>
-
-<span class="sd">        This method is called automatically by the population maker after creating an instance.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-
-<div class="viewcode-block" id="Location.add_agent"><a class="viewcode-back" href="../../api/location.html#popy.Location.add_agent">[docs]</a>    <span class="k">def</span> <span class="nf">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns the given agent to this location.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent: The agent that should be added to the location.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">add_agent_to_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_weight</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">agents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentList</span><span class="p">:</span>
@@ -140,16 +108,25 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            List of agents at this location.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_affiliated_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the number of agents currently at this location.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            Number of agents.</span>
+<div class="viewcode-block" id="Location.add_agent"><a class="viewcode-back" href="../../api/location.html#popy.Location.add_agent">[docs]</a>    <span class="k">def</span> <span class="nf">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns the given agent to this location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that should be added to the location.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_agent_to_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Location.add_agents"><a class="viewcode-back" href="../../api/location.html#popy.Location.add_agents">[docs]</a>    <span class="k">def</span> <span class="nf">add_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add multiple agents at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents (list): An iterable over agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Location.remove_agent"><a class="viewcode-back" href="../../api/location.html#popy.Location.remove_agent">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Removes the given agent from this location.</span>
@@ -157,7 +134,19 @@
 <span class="sd">        Args:</span>
 <span class="sd">            agent: Agent that is to be removed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">remove_agent_from_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">remove_agent_from_location</span><span class="p">(</span>
+            <span class="n">location</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Location.remove_agents"><a class="viewcode-back" href="../../api/location.html#popy.Location.remove_agents">[docs]</a>    <span class="k">def</span> <span class="nf">remove_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove multiple agents at once.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agents (list): An iterable over agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_agent</span><span class="p">(</span><span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Location.neighbors"><a class="viewcode-back" href="../../api/location.html#popy.Location.neighbors">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a list of agents which are connected to the given agent via this location.</span>
@@ -168,34 +157,18 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            AgentList: A list of all agents at this location except the passed agent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">agents</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">agents</span></div>
 
-<div class="viewcode-block" id="Location.is_affiliated"><a class="viewcode-back" href="../../api/location.html#popy.Location.is_affiliated">[docs]</a>    <span class="k">def</span> <span class="nf">is_affiliated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the given agent is connected to this location.</span>
+<div class="viewcode-block" id="Location.set_weight"><a class="viewcode-back" href="../../api/location.html#popy.Location.set_weight">[docs]</a>    <span class="k">def</span> <span class="nf">set_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the weight of an agent at the current location.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent: Agent to be checked.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            True if agent is affiliated with location, False otherwise</span>
+<span class="sd">            agent (Agent): The agent.</span>
+<span class="sd">            weight (float): The weight.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">agents_of_location</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Location.update_weight"><a class="viewcode-back" href="../../api/location.html#popy.Location.update_weight">[docs]</a>    <span class="k">def</span> <span class="nf">update_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create or update the agent-speific weight.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent: The agent to be updated.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Location.update_weights"><a class="viewcode-back" href="../../api/location.html#popy.Location.update_weights">[docs]</a>    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the weight of every agent on this location.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">agent_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_weight</span><span class="p">(</span><span class="n">agent_</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_weight</span><span class="p">(</span><span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Location.get_weight"><a class="viewcode-back" href="../../api/location.html#popy.Location.get_weight">[docs]</a>    <span class="k">def</span> <span class="nf">get_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the edge weight between an agent and the location.</span>
@@ -206,83 +179,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Edge weight.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span></div>
-    
-
-    <span class="c1"># INTERFACE METHODS:</span>
-    <span class="c1"># (Methods that serve as user interface for defining the network via location classes.)</span>
-
-<div class="viewcode-block" id="Location.filter"><a class="viewcode-back" href="../../api/location.html#popy.Location.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether the agent is meant to join this type of location.</span>
-
-<span class="sd">        This is a boilerplate implementation of this method which always returns True; i.e. all</span>
-<span class="sd">        agents will always be allowed at this location. Override this method in your own</span>
-<span class="sd">        implementations as you seem fit.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent: The agent that is currently processed by the PopMaker.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            True if the agent is allowed to join the location, False otherwise.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-<div class="viewcode-block" id="Location.find"><a class="viewcode-back" href="../../api/location.html#popy.Location.find">[docs]</a>    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns the agent to a specific location instance that meets the requirements.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the PopMaker.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: _description_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-<div class="viewcode-block" id="Location.split"><a class="viewcode-back" href="../../api/location.html#popy.Location.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates seperate location instances for each unique returned value.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent: The agent that is currently processed by the PopMaker.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            float | str | list | None: The value(s) that determine(s) to which location instance</span>
-<span class="sd">                the agent is assigned.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="Location.subsplit"><a class="viewcode-back" href="../../api/location.html#popy.Location.subsplit">[docs]</a>    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Splits a location instance into sub-instances to create a certain network structure.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the PopMaker.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str | float | None: A value or a list of values that represent specific sub-instances.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">[</span>
-                <span class="n">utils</span><span class="o">.</span><span class="n">_join_positions</span><span class="p">(</span><span class="n">pos1</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos2</span><span class="o">=</span><span class="n">neighbor</span><span class="p">)</span> 
-                <span class="k">for</span> <span class="n">neighbor</span> 
-                <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-                <span class="p">]</span></div>
-
-<div class="viewcode-block" id="Location.weight"><a class="viewcode-back" href="../../api/location.html#popy.Location.weight">[docs]</a>    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines the edge weight between the agent and the location instance.</span>
-
-<span class="sd">        Defines how the edge weight between an agent and the location is determined.</span>
-<span class="sd">        This is a boilerplate implementation of this method which always returns 1; i.e. all</span>
-<span class="sd">        edge weights will be 1. Override this method in your own implementations as you seem fit.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            agent: The agent that is currently processed by the PopMaker.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The edge weight.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">1</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Location.project_weights"><a class="viewcode-back" href="../../api/location.html#popy.Location.project_weights">[docs]</a>    <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span> <span class="n">agent2</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the edge weight between two agents assigned to the same location instance.</span>
@@ -301,20 +198,92 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Combined edge weight.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span></div>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span></div></div>
 
-<div class="viewcode-block" id="Location.stick_together"><a class="viewcode-back" href="../../api/location.html#popy.Location.stick_together">[docs]</a>    <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="k">class</span> <span class="nc">MagicLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper class to create locations from inside the Creator.&quot;&quot;&quot;</span>
+    <span class="n">n_agents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">overcrowding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">only_exact_n_agents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">n_locations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">static_weight</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">recycle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">nxgraph</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">_model</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a helper class to create locations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (_model.Model):  The model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subgroup_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subgroup_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use this method to set instance attributes, for instance.</span>
+
+<span class="sd">        This method is called automatically by the population maker after creating an instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether the agent is meant to join this type of location.</span>
+
+<span class="sd">        This is a boilerplate implementation of this method which always returns True; i.e. all</span>
+<span class="sd">        agents will always be allowed at this location. Override this method in your own</span>
+<span class="sd">        implementations as you seem fit.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the agent is allowed to join the location, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates seperate location instances for each unique returned value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float | str | list | None: The value(s) that determine(s) to which location instance</span>
+<span class="sd">                the agent is assigned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines the edge weight between the agent and the location instance.</span>
+
+<span class="sd">        Defines how the edge weight between an agent and the location is determined.</span>
+<span class="sd">        This is a boilerplate implementation of this method which always returns 1; i.e. all</span>
+<span class="sd">        edge weights will be 1. Override this method in your own implementations as you seem fit.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The edge weight.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns agents with a shared value on an attribute to the same location instance.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the PopMaker.</span>
+<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the Creator.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            float | str: A value that defines the groups of agents.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span></div>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="Location.nest"><a class="viewcode-back" href="../../api/location.html#popy.Location.nest">[docs]</a>    <span class="k">def</span> <span class="nf">nest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">nest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Nests this location class into another location class.</span>
 
 <span class="sd">        Ensures that the agents assigned to the same instance of this location class</span>
@@ -323,9 +292,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">           type[Location] | None: The location class in which this location class should be nested.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Location.melt"><a class="viewcode-back" href="../../api/location.html#popy.Location.melt">[docs]</a>    <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Location</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Location</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Allows to assign agents with different attribute values to the same location.</span>
 
 <span class="sd">        Merges the agents assigned to the instances of the returned location classes</span>
@@ -334,128 +303,127 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            None | list | tuple: A list or tuple of location classes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[]</span></div>
+        <span class="k">return</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="Location.do_this_after_creation"><a class="viewcode-back" href="../../api/location.html#popy.Location.do_this_after_creation">[docs]</a>    <span class="k">def</span> <span class="nf">do_this_after_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">refine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;An action that is performed after all location instances have been created.&quot;&quot;&quot;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span>
 
-
-
-
-<span class="k">class</span> <span class="nc">LineLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location that connects agents via a line network.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns the agent to a specific location instance that meets the requirements.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent (_type_): _description_</span>
+<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the Creator.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            bool: _description_</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">pos</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-
-<span class="k">class</span> <span class="nc">RingLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location that connects agents via a ring network.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+    <span class="k">def</span> <span class="nf">_update_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create or update the agent-speific weight.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent (_type_): _description_</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            agent: The agent to be updated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">pos</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the weight of every agent on this location.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_weight</span><span class="p">(</span><span class="n">agent_</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">GridLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location that connects agents via a grid network.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+    <span class="k">def</span> <span class="nf">_subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Splits a location instance into sub-instances to create a certain network structure.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent (_type_): _description_</span>
+<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the Creator.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            str | float | None: A value or a list of values that represent specific sub-instances.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">row_len</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
-            <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="p">),</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">right_edge_positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">row_len</span> <span class="o">*</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row_len</span><span class="p">)]</span>
-
-        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">left</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">top</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="n">row_len</span>
-        <span class="n">bottom</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">row_len</span>
-
-        <span class="n">return_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">return_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">left</span><span class="p">)])))</span>
-        <span class="n">return_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">top</span><span class="p">)])))</span>
-        <span class="n">return_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">bottom</span><span class="p">)])))</span>
-
-        <span class="k">if</span> <span class="n">pos</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">right_edge_positions</span><span class="p">:</span>
-            <span class="n">return_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">right</span><span class="p">)])))</span>
-
-        <span class="k">return</span> <span class="n">return_list</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">_join_positions</span><span class="p">(</span><span class="n">pos1</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos2</span><span class="o">=</span><span class="n">neighbor</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">neighbor</span>
+                <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nxgraph</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+            <span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">TreeLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location that connects agents via a tree network.&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">MeltLocation</span><span class="p">(</span><span class="n">Location</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper class to melt locations.&quot;&quot;&quot;</span>
+    <span class="n">n_agents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">overcrowding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">only_exact_n_agents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">n_locations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;_summary_.</span>
+
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check whether the agent is meant to join this type of location.</span>
+
+<span class="sd">        This is a boilerplate implementation of this method which always returns True; i.e. all</span>
+<span class="sd">        agents will always be allowed at this location. Override this method in your own</span>
+<span class="sd">        implementations as you seem fit.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            agent (_type_): _description_</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            _type_: _description_</span>
+<span class="sd">            True if the agent is allowed to join the location, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">StarLocation</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">n_branches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_TEMP_infected</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="s2">&quot;_TEMP_contacts&quot;</span><span class="p">):</span>
-            <span class="n">agent</span><span class="o">.</span><span class="n">_TEMP_contacts</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns agents with a shared value on an attribute to the same location instance.</span>
 
-        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_agents</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;_TEMP_infected&quot;</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;_TEMP_infected&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">a</span><span class="o">.</span><span class="n">_TEMP_infected</span>
-            <span class="p">):</span>
-                <span class="k">if</span> <span class="n">agent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
-                    <span class="n">agent</span><span class="o">.</span><span class="n">_TEMP_contacts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;_TEMP_contacts&quot;</span><span class="p">):</span>
-                        <span class="n">a</span><span class="o">.</span><span class="n">_TEMP_contacts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">a</span><span class="o">.</span><span class="n">_TEMP_contacts</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent</span><span class="p">]</span>
-                    <span class="n">a</span><span class="o">.</span><span class="n">_TEMP_infected</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">_TEMP_contacts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_branches</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">break</span>
+<span class="sd">        Args:</span>
+<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the Creator.</span>
 
-        <span class="n">location_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="p">)]))</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">_TEMP_contacts</span><span class="p">]</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float | str: A value that defines the groups of agents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">id</span>
 
-        <span class="k">return</span> <span class="n">location_ids</span>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates seperate location instances for each unique returned value.</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
 
-<span class="k">class</span> <span class="nc">StarLocation</span><span class="p">(</span><span class="n">TreeLocation</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A location that connects agents via a star network.&quot;&quot;&quot;</span>
-    <span class="k">pass</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float | str | list | None: The value(s) that determine(s) to which location instance</span>
+<span class="sd">                the agent is assigned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Defines the edge weight between the agent and the location instance.</span>
+
+<span class="sd">        Defines how the edge weight between an agent and the location is determined.</span>
+<span class="sd">        This is a boilerplate implementation of this method which always returns 1; i.e. all</span>
+<span class="sd">        edge weights will be 1. Override this method in your own implementations as you seem fit.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent: The agent that is currently processed by the Creator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The edge weight.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># noqa: ARG002</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assigns the agent to a specific location instance that meets the requirements.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            agent (_agent.Agent): The agent that is currently processed by the Creator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
 
            </div>
