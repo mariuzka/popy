@@ -18,6 +18,7 @@
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -43,10 +44,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -75,6 +78,7 @@
              
   <h1>Source code for popy.agent</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Base class to create Agent objects.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">typing</span>
@@ -84,6 +88,7 @@
 <span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">location</span> <span class="k">as</span> <span class="n">_location</span>
     <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequences</span> <span class="k">as</span> <span class="n">_sequences</span>
+
 
 <div class="viewcode-block" id="Agent"><a class="viewcode-back" href="../../api/agent.html#popy.Agent">[docs]</a><span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This is a Base class to represent agents in the simulation.</span>
@@ -111,7 +116,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
-
 <div class="viewcode-block" id="Agent.setup"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate an Agent.</span>
 
@@ -132,14 +136,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">neighbors_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="n">location_classes</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">shared_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shared_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">locations_between_agents</span><span class="p">(</span>
             <span class="n">agent1</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">agent2</span><span class="o">=</span><span class="n">agent</span><span class="p">,</span>
             <span class="n">location_classes</span><span class="o">=</span><span class="n">location_classes</span><span class="p">,</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Agent.enter_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.enter_location">[docs]</a>    <span class="k">def</span> <span class="nf">enter_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Agent.add_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.add_location">[docs]</a>    <span class="k">def</span> <span class="nf">add_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Add this Agent to a given location.</span>
 
 <span class="sd">        Args:</span>
@@ -147,11 +151,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_agent_to_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">enter_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">add_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">leave_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Agent.leave_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.leave_location">[docs]</a>    <span class="k">def</span> <span class="nf">leave_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Agent.remove_location"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.remove_location">[docs]</a>    <span class="k">def</span> <span class="nf">remove_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">:</span> <span class="n">_location</span><span class="o">.</span><span class="n">Location</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove this Agent from a given location.</span>
 
 <span class="sd">        Args:</span>
@@ -159,9 +163,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">remove_agent_from_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">leave_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">remove_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">locations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">leave_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">locations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_sequences</span><span class="o">.</span><span class="n">LocationList</span><span class="p">:</span>
@@ -172,7 +176,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">locations_of_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Agent.get_agent_weight"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.get_agent_weight">[docs]</a>    <span class="k">def</span> <span class="nf">get_agent_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">[])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="Agent.get_agent_weight"><a class="viewcode-back" href="../../api/agent.html#popy.Agent.get_agent_weight">[docs]</a>    <span class="k">def</span> <span class="nf">get_agent_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the contact weight between this agent and a given other agent.</span>
 
 <span class="sd">        This is summed over all shared locations.</span>

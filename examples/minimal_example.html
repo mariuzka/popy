@@ -22,6 +22,7 @@
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
@@ -47,10 +48,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -91,7 +94,7 @@
 
 <span class="c1"># for reproducibilty</span>
 <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <p>Let’s set up two kinds of agents. They are very similar - except one is healthy and the other one is infected.</p>
@@ -113,7 +116,7 @@
             <span class="n">p_infect</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">p_infect</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
                 <span class="n">contact</span><span class="o">.</span><span class="n">is_infected</span> <span class="o">=</span> <span class="kc">True</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <p>We can now create our Population and assign agents to some locations. Agents can <strong>only</strong> interact if they share at least one location.</p>
@@ -152,7 +155,7 @@
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">visit_locations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <p>Finally, we can specify our model like we do in agentpy.</p>
@@ -172,7 +175,7 @@
 
     <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <p>Let’s now row run our model:</p>
@@ -182,7 +185,7 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -205,7 +208,7 @@ Simulation finished
 <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_infected</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;is_infected&quot;</span><span class="p">)</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">

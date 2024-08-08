@@ -21,26 +21,26 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
    "metadata": {},
    "outputs": [
     {
-     "data": {
-      "text/plain": [
-       "[{'diameter': 3,\n",
-       "  'density': 1.0,\n",
-       "  'transitivity': 1.0,\n",
-       "  'avg_clustering': 0.07275933825277255,\n",
-       "  'avg_path_length': 1.7047619047619047},\n",
-       " {'diameter': 3,\n",
-       "  'density': 1.0,\n",
-       "  'transitivity': 1.0,\n",
-       "  'avg_clustering': 0.08229811172257519,\n",
-       "  'avg_path_length': 1.6857142857142857}]"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
+     "ename": "AttributeError",
+     "evalue": "module 'popy.inspector' has no attribute 'network_measures'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mAttributeError\u001b[0m                            Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[2], line 1\u001b[0m\n\u001b[1;32m----> 1\u001b[0m \u001b[43minspector\u001b[49m\u001b[38;5;241;43m.\u001b[39;49m\u001b[43mnetwork_measures\u001b[49m()\n",
+      "\u001b[1;31mAttributeError\u001b[0m: module 'popy.inspector' has no attribute 'network_measures'"
+     ]
     }
    ],
    "source": [
@@ -135,7 +135,7 @@
    "source": [
     "import popy.utils as utils\n",
     "\n",
-    "utils.create_contact_matrix(agents=agents)"
+    "utils.create_contact_matrix(agents=agents)  # noqa: F821"
    ]
   },
   {
@@ -163,7 +163,7 @@
     }
    ],
    "source": [
-    "utils.create_contact_matrix(agents=agents, attr=\"gender\")"
+    "utils.create_contact_matrix(agents=agents, attr=\"gender\")  # noqa: F821"
    ]
   },
   {
@@ -239,13 +239,27 @@
     }
    ],
    "source": [
-    "utils.create_contact_matrix(agents=agents, attr=\"gender\", return_df=True)"
+    "utils.create_contact_matrix(agents=agents, attr=\"gender\", return_df=True)  # noqa: F821"
    ]
   }
  ],
  "metadata": {
+  "kernelspec": {
+   "display_name": ".venv",
+   "language": "python",
+   "name": "python3"
+  },
   "language_info": {
-   "name": "python"
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.0"
   }
  },
  "nbformat": 4,

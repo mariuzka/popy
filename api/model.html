@@ -19,6 +19,7 @@
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Utils" href="utils.html" />
@@ -46,6 +47,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
@@ -81,7 +83,8 @@
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -220,7 +223,7 @@ If the location is already in the current environment, this methods does nothing
 
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.Model.agents_between_locations">
-<span class="sig-name descname"><span class="pre">agents_between_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.agents_between_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.agents_between_locations" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">agents_between_locations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.agents_between_locations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.agents_between_locations" title="Permalink to this definition"></a></dt>
 <dd><p>Return all agents between two locations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -293,7 +296,7 @@ Defaults to ().</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="popy.Model.locations_between_agents">
-<span class="sig-name descname"><span class="pre">locations_between_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.locations_between_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.locations_between_agents" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">locations_between_agents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/popy/model.html#Model.locations_between_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popy.Model.locations_between_agents" title="Permalink to this definition"></a></dt>
 <dd><p>Return all locations the connect two agents.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

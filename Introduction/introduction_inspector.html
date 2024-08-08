@@ -22,10 +22,9 @@
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Running simulations using Popy" href="introduction_simulations.html" />
-    <link rel="prev" title="Designing networks: The Creator class" href="introduction_creator.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,22 +47,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../section_introduction.html">Tutorial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="introduction_basics.html">The Basics: Models, locations &amp; agents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_creator.html">Designing networks: The Creator class</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Inspecting the network: The Inspector class</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Network-measures">Network measures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Affiliation-statistics">Affiliation statistics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Contact-matrix">Contact matrix</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="introduction_simulations.html">Running simulations using Popy</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Popy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -80,7 +70,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../section_introduction.html">Tutorial</a></li>
       <li class="breadcrumb-item active">Inspecting the network: The Inspector class</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Introduction/introduction_inspector.ipynb.txt" rel="nofollow"> View page source</a>
@@ -97,11 +86,19 @@
 <section id="Network-measures">
 <h2>Network measures<a class="headerlink" href="#Network-measures" title="Permalink to this heading"></a></h2>
 <p>For a quick quanitative inspection of the network(s) produced, one can use <code class="docutils literal notranslate"><span class="pre">utils.network_measures()</span></code>:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">network_measures</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">network_measures</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -110,16 +107,12 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[{&#39;diameter&#39;: 3,
-  &#39;density&#39;: 1.0,
-  &#39;transitivity&#39;: 1.0,
-  &#39;avg_clustering&#39;: 0.07275933825277255,
-  &#39;avg_path_length&#39;: 1.7047619047619047},
- {&#39;diameter&#39;: 3,
-  &#39;density&#39;: 1.0,
-  &#39;transitivity&#39;: 1.0,
-  &#39;avg_clustering&#39;: 0.08229811172257519,
-  &#39;avg_path_length&#39;: 1.6857142857142857}]
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>                            Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[2], line 1</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span> <span class="ansi-yellow-bg">inspector</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">network_measures</span>()
+
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>: module &#39;popy.inspector&#39; has no attribute &#39;network_measures&#39;
 </pre></div></div>
 </div>
 <p>If the network is divided into independent clusters, this function returns the measures for each cluster.</p>
@@ -131,7 +124,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">eval_affiliations</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">eval_affiliations</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -175,9 +168,9 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
-<span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">)</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">)</span>  <span class="c1"># noqa: F821</span>
 </pre></div>
 </div>
 </div>
@@ -185,7 +178,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/Introduction_introduction_inspector_7_0.png" src="../_images/Introduction_introduction_inspector_7_0.png" />
+<img alt="../_images/Introduction_introduction_inspector_8_0.png" src="../_images/Introduction_introduction_inspector_8_0.png" />
 </div>
 </div>
 <p>To aggregate the results, simply insert the name of an agent attribute for <code class="docutils literal notranslate"><span class="pre">attr</span></code>. For instance, the following matrix shows the number of contacts between the different gender groups.</p>
@@ -193,7 +186,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">)</span>  <span class="c1"># noqa: F821</span>
 </pre></div>
 </div>
 </div>
@@ -201,7 +194,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/Introduction_introduction_inspector_9_0.png" src="../_images/Introduction_introduction_inspector_9_0.png" />
+<img alt="../_images/Introduction_introduction_inspector_10_0.png" src="../_images/Introduction_introduction_inspector_10_0.png" />
 </div>
 </div>
 <p>By setting <code class="docutils literal notranslate"><span class="pre">return_df</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the data of the matrix can be returned, too.</p>
@@ -209,7 +202,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">create_contact_matrix</span><span class="p">(</span><span class="n">agents</span><span class="o">=</span><span class="n">agents</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="n">return_df</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># noqa: F821</span>
 </pre></div>
 </div>
 </div>
@@ -258,7 +251,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/Introduction_introduction_inspector_11_1.png" src="../_images/Introduction_introduction_inspector_11_1.png" />
+<img alt="../_images/Introduction_introduction_inspector_12_1.png" src="../_images/Introduction_introduction_inspector_12_1.png" />
 </div>
 </div>
 </section>
@@ -267,10 +260,7 @@ Name: n_affiliated_locations, dtype: float64
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="introduction_creator.html" class="btn btn-neutral float-left" title="Designing networks: The Creator class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="introduction_simulations.html" class="btn btn-neutral float-right" title="Running simulations using Popy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

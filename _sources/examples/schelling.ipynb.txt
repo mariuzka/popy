@@ -23,7 +23,7 @@
     "import popy\n",
     "from popy.data_fakers.soep import soep_faker\n",
     "from popy.pop_maker import PopMaker\n",
-    "import seaborn as sns\n"
+    "import seaborn as sns"
    ]
   },
   {
@@ -85,7 +85,7 @@
    "source": [
     "class Work(popy.Location):\n",
     "    def setup(self):\n",
-    "        self.size = self.model.p.location_size\n"
+    "        self.size = self.model.p.location_size"
    ]
   },
   {
@@ -103,7 +103,7 @@
     "            df=df_soep,\n",
     "            agent_class=Agent,\n",
     "            location_classes=[Work],\n",
-    "            )\n",
+    "        )\n",
     "\n",
     "    def get_segregation(self):\n",
     "        return sum(\n",
@@ -254,7 +254,7 @@
    ],
    "source": [
     "df = results.arrange_reporters()\n",
-    "df.head()\n"
+    "df.head()"
    ]
   },
   {

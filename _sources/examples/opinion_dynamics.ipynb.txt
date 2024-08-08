@@ -17,12 +17,11 @@
    "outputs": [],
    "source": [
     "import random\n",
-    "from typing import List\n",
     "\n",
     "import matplotlib.pyplot as plt\n",
     "import popy as popy\n",
     "from popy.data_fakers.soep import soep_faker\n",
-    "from popy.pop_maker import PopMaker\n"
+    "from popy.pop_maker import PopMaker"
    ]
   },
   {
@@ -36,18 +35,18 @@
     "        super().__init__(model, *args, **kwargs)\n",
     "\n",
     "        self.opinion: float = random.random()\n",
-    "        self.opinion_history: List[float] = []\n",
+    "        self.opinion_history: list[float] = []\n",
     "        self.tolerance = self.model.p.tolerance\n",
     "\n",
     "    def get_weight(self, contact: \"Agent\", mode: int = 1):\n",
-    "        \"\"\"Calculates a weight which determines how the opinion of the contact will influence the \n",
+    "        \"\"\"Calculates a weight which determines how the opinion of the contact will influence the\n",
     "        focal agent.\"\"\"\n",
     "\n",
     "        # All contacts are weighted the same\n",
     "        if mode == 1:\n",
     "            return 1\n",
     "\n",
-    "        # bounded confidence: if the opinion of the contact is too far away from the focal agent's \n",
+    "        # bounded confidence: if the opinion of the contact is too far away from the focal agent's\n",
     "        # opinion, then the focal agent is not influenced by this opinion\n",
     "        elif mode == 2:\n",
     "            abs_opinion_diff = abs(contact.opinion - self.opinion)\n",
@@ -154,7 +153,7 @@
     "                Work,\n",
     "                School,\n",
     "            ],\n",
-    "            )\n",
+    "        )\n",
     "\n",
     "    def step(self):\n",
     "        # select one random agent\n",
@@ -204,7 +203,7 @@
     "results = model.run()\n",
     "\n",
     "for agent in model.agents:\n",
-    "    plt.plot(agent.opinion_history, color=\"black\")\n"
+    "    plt.plot(agent.opinion_history, color=\"black\")"
    ]
   },
   {
@@ -244,7 +243,7 @@
     "results = model.run()\n",
     "\n",
     "for agent in model.agents:\n",
-    "    plt.plot(agent.opinion_history, color=\"black\")\n"
+    "    plt.plot(agent.opinion_history, color=\"black\")"
    ]
   },
   {
@@ -284,7 +283,7 @@
     "results = model.run()\n",
     "\n",
     "for agent in model.agents:\n",
-    "    plt.plot(agent.opinion_history, color=\"black\")\n"
+    "    plt.plot(agent.opinion_history, color=\"black\")"
    ]
   },
   {
@@ -327,7 +326,7 @@
     }
    ],
    "source": [
-    "model.pop_maker.eval_affiliations()\n"
+    "model.pop_maker.eval_affiliations()"
    ]
   }
  ],

@@ -26,7 +26,7 @@
    "outputs": [],
    "source": [
     "df_pequiv = pd.read_stata(\"C:/01-main/03-ac135963/Projekte/popy/examples/data/pequiv.dta\")\n",
-    "df_pequiv = df_pequiv.rename(columns={\"d11101\": \"age\"})\n"
+    "df_pequiv = df_pequiv.rename(columns={\"d11101\": \"age\"})"
    ]
   },
   {
@@ -35,7 +35,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "df = df_pequiv\n"
+    "df = df_pequiv"
    ]
   },
   {
@@ -95,7 +95,7 @@
     "        self.pop_maker = PopMaker(model=self)\n",
     "        self.agents, self.locations = self.pop_maker.make(\n",
     "            df=df,\n",
-    "            n_agents=self.p.n_agents, \n",
+    "            n_agents=self.p.n_agents,\n",
     "            sample_level=\"hid\",\n",
     "            agent_class=Agent,\n",
     "            location_classes=[Home],\n",
@@ -138,7 +138,7 @@
     "    \"n_agents\": 10000,\n",
     "}\n",
     "model = Model(parameters=parameters)\n",
-    "model.run()\n"
+    "model.run()"
    ]
   },
   {
@@ -694,7 +694,11 @@
    "source": [
     "for agent in model.agents:\n",
     "    agent.age_5 = utils.group_it(\n",
-    "        value=agent.age, start=0, step=5, n_steps=20, return_value=\"lower_bound\",\n",
+    "        value=agent.age,\n",
+    "        start=0,\n",
+    "        step=5,\n",
+    "        n_steps=20,\n",
+    "        return_value=\"lower_bound\",\n",
     "    )\n",
     "\n",
     "utils.create_contact_matrix(agents=model.agents, attr=\"age_5\", plot=True)"

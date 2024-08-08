@@ -18,6 +18,7 @@
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -43,10 +44,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -75,6 +78,7 @@
              
   <h1>Source code for popy.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Various utility functions for popy.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">inspect</span>
@@ -85,21 +89,20 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="k">if</span> <span class="n">typing</span><span class="o">.</span><span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">popy</span> <span class="kn">import</span> <span class="n">AgentList</span>
-
 
 
 <span class="c1">##########################################################################</span>
 <span class="c1"># scientific stuff</span>
 <span class="c1">##########################################################################</span>
 
+
 <div class="viewcode-block" id="create_agent_graph"><a class="viewcode-back" href="../../api/utils.html#popy.utils.create_agent_graph">[docs]</a><span class="k">def</span> <span class="nf">create_agent_graph</span><span class="p">(</span>
-        <span class="n">agents</span><span class="p">:</span> <span class="n">AgentList</span><span class="p">,</span>
-        <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">agents</span><span class="p">:</span> <span class="n">AgentList</span><span class="p">,</span>
+    <span class="n">node_attrs</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_0_weights</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Graph from a model&#39;s agent list.</span>
 
@@ -118,7 +121,6 @@
     <span class="c1"># create nodes</span>
     <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">projection</span><span class="o">.</span><span class="n">has_node</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
-
             <span class="n">node_attr_dict</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="n">node_attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">node_attr</span> <span class="ow">in</span> <span class="n">node_attrs</span><span class="p">:</span>
@@ -235,6 +237,7 @@
 <span class="c1"># technical helper functions</span>
 <span class="c1">##########################################################################</span>
 
+
 <div class="viewcode-block" id="group_it"><a class="viewcode-back" href="../../api/utils.html#popy.utils.group_it">[docs]</a><span class="k">def</span> <span class="nf">group_it</span><span class="p">(</span>
     <span class="n">value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
@@ -278,13 +281,13 @@
                 <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;You have entered a non-existing option for `return_value`.&quot;</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-
         <span class="k">if</span> <span class="ow">not</span> <span class="n">summarize_highest</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">upper_bound</span><span class="p">:</span>
                     <span class="n">new_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="c1"># BUG: new_value possibly unbound</span>
     <span class="k">return</span> <span class="n">new_value</span></div>
+
 
 <div class="viewcode-block" id="print_header"><a class="viewcode-back" href="../../api/utils.html#popy.utils.print_header">[docs]</a><span class="k">def</span> <span class="nf">print_header</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a header around an object.</span>
@@ -308,6 +311,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
 
+
 <span class="k">def</span> <span class="nf">_get_cls_as_str</span><span class="p">(</span><span class="n">cls_</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">cls_</span><span class="p">):</span>
         <span class="c1"># if cls_ is a class</span>
@@ -315,6 +319,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># if cls_ is an instance</span>
         <span class="k">return</span> <span class="n">cls_</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
 
 <span class="k">def</span> <span class="nf">_join_positions</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">):</span>
     <span class="k">return</span> <span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pos1</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">pos2</span><span class="p">)]))</span>

@@ -22,6 +22,7 @@
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
@@ -47,10 +48,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -1398,7 +1401,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -2780,6 +2783,7 @@ AgentList (3 objects)
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy</span>
 
+
 <span class="k">class</span> <span class="nc">MyLocation</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_agents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">overcrowding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -3086,6 +3090,7 @@ popy.agent.Agent
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyAgent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
     <span class="k">pass</span>
 
+
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">agents</span> <span class="o">=</span> <span class="n">creator</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span>
@@ -3143,6 +3148,7 @@ __main__.MyAgent
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+
 <span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="n">ClassRoom</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -5686,6 +5692,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">exact_size_only</span> <span class="o">=</span> <span class="kc">True</span>
 
+
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">inspector</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">NetworkInspector</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -6033,6 +6040,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">4</span>
 
+
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">inspector</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">NetworkInspector</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -6374,6 +6382,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">4</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -10573,12 +10582,14 @@ location classes that shall be melted into one.</p>
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="c1"># a location for pupils</span>
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
 
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;pupil&quot;</span>
+
 
 <span class="c1"># a location for teachers and pupils</span>
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
@@ -10936,6 +10947,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
 
@@ -10947,6 +10959,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">friend_group</span>
+
 
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -11302,6 +11315,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
 
@@ -11314,6 +11328,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">friend_group</span>
 
+
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">TeachersInClassRoom</span><span class="p">,</span> <span class="n">PupilsInClassRoom</span>
@@ -11324,9 +11339,10 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="n">statuses</span> <span class="o">=</span> <span class="p">[</span><span class="n">agent1</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">agent2</span><span class="o">.</span><span class="n">status</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">&quot;pupil&quot;</span> <span class="ow">in</span> <span class="n">statuses</span> <span class="ow">and</span> <span class="s2">&quot;teacher&quot;</span> <span class="ow">in</span> <span class="n">statuses</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span> <span class="c1"># min([self.get_weight(agent1), self.get_weight(agent2)])</span>
+            <span class="k">return</span> <span class="mi">1</span>  <span class="c1"># min([self.get_weight(agent1), self.get_weight(agent2)])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -12715,6 +12731,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span>
+
 
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">2</span>
@@ -14105,6 +14122,7 @@ always be created after the level-2 location.</p>
     <span class="k">def</span> <span class="nf">nest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">School</span>
 
+
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">2</span>
 
@@ -14788,6 +14806,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
@@ -14797,6 +14816,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 
     <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">grade</span>
+
 
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -14811,8 +14831,10 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">nest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">School</span>
 
+
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">2</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -15199,6 +15221,7 @@ composition of agents, they have to be created before the schools are created an
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
@@ -15212,6 +15235,7 @@ composition of agents, they have to be created before the schools are created an
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">friend_group</span>
 
+
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">TeachersInClassRoom</span><span class="p">,</span> <span class="n">PupilsInClassRoom</span><span class="p">]</span>
@@ -15222,11 +15246,13 @@ composition of agents, they have to be created before the schools are created an
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span>
 
+
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">ClassRoom</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -15573,6 +15599,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;teacher&quot;</span>
 
+
 <span class="k">class</span> <span class="nc">PupilsInClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MeltLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">4</span>
@@ -15586,6 +15613,7 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">friend_group</span>
 
+
 <span class="k">class</span> <span class="nc">ClassRoom</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">melt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">TeachersInClassRoom</span><span class="p">,</span> <span class="n">PupilsInClassRoom</span><span class="p">]</span>
@@ -15596,17 +15624,20 @@ var element = document.currentScript.previousSibling.previousSibling;
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">)])</span>
 
+
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_locations</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">stick_together</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">ClassRoom</span>
 
+
 <span class="k">class</span> <span class="nc">SoccerTeam</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="n">n_agents</span> <span class="o">=</span> <span class="mi">11</span>
 
     <span class="k">def</span> <span class="nf">nest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">School</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
 <span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -15615,11 +15646,11 @@ var element = document.currentScript.previousSibling.previousSibling;
 <span class="n">creator</span><span class="o">.</span><span class="n">make</span><span class="p">(</span>
     <span class="n">df</span><span class="o">=</span><span class="n">df_school</span><span class="p">,</span>
     <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">ClassRoom</span><span class="p">,</span> <span class="c1"># nested into School using `stick_together()`</span>
+        <span class="n">ClassRoom</span><span class="p">,</span>  <span class="c1"># nested into School using `stick_together()`</span>
         <span class="n">School</span><span class="p">,</span>
-        <span class="n">SoccerTeam</span><span class="p">,</span> <span class="c1"># nested into School using `nest()`</span>
-        <span class="p">],</span>
-    <span class="p">)</span>
+        <span class="n">SoccerTeam</span><span class="p">,</span>  <span class="c1"># nested into School using `nest()`</span>
+    <span class="p">],</span>
+<span class="p">)</span>
 <span class="n">inspector</span><span class="o">.</span><span class="n">plot_agent_network</span><span class="p">(</span><span class="n">node_attrs</span><span class="o">=</span><span class="n">df_school</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -16464,12 +16495,14 @@ Name: n_affiliated_locations, dtype: float64
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[107]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;hh&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
-    <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;school_age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
-    <span class="s2">&quot;sample_weight&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
-<span class="p">})</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;hh&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+        <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;school_age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span>
+        <span class="s2">&quot;sample_weight&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
 
 <span class="n">df</span>
 </pre></div>
@@ -16573,6 +16606,7 @@ Name: n_affiliated_locations, dtype: float64
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Household</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">hh</span>
+
 
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
@@ -17452,6 +17486,7 @@ introduction.</p>
 
 <span class="kn">import</span> <span class="nn">popy</span>
 
+
 <span class="k">class</span> <span class="nc">Agent</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
     <span class="k">pass</span>
 
@@ -17465,7 +17500,8 @@ introduction.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_agents</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_soep</span><span class="p">,</span> <span class="n">agent_class</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
-            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Home</span><span class="p">],</span>
+            <span class="n">agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span>
+            <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span><span class="n">Home</span><span class="p">],</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -17521,7 +17557,6 @@ introduction.</p>
                     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">infection_probability</span><span class="p">:</span>
                         <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
 
-
     <span class="k">def</span> <span class="nf">update_infection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exposed&quot;</span><span class="p">,</span> <span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">days_since_infection</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -17549,6 +17584,7 @@ introduction.</p>
     <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">12</span>
 
+
 <span class="k">class</span> <span class="nc">Work</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">10</span>
@@ -17562,6 +17598,7 @@ introduction.</p>
     <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">agent</span><span class="o">.</span><span class="n">work_hours_day</span>
 
+
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">25</span>
@@ -17574,6 +17611,7 @@ introduction.</p>
 
     <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">6</span>
+
 
 <span class="k">class</span> <span class="nc">Ring</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">RingLocation</span><span class="p">):</span>
     <span class="k">pass</span>
@@ -17597,7 +17635,8 @@ introduction.</p>
                 <span class="n">Work</span><span class="p">,</span>
                 <span class="n">School</span><span class="p">,</span>
                 <span class="n">Ring</span><span class="p">,</span>
-                <span class="p">])</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
             <span class="n">agent</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
@@ -17680,6 +17719,7 @@ preferable. In the following, we will have a look at this method to create dynam
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
 
+
 <span class="k">class</span> <span class="nc">Work</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_agents</span> <span class="o">=</span> <span class="mi">10</span>
@@ -17698,6 +17738,7 @@ preferable. In the following, we will have a look at this method to create dynam
 
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
+
 
 <span class="k">class</span> <span class="nc">School</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -17718,6 +17759,7 @@ preferable. In the following, we will have a look at this method to create dynam
     <span class="k">def</span> <span class="nf">project_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weight</span><span class="p">(</span><span class="n">agent2</span><span class="p">))</span>
 
+
 <span class="k">class</span> <span class="nc">Ring</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Location</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">subsplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">agents</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
@@ -17732,6 +17774,7 @@ preferable. In the following, we will have a look at this method to create dynam
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
 
+
 <span class="k">class</span> <span class="nc">InfectionModel</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
@@ -17743,7 +17786,8 @@ preferable. In the following, we will have a look at this method to create dynam
                 <span class="n">Work</span><span class="p">,</span>
                 <span class="n">School</span><span class="p">,</span>
                 <span class="n">Ring</span><span class="p">,</span>
-                <span class="p">])</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -17780,7 +17824,6 @@ preferable. In the following, we will have a look at this method to create dynam
 
                     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">infection_probability</span><span class="p">:</span>
                         <span class="n">agent_v</span><span class="o">.</span><span class="n">infection_status</span> <span class="o">=</span> <span class="s2">&quot;exposed&quot;</span>
-
 
     <span class="k">def</span> <span class="nf">update_infection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">infection_status</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exposed&quot;</span><span class="p">,</span> <span class="s2">&quot;infectious&quot;</span><span class="p">,</span> <span class="s2">&quot;symptomatic&quot;</span><span class="p">]:</span>

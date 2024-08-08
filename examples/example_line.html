@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Line graph using networkx &mdash; popy 0.1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nbsphinx-code-cells.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2389946f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lollipop graph" href="example_lollipop.html" />
+    <link rel="prev" title="Grid graph using networkx" href="example_grid.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            popy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About Popy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../section_introduction.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../section_examples.html">Example Gallery</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="example_barbell.html">Barbell graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_caveman_graph.html">Caveman graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_cycle.html">Cycle using networkx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_fully_connected_graph.html">Complete graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_grid.html">Grid graph using networkx</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Line graph using networkx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Example-I">Example I</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="example_lollipop.html">Lollipop graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_smallworld.html">Small world using networkx</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Notes to Developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">popy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../section_examples.html">Example Gallery</a></li>
+      <li class="breadcrumb-item active">Line graph using networkx</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/example_line.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Line-graph-using-networkx">
+<h1>Line graph using networkx<a class="headerlink" href="#Line-graph-using-networkx" title="Permalink to this heading"></a></h1>
+<section id="Example-I">
+<h2>Example I<a class="headerlink" href="#Example-I" title="Permalink to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">popy</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span>
+<span class="n">creator</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">Creator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">inspector</span> <span class="o">=</span> <span class="n">popy</span><span class="o">.</span><span class="n">NetworkInspector</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Line</span><span class="p">(</span><span class="n">popy</span><span class="o">.</span><span class="n">MagicLocation</span><span class="p">):</span>
+    <span class="n">nxgraph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_graph</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">popy</span><span class="o">.</span><span class="n">Agent</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">creator</span><span class="o">.</span><span class="n">create_locations</span><span class="p">(</span>
+    <span class="n">location_classes</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">Line</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+LocationList (9 objects)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">plot_bipartite_network</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  const force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+const JS_MIME_TYPE = 'application/javascript';
+  const HTML_MIME_TYPE = 'text/html';
+  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  const CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    const script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    const cell = handle.cell;
+
+    const id = cell.output_area._bokeh_element_id;
+    const server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd_clean, {
+        iopub: {
+          output: function(msg) {
+            const id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd_destroy);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    const output_area = handle.output_area;
+    const output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      const bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      const script_attrs = bk_div.children[0].attributes;
+      for (let i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      const toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    const events = require('base/js/events');
+    const OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  const NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    const el = document.getElementById(null);
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.1.1.min.js"];
+  const css_urls = [];
+
+  const inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {
+    }
+  ];
+
+  function run_inline_js() {
+    if (root.Bokeh !== undefined || force === true) {
+          for (let i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      const cell = $(document.getElementById(null)).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="a9223eb3-05c4-49e8-ac21-dc527d3fd219" data-root-id="p12041" style="display: contents;"></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function embed_document(root) {
+  const docs_json = {"f842982e-75e5-4350-8fb7-9d4d94a39d40":{"version":"3.1.1","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p12041","attributes":{"width":400,"height":400,"x_range":{"type":"object","name":"DataRange1d","id":"p12043"},"y_range":{"type":"object","name":"DataRange1d","id":"p12042"},"x_scale":{"type":"object","name":"LinearScale","id":"p12054"},"y_scale":{"type":"object","name":"LinearScale","id":"p12056"},"title":{"type":"object","name":"Title","id":"p12045"},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p12093","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p12084","attributes":{"selected":{"type":"object","name":"Selection","id":"p12085","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p12086"},"data":{"type":"map","entries":[["xs",[[-0.1336819654500638,-0.2535693903997324],[-0.35607746553729075,-0.2535693903997324],[-0.35607746553729075,-0.4080971982362854],[-0.3808475723150709,-0.29237831981122064],[-0.3808475723150709,-0.4080971982362854],[-0.15203346494647432,0.02850346398753438],[-0.15203346494647432,-0.29237831981122064],[0.23023213589778996,0.4575823772030786],[0.23023213589778996,0.02850346398753438],[0.6382710982267755,0.4575823772030786],[0.6382710982267755,0.6452202495116973],[0.475989209370074,0.6452202495116973],[0.475989209370074,0.31604394464730917],[0.15669430816548713,-0.0028685436494576954],[0.15669430816548713,0.31604394464730917],[-0.16801334224665476,-0.33029261847574437],[-0.16801334224665476,-0.0028685436494576954],[-0.47067690594175193,-0.33029261847574437]]],["ys",[[1.0,0.9223174618400313],[0.7908068486258183,0.9223174618400313],[0.7908068486258183,0.6239084412714461],[0.4317714983118924,0.24185863679949132],[0.4317714983118924,0.6239084412714461],[0.07667863899512989,-0.04931815498344613],[0.07667863899512989,0.24185863679949132],[-0.15309205338831886,-0.19249372273393905],[-0.15309205338831886,-0.04931815498344613],[-0.1617385083190768,-0.19249372273393905],[-0.1617385083190768,-0.029974261182117372],[-0.03228564964661957,-0.029974261182117372],[-0.03228564964661957,-0.17842654730640084],[-0.37884158945100627,-0.5571384661659086],[-0.37884158945100627,-0.17842654730640084],[-0.697894820197598,-0.7980297579251787],[-0.697894820197598,-0.5571384661659086],[-0.8581079945441993,-0.7980297579251787]]],["_u",[1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10]],["_v",[14,14,18,17,18,12,17,11,12,11,13,13,19,16,19,15,16,15]],["weight",[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],["_edge_alpha",[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]]]}}},"view":{"type":"object","name":"CDSView","id":"p12094","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p12095"}}},"glyph":{"type":"object","name":"MultiLine","id":"p12090","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"field","field":"_edge_alpha"}}},"nonselection_glyph":{"type":"object","name":"MultiLine","id":"p12091","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"MultiLine","id":"p12092","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p12107","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p12098","attributes":{"selected":{"type":"object","name":"Selection","id":"p12099","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p12100"},"data":{"type":"map","entries":[["xs",[0.4575823772030786,0.02850346398753438,0.6452202495116973,-0.2535693903997324,-0.33029261847574437,-0.0028685436494576954,-0.29237831981122064,-0.4080971982362854,0.31604394464730917]],["ys",[-0.19249372273393905,-0.04931815498344613,-0.029974261182117372,0.9223174618400313,-0.7980297579251787,-0.5571384661659086,0.24185863679949132,0.6239084412714461,-0.17842654730640084]],["_node",[11,12,13,14,15,16,17,18,19]],["bipartite",[1,1,1,1,1,1,1,1,1]],["type",["Line","Line","Line","Line","Line","Line","Line","Line","Line"]]]}}},"view":{"type":"object","name":"CDSView","id":"p12108","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p12109"}}},"glyph":{"type":"object","name":"Scatter","id":"p12104","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.7},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.7},"hatch_alpha":{"type":"value","value":0.7}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"p12105","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"p12106","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p12119","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p12110","attributes":{"selected":{"type":"object","name":"Selection","id":"p12111","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p12112"},"data":{"type":"map","entries":[["xs",[-0.1336819654500638,-0.35607746553729075,-0.3808475723150709,-0.15203346494647432,0.23023213589778996,0.6382710982267755,0.475989209370074,0.15669430816548713,-0.16801334224665476,-0.47067690594175193]],["ys",[1.0,0.7908068486258183,0.4317714983118924,0.07667863899512989,-0.15309205338831886,-0.1617385083190768,-0.03228564964661957,-0.37884158945100627,-0.697894820197598,-0.8581079945441993]],["_node",[1,2,3,4,5,6,7,8,9,10]],["bipartite",[0,0,0,0,0,0,0,0,0,0]],["type",["Agent","Agent","Agent","Agent","Agent","Agent","Agent","Agent","Agent","Agent"]]]}}},"view":{"type":"object","name":"CDSView","id":"p12120","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p12121"}}},"glyph":{"type":"object","name":"Scatter","id":"p12116","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.7},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.7},"hatch_alpha":{"type":"value","value":0.7},"marker":{"type":"value","value":"square"}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"p12117","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1},"marker":{"type":"value","value":"square"}}},"muted_glyph":{"type":"object","name":"Scatter","id":"p12118","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2},"marker":{"type":"value","value":"square"}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p12048","attributes":{"logo":null,"tools":[{"type":"object","name":"BoxZoomTool","id":"p12072","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p12073","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"ResetTool","id":"p12074"},{"type":"object","name":"WheelZoomTool","id":"p12075"},{"type":"object","name":"PanTool","id":"p12076"},{"type":"object","name":"HoverTool","id":"p12096","attributes":{"renderers":[{"id":"p12093"}],"tooltips":[["type","edge"],["u","@_u"],["v","@_v"],["weight","@weight"]],"formatters":{"type":"map","entries":[["type","printf"],["u","printf"],["v","printf"],["weight","printf"]]},"line_policy":"interp"}},{"type":"object","name":"HoverTool","id":"p12122","attributes":{"renderers":[{"id":"p12107"}],"tooltips":[["type","node lv0"],["node","@_node"],["type","@type"]],"formatters":{"type":"map","entries":[["type","printf"],["node","printf"]]},"attachment":"vertical"}},{"type":"object","name":"HoverTool","id":"p12124","attributes":{"renderers":[{"id":"p12119"}],"tooltips":[["type","node lv1"],["node","@_node"],["type","@type"]],"formatters":{"type":"map","entries":[["type","printf"],["node","printf"]]},"attachment":"vertical"}}]}},"left":[{"type":"object","name":"LinearAxis","id":"p12065","attributes":{"visible":false,"ticker":{"type":"object","name":"BasicTicker","id":"p12066","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p12067"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p12068"}}}],"below":[{"type":"object","name":"LinearAxis","id":"p12058","attributes":{"visible":false,"ticker":{"type":"object","name":"BasicTicker","id":"p12059","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p12060"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p12061"}}}],"center":[{"type":"object","name":"Grid","id":"p12064","attributes":{"axis":{"id":"p12058"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p12071","attributes":{"dimension":1,"axis":{"id":"p12065"},"grid_line_color":null}}]}}],"callbacks":{"type":"map"}}};
+  const render_items = [{"docid":"f842982e-75e5-4350-8fb7-9d4d94a39d40","roots":{"p12041":"a9223eb3-05c4-49e8-ac21-dc527d3fd219"},"root_ids":["p12041"],"notebook_comms_target":"p12671"}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    let attempts = 0;
+    const timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspector</span><span class="o">.</span><span class="n">plot_agent_network</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  const force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+const JS_MIME_TYPE = 'application/javascript';
+  const HTML_MIME_TYPE = 'text/html';
+  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  const CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    const script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    const cell = handle.cell;
+
+    const id = cell.output_area._bokeh_element_id;
+    const server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd_clean, {
+        iopub: {
+          output: function(msg) {
+            const id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd_destroy);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    const output_area = handle.output_area;
+    const output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      const bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      const script_attrs = bk_div.children[0].attributes;
+      for (let i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      const toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    const events = require('base/js/events');
+    const OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  const NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    const el = document.getElementById(null);
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.1.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.1.1.min.js"];
+  const css_urls = [];
+
+  const inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {
+    }
+  ];
+
+  function run_inline_js() {
+    if (root.Bokeh !== undefined || force === true) {
+          for (let i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      const cell = $(document.getElementById(null)).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="ffa8f1bb-b03d-4662-b20c-d08eb307f520" data-root-id="p12792" style="display: contents;"></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function embed_document(root) {
+  const docs_json = {"16ad4b03-6089-44f7-a6ad-929576f8cf84":{"version":"3.1.1","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p12792","attributes":{"width":400,"height":400,"x_range":{"type":"object","name":"DataRange1d","id":"p12794"},"y_range":{"type":"object","name":"DataRange1d","id":"p12793"},"x_scale":{"type":"object","name":"LinearScale","id":"p12805"},"y_scale":{"type":"object","name":"LinearScale","id":"p12807"},"title":{"type":"object","name":"Title","id":"p12796"},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p12844","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p12835","attributes":{"selected":{"type":"object","name":"Selection","id":"p12836","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p12837"},"data":{"type":"map","entries":[["xs",[[0.44628135982835465,0.30648952410033226],[0.30648952410033226,0.18346579627340315],[0.18346579627340315,0.0901134301664819],[0.0901134301664819,0.035597404226538225],[0.035597404226538225,-0.008918488673310887],[-0.008918488673310887,-0.06787263716129631],[-0.06787263716129631,-0.16386245077043812],[-0.16386245077043812,-0.3175316367852919],[-0.3175316367852919,-0.5037623012047729]]],["ys",[[-1.0,-0.8532957622647347],[-0.8532957622647347,-0.6371250088993508],[-0.6371250088993508,-0.3839856060729244],[-0.3839856060729244,-0.11319028330194647],[-0.11319028330194647,0.161233612698644],[0.161233612698644,0.4285061250689615],[0.4285061250689615,0.669144733348686],[0.669144733348686,0.8481295183529028],[0.8481295183529028,0.8805826710697623]]],["_u",[1,2,3,4,5,6,7,8,9]],["_v",[2,3,4,5,6,7,8,9,10]],["weight",[1,1,1,1,1,1,1,1,1]],["_edge_alpha",[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]]]}}},"view":{"type":"object","name":"CDSView","id":"p12845","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p12846"}}},"glyph":{"type":"object","name":"MultiLine","id":"p12841","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"field","field":"_edge_alpha"}}},"nonselection_glyph":{"type":"object","name":"MultiLine","id":"p12842","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"MultiLine","id":"p12843","attributes":{"xs":{"type":"field","field":"xs"},"ys":{"type":"field","field":"ys"},"line_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p12858","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p12849","attributes":{"selected":{"type":"object","name":"Selection","id":"p12850","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p12851"},"data":{"type":"map","entries":[["xs",[0.44628135982835465,0.30648952410033226,0.18346579627340315,0.0901134301664819,0.035597404226538225,-0.008918488673310887,-0.06787263716129631,-0.16386245077043812,-0.3175316367852919,-0.5037623012047729]],["ys",[-1.0,-0.8532957622647347,-0.6371250088993508,-0.3839856060729244,-0.11319028330194647,0.161233612698644,0.4285061250689615,0.669144733348686,0.8481295183529028,0.8805826710697623]],["_node",[1,2,3,4,5,6,7,8,9,10]]]}}},"view":{"type":"object","name":"CDSView","id":"p12859","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p12860"}}},"glyph":{"type":"object","name":"Scatter","id":"p12855","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.7},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.7},"hatch_alpha":{"type":"value","value":0.7}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"p12856","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"p12857","attributes":{"x":{"type":"field","field":"xs"},"y":{"type":"field","field":"ys"},"size":{"type":"value","value":9},"line_color":{"type":"value","value":"firebrick"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"firebrick"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p12799","attributes":{"logo":null,"tools":[{"type":"object","name":"BoxZoomTool","id":"p12823","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p12824","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"ResetTool","id":"p12825"},{"type":"object","name":"WheelZoomTool","id":"p12826"},{"type":"object","name":"PanTool","id":"p12827"},{"type":"object","name":"HoverTool","id":"p12847","attributes":{"renderers":[{"id":"p12844"}],"tooltips":[["type","edge"],["u","@_u"],["v","@_v"],["weight","@weight"]],"formatters":{"type":"map","entries":[["type","printf"],["u","printf"],["v","printf"],["weight","printf"]]},"line_policy":"interp"}},{"type":"object","name":"HoverTool","id":"p12861","attributes":{"renderers":[{"id":"p12858"}],"tooltips":[["type","node"],["node","@_node"]],"formatters":{"type":"map","entries":[["type","printf"],["node","printf"]]},"attachment":"vertical"}}]}},"left":[{"type":"object","name":"LinearAxis","id":"p12816","attributes":{"visible":false,"ticker":{"type":"object","name":"BasicTicker","id":"p12817","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p12818"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p12819"}}}],"below":[{"type":"object","name":"LinearAxis","id":"p12809","attributes":{"visible":false,"ticker":{"type":"object","name":"BasicTicker","id":"p12810","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p12811"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p12812"}}}],"center":[{"type":"object","name":"Grid","id":"p12815","attributes":{"axis":{"id":"p12809"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p12822","attributes":{"dimension":1,"axis":{"id":"p12816"},"grid_line_color":null}}]}}],"callbacks":{"type":"map"}}};
+  const render_items = [{"docid":"16ad4b03-6089-44f7-a6ad-929576f8cf84","roots":{"p12792":"ffa8f1bb-b03d-4662-b20c-d08eb307f520"},"root_ids":["p12792"],"notebook_comms_target":"p13427"}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    let attempts = 0;
+    const timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example_grid.html" class="btn btn-neutral float-left" title="Grid graph using networkx" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_lollipop.html" class="btn btn-neutral float-right" title="Lollipop graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Marius Kaffai, Lukas Erhard.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -23,7 +23,7 @@
     "import seaborn as sns\n",
     "\n",
     "# for reproducibilty\n",
-    "random.seed(1337)\n"
+    "random.seed(1337)"
    ]
   },
   {
@@ -54,7 +54,7 @@
     "            # shared location is infected with .1 propability\n",
     "            p_infect = random.random()\n",
     "            if p_infect < 0.1:\n",
-    "                contact.is_infected = True\n"
+    "                contact.is_infected = True"
    ]
   },
   {
@@ -102,7 +102,7 @@
     "        self.agents.shuffle()\n",
     "\n",
     "    def update(self) -> None:\n",
-    "        self.agents.visit_locations(self.model)\n"
+    "        self.agents.visit_locations(self.model)"
    ]
   },
   {
@@ -131,7 +131,7 @@
     "        self.population.agents.record(\"is_infected\")\n",
     "\n",
     "    def end(self):\n",
-    "        pass\n"
+    "        pass"
    ]
   },
   {
@@ -160,7 +160,7 @@
    ],
    "source": [
     "model = MyModel(parameters={\"steps\": 30})\n",
-    "results = model.run()\n"
+    "results = model.run()"
    ]
   },
   {
@@ -193,7 +193,7 @@
     "\n",
     "data = df.groupby(\"t\").is_infected.sum().reset_index()\n",
     "\n",
-    "_ = sns.lineplot(data, x=\"t\", y=\"is_infected\")\n"
+    "_ = sns.lineplot(data, x=\"t\", y=\"is_infected\")"
    ]
   }
  ],

@@ -18,6 +18,7 @@
         <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -43,10 +44,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About Popy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../section_introduction.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../section_examples.html">Example Gallery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">Notes to Developers</a></li>
 </ul>
 
         </div>
@@ -91,6 +94,7 @@
 <span class="kn">from</span> <span class="nn">popy.sequences</span> <span class="kn">import</span> <span class="n">LocationList</span>
 <span class="kn">import</span> <span class="nn">popy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 
+
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../api/model.html#popy.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class the encapsulates a full simluation.</span>
 
@@ -114,6 +118,12 @@
 <div class="viewcode-block" id="Model.sim_step"><a class="viewcode-back" href="../../api/model.html#popy.Model.sim_step">[docs]</a>    <span class="k">def</span> <span class="nf">sim_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Do 1 step in the simulation.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># TODO: Rethink the following:</span>
+        <span class="k">for</span> <span class="n">location</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;static_weight&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;_update_weights&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">location</span><span class="o">.</span><span class="n">static_weight</span><span class="p">:</span>
+                    <span class="n">location</span><span class="o">.</span><span class="n">_update_weights</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
@@ -317,7 +327,9 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Model.neighbors_of_agent"><a class="viewcode-back" href="../../api/model.html#popy.Model.neighbors_of_agent">[docs]</a>    <span class="k">def</span> <span class="nf">neighbors_of_agent</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">agent</span><span class="p">:</span> <span class="n">_agent</span><span class="o">.</span><span class="n">Agent</span><span class="p">,</span>
+        <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of neighboring agents for a specific agent.</span>
 
@@ -363,7 +375,7 @@
         <span class="p">)</span></div>
 
     <span class="c1"># TODO: evlt. filtern nach Klasse oder Key einbauen</span>
-    <span class="k">def</span> <span class="nf">_objects_between_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object1</span><span class="p">,</span> <span class="n">object2</span><span class="p">,</span> <span class="n">object_classes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_objects_between_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">object1</span><span class="p">,</span> <span class="n">object2</span><span class="p">,</span> <span class="n">object_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
             <span class="n">nx</span><span class="o">.</span><span class="n">all_simple_paths</span><span class="p">(</span>
                 <span class="n">G</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
@@ -375,15 +387,21 @@
 
         <span class="n">objects_between</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;_obj&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">object_classes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">object_classes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">object_classes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># TODO</span>
+                <span class="k">raise</span> <span class="ne">Exception</span>
+
             <span class="n">object_classes</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">_get_cls_as_str</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="bp">cls</span><span class="p">)</span>
                 <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">object_classes</span>
             <span class="p">]</span>
-            <span class="n">objects_between</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">objects_between</span> <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">object_classes</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">objects_between</span>
+            <span class="n">filtered_objects_between</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">objects_between</span> <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">object_classes</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">filtered_objects_between</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">objects_between</span>
 
-<div class="viewcode-block" id="Model.locations_between_agents"><a class="viewcode-back" href="../../api/model.html#popy.Model.locations_between_agents">[docs]</a>    <span class="k">def</span> <span class="nf">locations_between_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">,</span> <span class="n">location_classes</span><span class="o">=</span><span class="p">()):</span>
+<div class="viewcode-block" id="Model.locations_between_agents"><a class="viewcode-back" href="../../api/model.html#popy.Model.locations_between_agents">[docs]</a>    <span class="k">def</span> <span class="nf">locations_between_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all locations the connect two agents.</span>
 
 <span class="sd">        Args:</span>
@@ -400,7 +418,7 @@
             <span class="n">objs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_objects_between_objects</span><span class="p">(</span><span class="n">agent1</span><span class="p">,</span> <span class="n">agent2</span><span class="p">,</span> <span class="n">location_classes</span><span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Model.agents_between_locations"><a class="viewcode-back" href="../../api/model.html#popy.Model.agents_between_locations">[docs]</a>    <span class="k">def</span> <span class="nf">agents_between_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location1</span><span class="p">,</span> <span class="n">location2</span><span class="p">,</span> <span class="n">agent_classes</span><span class="o">=</span><span class="p">()):</span>
+<div class="viewcode-block" id="Model.agents_between_locations"><a class="viewcode-back" href="../../api/model.html#popy.Model.agents_between_locations">[docs]</a>    <span class="k">def</span> <span class="nf">agents_between_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location1</span><span class="p">,</span> <span class="n">location2</span><span class="p">,</span> <span class="n">agent_classes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return all agents between two locations.</span>
 
 <span class="sd">        Args:</span>
